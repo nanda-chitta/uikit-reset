@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/Ranjanchitta/uikit-reset"
   spec.license       = "MIT"
 
-  spec.files         = Dir["{test,spec,features,lib,vendor}/**/*"] + ["MIT-LICENSE", "README.md"]
+  spec.files         = Dir["{test,spec,features,lib,vendor}/**/*"]
 
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
