@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{UIkit on Reset for Rails.}
   spec.description   = %q{Uikit::Reset is a gem to make it super easy to use UIkit in your Rails project.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/Ranjanchitta/uikit-reset"
   spec.license       = "MIT"
 
   spec.files         = Dir["{test,spec,features,lib,vendor}/**/*"] + ["MIT-LICENSE", "README.md"]
