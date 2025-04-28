@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 module Uikit
   module Reset
-    VERSION = "1.1.2"
+    VERSION = '2.0.0'
   end
 end
