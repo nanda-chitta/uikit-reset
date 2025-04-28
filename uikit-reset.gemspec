@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'UIkit on Reset for Rails.'
   spec.description   = 'Uikit::Reset is a gem to make it super easy to use UIkit in your Rails project.'
-  spec.homepage      = 'https://github.com/Ranjanchitta/uikit-reset'
+  spec.homepage      = 'https://github.com/nanda-chitta/uikit-reset'
   spec.license       = 'MIT'
   spec.required_ruby_version = '>= 2.3.0'
 
