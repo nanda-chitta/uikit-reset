@@ -1,5401 +1,11714 @@
 //= require jquery
 
-/*! UIkit 3.23.6 | https://www.getuikit.com | (c) 2014 - 2025 YOOtheme | MIT License */
-(function (Se, Ie) {
-  typeof exports == "object" && typeof module < "u" ? module.exports = Ie() : typeof define == "function" && define.amd ? define("uikit", Ie) : (Se = typeof globalThis < "u" ? globalThis : Se || self, Se.UIkit = Ie())
-})(this, function () {
-  "use strict";
-  const {
-    hasOwnProperty: Se,
-    toString: Ie
-  } = Object.prototype;
+/*! UIkit 3.0.0 | http://www.getuikit.com | (c) 2014 - 2018 YOOtheme | MIT License */
 
-  function gt(t, e) {
-    return Se.call(t, e)
-  }
-  const ar = /\B([A-Z])/g,
-    zt = ct(t => t.replace(ar, "-$1").toLowerCase()),
-    lr = /-(\w)/g,
-    Ee = ct(t => (t.charAt(0).toLowerCase() + t.slice(1)).replace(lr, (e, i) => i.toUpperCase())),
-    Ft = ct(t => t.charAt(0).toUpperCase() + t.slice(1));
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+    typeof define === 'function' && define.amd ? define('uikit', factory) :
+      (global = global || self, global.UIkit = factory());
+}(this, function () { 'use strict';
 
-  function mt(t, e) {
-    var i;
-    return (i = t == null ? void 0 : t.startsWith) == null ? void 0 : i.call(t, e)
-  }
-
-  function se(t, e) {
-    var i;
-    return (i = t == null ? void 0 : t.endsWith) == null ? void 0 : i.call(t, e)
-  }
-
-  function b(t, e) {
-    var i;
-    return (i = t == null ? void 0 : t.includes) == null ? void 0 : i.call(t, e)
-  }
-
-  function xt(t, e) {
-    var i;
-    return (i = t == null ? void 0 : t.findIndex) == null ? void 0 : i.call(t, e)
-  }
-  const {
-    isArray: J,
-    from: ne
-  } = Array, {
-    assign: ft
-  } = Object;
-
-  function ot(t) {
-    return typeof t == "function"
-  }
-
-  function Ct(t) {
-    return t !== null && typeof t == "object"
-  }
-
-  function Te(t) {
-    return Ie.call(t) === "[object Object]"
-  }
-
-  function ei(t) {
-    return Ct(t) && t === t.window
-  }
-
-  function Ce(t) {
-    return Li(t) === 9
-  }
-
-  function Pe(t) {
-    return Li(t) >= 1
-  }
-
-  function oe(t) {
-    return Li(t) === 1
-  }
-
-  function Li(t) {
-    return !ei(t) && Ct(t) && t.nodeType
-  }
-
-  function re(t) {
-    return typeof t == "boolean"
-  }
-
-  function H(t) {
-    return typeof t == "string"
-  }
-
-  function _e(t) {
-    return typeof t == "number"
-  }
-
-  function vt(t) {
-    return _e(t) || H(t) && !isNaN(t - parseFloat(t))
-  }
-
-  function ii(t) {
-    return !(J(t) ? t.length : Ct(t) && Object.keys(t).length)
-  }
-
-  function X(t) {
-    return t === void 0
-  }
-
-  function Wi(t) {
-    return re(t) ? t : t === "true" || t === "1" || t === "" ? !0 : t === "false" || t === "0" ? !1 : t
-  }
-
-  function $t(t) {
-    const e = Number(t);
-    return isNaN(e) ? !1 : e
-  }
-
-  function S(t) {
-    return parseFloat(t) || 0
-  }
-
-  function R(t) {
-    return t && E(t)[0]
-  }
-
-  function E(t) {
-    return Pe(t) ? [t] : Array.from(t || []).filter(Pe)
-  }
-
-  function Ht(t) {
-    if (ei(t)) return t;
-    t = R(t);
-    const e = Ce(t) ? t : t == null ? void 0 : t.ownerDocument;
-    return (e == null ? void 0 : e.defaultView) || window
-  }
-
-  function Ae(t, e) {
-    return t === e || Ct(t) && Ct(e) && Object.keys(t).length === Object.keys(e).length && ae(t, (i, s) => i === e[s])
-  }
-
-  function ji(t, e, i) {
-    return t.replace(new RegExp(`${e}|${i}`, "g"), s => s === e ? i : e)
-  }
-
-  function Lt(t) {
-    return t[t.length - 1]
-  }
-
-  function ae(t, e) {
-    for (const i in t)
-      if (e(t[i], i) === !1) return !1;
-    return !0
-  }
-
-  function Vs(t, e) {
-    return t.slice().sort(({
-                             [e]: i = 0
-                           }, {
-                             [e]: s = 0
-                           }) => i > s ? 1 : s > i ? -1 : 0)
-  }
-
-  function Wt(t, e) {
-    return t.reduce((i, s) => i + S(ot(e) ? e(s) : s[e]), 0)
-  }
-
-  function Ys(t, e) {
-    const i = new Set;
-    return t.filter(({
-                       [e]: s
-                     }) => i.has(s) ? !1 : i.add(s))
-  }
-
-  function si(t, e) {
-    return e.reduce((i, s) => ({
-      ...i,
-      [s]: t[s]
-    }), {})
-  }
-
-  function K(t, e = 0, i = 1) {
-    return Math.min(Math.max($t(t) || 0, e), i)
-  }
-
-  function A() {}
-
-  function ni(...t) {
-    return [
-      ["bottom", "top"],
-      ["right", "left"]
-    ].every(([e, i]) => Math.min(...t.map(({
-                                             [e]: s
-                                           }) => s)) - Math.max(...t.map(({
-                                                                            [i]: s
-                                                                          }) => s)) > 0)
-  }
-
-  function oi(t, e) {
-    return t.x <= e.right && t.x >= e.left && t.y <= e.bottom && t.y >= e.top
-  }
-
-  function Ri(t, e, i) {
-    const s = e === "width" ? "height" : "width";
-    return {
-      [s]: t[e] ? Math.round(i * t[s] / t[e]) : t[s],
-      [e]: i
-    }
-  }
-
-  function Gs(t, e) {
-    t = {
-      ...t
+  function bind(fn, context) {
+    return function (a) {
+      var l = arguments.length;
+      return l ? l > 1 ? fn.apply(context, arguments) : fn.call(context, a) : fn.call(context);
     };
-    for (const i in t) t = t[i] > e[i] ? Ri(t, i, e[i]) : t;
-    return t
   }
 
-  function hr(t, e) {
-    t = Gs(t, e);
-    for (const i in t) t = t[i] < e[i] ? Ri(t, i, e[i]) : t;
-    return t
-  }
-  const qi = {
-    ratio: Ri,
-    contain: Gs,
-    cover: hr
-  };
+  var objPrototype = Object.prototype;
+  var hasOwnProperty = objPrototype.hasOwnProperty;
 
-  function rt(t, e, i = 0, s = !1) {
-    e = E(e);
-    const {
-      length: n
-    } = e;
-    return n ? (t = vt(t) ? $t(t) : t === "next" ? i + 1 : t === "previous" ? i - 1 : t === "last" ? n - 1 : e.indexOf(R(t)), s ? K(t, 0, n - 1) : (t %= n, t < 0 ? t + n : t)) : -1
+  function hasOwn(obj, key) {
+    return hasOwnProperty.call(obj, key);
   }
 
-  function ct(t) {
-    const e = Object.create(null);
-    return (i, ...s) => e[i] || (e[i] = t(i, ...s))
-  }
+  var hyphenateCache = {};
+  var hyphenateRe = /([a-z\d])([A-Z])/g;
 
-  function I(t, ...e) {
-    for (const i of E(t)) {
-      const s = jt(e).filter(n => !$(i, n));
-      s.length && i.classList.add(...s)
+  function hyphenate(str) {
+
+    if (!(str in hyphenateCache)) {
+      hyphenateCache[str] = str
+        .replace(hyphenateRe, '$1-$2')
+        .toLowerCase();
     }
+
+    return hyphenateCache[str];
   }
 
-  function _(t, ...e) {
-    for (const i of E(t)) {
-      const s = jt(e).filter(n => $(i, n));
-      s.length && i.classList.remove(...s)
-    }
+  var camelizeRe = /-(\w)/g;
+
+  function camelize(str) {
+    return str.replace(camelizeRe, toUpper);
   }
 
-  function ri(t, e, i) {
-    i = jt(i), e = jt(e).filter(s => !b(i, s)), _(t, e), I(t, i)
+  function toUpper(_, c) {
+    return c ? c.toUpperCase() : '';
   }
 
-  function $(t, e) {
-    return [e] = jt(e), E(t).some(i => i.classList.contains(e))
+  function ucfirst(str) {
+    return str.length ? toUpper(null, str.charAt(0)) + str.slice(1) : '';
   }
 
-  function L(t, e, i) {
-    const s = jt(e);
-    X(i) || (i = !!i);
-    for (const n of E(t))
-      for (const o of s) n.classList.toggle(o, i)
+  var strPrototype = String.prototype;
+  var startsWithFn = strPrototype.startsWith || function (search) { return this.lastIndexOf(search, 0) === 0; };
+
+  function startsWith(str, search) {
+    return startsWithFn.call(str, search);
   }
 
-  function jt(t) {
-    return t ? J(t) ? t.map(jt).flat() : String(t).split(" ").filter(Boolean) : []
+  var endsWithFn = strPrototype.endsWith || function (search) { return this.substr(-search.length) === search; };
+
+  function endsWith(str, search) {
+    return endsWithFn.call(str, search);
   }
 
-  function p(t, e, i) {
-    var s;
-    if (Ct(e)) {
-      for (const n in e) p(t, n, e[n]);
-      return
-    }
-    if (X(i)) return (s = R(t)) == null ? void 0 : s.getAttribute(e);
-    for (const n of E(t)) ot(i) && (i = i.call(n, p(n, e))), i === null ? Oe(n, e) : n.setAttribute(e, i)
+  var includesFn = function (search) { return ~this.indexOf(search); };
+  var includesStr = strPrototype.includes || includesFn;
+  var includesArray = Array.prototype.includes || includesFn;
+
+  function includes(obj, search) {
+    return obj && (isString(obj) ? includesStr : includesArray).call(obj, search);
   }
 
-  function Pt(t, e) {
-    return E(t).some(i => i.hasAttribute(e))
+  var isArray = Array.isArray;
+
+  function isFunction(obj) {
+    return typeof obj === 'function';
   }
 
-  function Oe(t, e) {
-    E(t).forEach(i => i.removeAttribute(e))
+  function isObject(obj) {
+    return obj !== null && typeof obj === 'object';
   }
 
-  function Z(t, e) {
-    for (const i of [e, `data-${e}`])
-      if (Pt(t, i)) return p(t, i)
-  }
-  const Rt = typeof window < "u",
-    U = Rt && document.dir === "rtl",
-    le = Rt && "ontouchstart" in window,
-    he = Rt && window.PointerEvent,
-    ut = he ? "pointerdown" : le ? "touchstart" : "mousedown",
-    ai = he ? "pointermove" : le ? "touchmove" : "mousemove",
-    _t = he ? "pointerup" : le ? "touchend" : "mouseup",
-    qt = he ? "pointerenter" : le ? "" : "mouseenter",
-    ce = he ? "pointerleave" : le ? "" : "mouseleave",
-    li = he ? "pointercancel" : "touchcancel",
-    cr = {
-      area: !0,
-      base: !0,
-      br: !0,
-      col: !0,
-      embed: !0,
-      hr: !0,
-      img: !0,
-      input: !0,
-      keygen: !0,
-      link: !0,
-      meta: !0,
-      param: !0,
-      source: !0,
-      track: !0,
-      wbr: !0
-    };
-
-  function Ui(t) {
-    return E(t).some(e => cr[e.tagName.toLowerCase()])
-  }
-  const ur = Rt && Element.prototype.checkVisibility || function () {
-    return this.offsetWidth || this.offsetHeight || this.getClientRects().length
-  };
-
-  function q(t) {
-    return E(t).some(e => ur.call(e))
-  }
-  const Me = "input,select,textarea,button";
-
-  function hi(t) {
-    return E(t).some(e => C(e, Me))
-  }
-  const ue = `${Me},a[href],[tabindex]`;
-
-  function ci(t) {
-    return C(t, ue)
+  function isPlainObject(obj) {
+    return isObject(obj) && Object.getPrototypeOf(obj) === objPrototype;
   }
 
-  function O(t) {
-    var e;
-    return (e = R(t)) == null ? void 0 : e.parentElement
+  function isWindow(obj) {
+    return isObject(obj) && obj === obj.window;
   }
 
-  function De(t, e) {
-    return E(t).filter(i => C(i, e))
+  function isDocument(obj) {
+    return isObject(obj) && obj.nodeType === 9;
   }
 
-  function C(t, e) {
-    return E(t).some(i => i.matches(e))
+  function isJQuery(obj) {
+    return isObject(obj) && !!obj.jquery;
   }
 
-  function de(t, e) {
-    const i = [];
-    for (; t = O(t);)(!e || C(t, e)) && i.push(t);
-    return i
+  function isNode(obj) {
+    return obj instanceof Node || isObject(obj) && obj.nodeType >= 1;
   }
 
-  function N(t, e) {
-    t = R(t);
-    const i = t ? ne(t.children) : [];
-    return e ? De(i, e) : i
+  var toString = objPrototype.toString;
+  function isNodeCollection(obj) {
+    return toString.call(obj).match(/^\[object (NodeList|HTMLCollection)\]$/);
   }
 
-  function yt(t, e) {
-    return e ? E(t).indexOf(R(e)) : N(O(t)).indexOf(t)
+  function isBoolean(value) {
+    return typeof value === 'boolean';
   }
 
-  function fe(t) {
-    return t = R(t), t && ["origin", "pathname", "search"].every(e => t[e] === location[e])
+  function isString(value) {
+    return typeof value === 'string';
   }
 
-  function Vi(t) {
-    if (fe(t)) {
-      const {
-        hash: e,
-        ownerDocument: i
-      } = R(t), s = decodeURIComponent(e).slice(1);
-      return s ? i.getElementById(s) || i.getElementsByName(s)[0] : i.documentElement
-    }
+  function isNumber(value) {
+    return typeof value === 'number';
   }
 
-  function et(t, e) {
-    return Yi(t, Xs(t, e))
+  function isNumeric(value) {
+    return isNumber(value) || isString(value) && !isNaN(value - parseFloat(value));
   }
 
-  function Be(t, e) {
-    return Ne(t, Xs(t, e))
+  function isUndefined(value) {
+    return value === void 0;
   }
 
-  function Yi(t, e) {
-    return R(Zs(t, R(e), "querySelector"))
+  function toBoolean(value) {
+    return isBoolean(value)
+      ? value
+      : value === 'true' || value === '1' || value === ''
+        ? true
+        : value === 'false' || value === '0'
+          ? false
+          : value;
   }
 
-  function Ne(t, e) {
-    return E(Zs(t, R(e), "querySelectorAll"))
+  function toNumber(value) {
+    var number = Number(value);
+    return !isNaN(number) ? number : false;
   }
 
-  function Xs(t, e = document) {
-    return Ce(e) || Js(t).isContextSelector ? e : e.ownerDocument
+  function toFloat(value) {
+    return parseFloat(value) || 0;
   }
-  const dr = /([!>+~-])(?=\s+[!>+~-]|\s*$)/g,
-    fr = /(\([^)]*\)|[^,])+/g,
-    Js = ct(t => {
-      let e = !1;
-      if (!t || !H(t)) return {};
-      const i = [];
-      for (let s of t.match(fr)) s = s.trim().replace(dr, "$1 *"), e || (e = ["!", "+", "~", "-", ">"].includes(s[0])), i.push(s);
-      return {
-        selector: i.join(","),
-        selectors: i,
-        isContextSelector: e
-      }
-    }),
-    pr = /(\([^)]*\)|\S)*/,
-    Ks = ct(t => {
-      t = t.slice(1).trim();
-      const [e] = t.match(pr);
-      return [e, t.slice(e.length + 1)]
+
+  function toNode(element) {
+    return isNode(element) || isWindow(element) || isDocument(element)
+      ? element
+      : isNodeCollection(element) || isJQuery(element)
+        ? element[0]
+        : isArray(element)
+          ? toNode(element[0])
+          : null;
+  }
+
+  var arrayProto = Array.prototype;
+  function toNodes(element) {
+    return isNode(element)
+      ? [element]
+      : isNodeCollection(element)
+        ? arrayProto.slice.call(element)
+        : isArray(element)
+          ? element.map(toNode).filter(Boolean)
+          : isJQuery(element)
+            ? element.toArray()
+            : [];
+  }
+
+  function toList(value) {
+    return isArray(value)
+      ? value
+      : isString(value)
+        ? value.split(/,(?![^(]*\))/).map(function (value) { return isNumeric(value)
+          ? toNumber(value)
+          : toBoolean(value.trim()); })
+        : [value];
+  }
+
+  function toMs(time) {
+    return !time
+      ? 0
+      : endsWith(time, 'ms')
+        ? toFloat(time)
+        : toFloat(time) * 1000;
+  }
+
+  function swap(value, a, b) {
+    return value.replace(new RegExp((a + "|" + b), 'mg'), function (match) {
+      return match === a ? b : a;
     });
-
-  function Zs(t, e = document, i) {
-    const s = Js(t);
-    if (!s.isContextSelector) return s.selector ? Gi(e, i, s.selector) : t;
-    t = "";
-    const n = s.selectors.length === 1;
-    for (let o of s.selectors) {
-      let r, a = e;
-      if (o[0] === "!" && ([r, o] = Ks(o), a = e.parentElement.closest(r), !o && n) || a && o[0] === "-" && ([r, o] = Ks(o), a = a.previousElementSibling, a = C(a, r) ? a : null, !o && n)) return a;
-      if (a) {
-        if (n) return o[0] === "~" || o[0] === "+" ? (o = `:scope > :nth-child(${yt(a)+1}) ${o}`, a = a.parentElement) : o[0] === ">" && (o = `:scope ${o}`), Gi(a, i, o);
-        t += `${t?",":""}${gr(a)} ${o}`
-      }
-    }
-    return Ce(e) || (e = e.ownerDocument), Gi(e, i, t)
   }
 
-  function Gi(t, e, i) {
+  var assign = Object.assign || function (target) {
+    var args = [], len = arguments.length - 1;
+    while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+    target = Object(target);
+    for (var i = 0; i < args.length; i++) {
+      var source = args[i];
+      if (source !== null) {
+        for (var key in source) {
+          if (hasOwn(source, key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+    }
+    return target;
+  };
+
+  function each(obj, cb) {
+    for (var key in obj) {
+      cb.call(obj[key], obj[key], key);
+    }
+  }
+
+  function sortBy(collection, prop) {
+    return collection.sort(function (ref, ref$1) {
+        var propA = ref[prop]; if ( propA === void 0 ) propA = 0;
+        var propB = ref$1[prop]; if ( propB === void 0 ) propB = 0;
+
+        return propA > propB
+          ? 1
+          : propB > propA
+            ? -1
+            : 0;
+      }
+    );
+  }
+
+  function clamp(number, min, max) {
+    if ( min === void 0 ) min = 0;
+    if ( max === void 0 ) max = 1;
+
+    return Math.min(Math.max(toNumber(number) || 0, min), max);
+  }
+
+  function noop() {}
+
+  function intersectRect(r1, r2) {
+    return r1.left < r2.right &&
+      r1.right > r2.left &&
+      r1.top < r2.bottom &&
+      r1.bottom > r2.top;
+  }
+
+  function pointInRect(point, rect) {
+    return point.x <= rect.right &&
+      point.x >= rect.left &&
+      point.y <= rect.bottom &&
+      point.y >= rect.top;
+  }
+
+  var Dimensions = {
+
+    ratio: function(dimensions, prop, value) {
+      var obj;
+
+
+      var aProp = prop === 'width' ? 'height' : 'width';
+
+      return ( obj = {}, obj[aProp] = dimensions[prop] ? Math.round(value * dimensions[aProp] / dimensions[prop]) : dimensions[aProp], obj[prop] = value, obj );
+    },
+
+    contain: function(dimensions, maxDimensions) {
+      var this$1 = this;
+
+      dimensions = assign({}, dimensions);
+
+      each(dimensions, function (_, prop) { return dimensions = dimensions[prop] > maxDimensions[prop]
+        ? this$1.ratio(dimensions, prop, maxDimensions[prop])
+        : dimensions; }
+      );
+
+      return dimensions;
+    },
+
+    cover: function(dimensions, maxDimensions) {
+      var this$1 = this;
+
+      dimensions = this.contain(dimensions, maxDimensions);
+
+      each(dimensions, function (_, prop) { return dimensions = dimensions[prop] < maxDimensions[prop]
+        ? this$1.ratio(dimensions, prop, maxDimensions[prop])
+        : dimensions; }
+      );
+
+      return dimensions;
+    }
+
+  };
+
+  function attr(element, name, value) {
+
+    if (isObject(name)) {
+      for (var key in name) {
+        attr(element, key, name[key]);
+      }
+      return;
+    }
+
+    if (isUndefined(value)) {
+      element = toNode(element);
+      return element && element.getAttribute(name);
+    } else {
+      toNodes(element).forEach(function (element) {
+
+        if (isFunction(value)) {
+          value = value.call(element, attr(element, name));
+        }
+
+        if (value === null) {
+          removeAttr(element, name);
+        } else {
+          element.setAttribute(name, value);
+        }
+      });
+    }
+
+  }
+
+  function hasAttr(element, name) {
+    return toNodes(element).some(function (element) { return element.hasAttribute(name); });
+  }
+
+  function removeAttr(element, name) {
+    element = toNodes(element);
+    name.split(' ').forEach(function (name) { return element.forEach(function (element) { return element.removeAttribute(name); }
+      ); }
+    );
+  }
+
+  function data(element, attribute) {
+    for (var i = 0, attrs = [attribute, ("data-" + attribute)]; i < attrs.length; i++) {
+      if (hasAttr(element, attrs[i])) {
+        return attr(element, attrs[i]);
+      }
+    }
+  }
+
+  function query(selector, context) {
+    return toNode(selector) || find(selector, getContext(selector, context));
+  }
+
+  function queryAll(selector, context) {
+    var nodes = toNodes(selector);
+    return nodes.length && nodes || findAll(selector, getContext(selector, context));
+  }
+
+  function getContext(selector, context) {
+    if ( context === void 0 ) context = document;
+
+    return isContextSelector(selector) || isDocument(context)
+      ? context
+      : context.ownerDocument;
+  }
+
+  function find(selector, context) {
+    return toNode(_query(selector, context, 'querySelector'));
+  }
+
+  function findAll(selector, context) {
+    return toNodes(_query(selector, context, 'querySelectorAll'));
+  }
+
+  function _query(selector, context, queryFn) {
+    if ( context === void 0 ) context = document;
+
+
+    if (!selector || !isString(selector)) {
+      return null;
+    }
+
+    selector = selector.replace(contextSanitizeRe, '$1 *');
+
+    var removes;
+
+    if (isContextSelector(selector)) {
+
+      removes = [];
+
+      selector = selector.split(',').map(function (selector, i) {
+
+        var ctx = context;
+
+        selector = selector.trim();
+
+        if (selector[0] === '!') {
+
+          var selectors = selector.substr(1).trim().split(' ');
+          ctx = closest(context.parentNode, selectors[0]);
+          selector = selectors.slice(1).join(' ').trim();
+
+        }
+
+        if (selector[0] === '-') {
+
+          var selectors$1 = selector.substr(1).trim().split(' ');
+          var prev = (ctx || context).previousElementSibling;
+          ctx = matches(prev, selector.substr(1)) ? prev : null;
+          selector = selectors$1.slice(1).join(' ');
+
+        }
+
+        if (!ctx) {
+          return null;
+        }
+
+        if (!ctx.id) {
+          ctx.id = "uk-" + (Date.now()) + i;
+          removes.push(function () { return removeAttr(ctx, 'id'); });
+        }
+
+        return ("#" + (escape(ctx.id)) + " " + selector);
+
+      }).filter(Boolean).join(',');
+
+      context = document;
+
+    }
+
     try {
-      return t[e](i)
-    } catch {
-      return null
+
+      return context[queryFn](selector);
+
+    } catch (e) {
+
+      return null;
+
+    } finally {
+
+      removes && removes.forEach(function (remove) { return remove(); });
+
     }
+
   }
 
-  function gr(t) {
-    const e = [];
-    for (; t.parentNode;) {
-      const i = p(t, "id");
-      if (i) {
-        e.unshift(`#${Xi(i)}`);
-        break
-      } else {
-        let {
-          tagName: s
-        } = t;
-        s !== "HTML" && (s += `:nth-child(${yt(t)+1})`), e.unshift(s), t = t.parentNode
+  var contextSelectorRe = /(^|,)\s*[!>+~-]/;
+  var contextSanitizeRe = /([!>+~-])(?=\s+[!>+~-]|\s*$)/g;
+
+  function isContextSelector(selector) {
+    return isString(selector) && selector.match(contextSelectorRe);
+  }
+
+  var elProto = Element.prototype;
+  var matchesFn = elProto.matches || elProto.webkitMatchesSelector || elProto.msMatchesSelector;
+
+  function matches(element, selector) {
+    return toNodes(element).some(function (element) { return matchesFn.call(element, selector); });
+  }
+
+  var closestFn = elProto.closest || function (selector) {
+    var ancestor = this;
+
+    do {
+
+      if (matches(ancestor, selector)) {
+        return ancestor;
       }
+
+      ancestor = ancestor.parentNode;
+
+    } while (ancestor && ancestor.nodeType === 1);
+  };
+
+  function closest(element, selector) {
+
+    if (startsWith(selector, '>')) {
+      selector = selector.slice(1);
     }
-    return e.join(" > ")
+
+    return isNode(element)
+      ? element.parentNode && closestFn.call(element, selector)
+      : toNodes(element).map(function (element) { return element.parentNode && closestFn.call(element, selector); }).filter(Boolean);
   }
 
-  function Xi(t) {
-    return H(t) ? CSS.escape(t) : ""
-  }
+  function parents(element, selector) {
+    var elements = [];
+    var parent = toNode(element).parentNode;
 
-  function y(...t) {
-    let [e, i, s, n, o = !1] = Ji(t);
-    n.length > 1 && (n = vr(n)), o != null && o.self && (n = br(n)), s && (n = mr(s, n));
-    for (const r of i)
-      for (const a of e) a.addEventListener(r, n, o);
-    return () => Ut(e, i, n, o)
-  }
+    while (parent && parent.nodeType === 1) {
 
-  function Ut(...t) {
-    let [e, i, , s, n = !1] = Ji(t);
-    for (const o of i)
-      for (const r of e) r.removeEventListener(o, s, n)
-  }
+      if (matches(parent, selector)) {
+        elements.push(parent);
+      }
 
-  function z(...t) {
-    const [e, i, s, n, o = !1, r] = Ji(t), a = y(e, i, s, l => {
-      const c = !r || r(l);
-      c && (a(), n(l, c))
-    }, o);
-    return a
-  }
-
-  function v(t, e, i) {
-    return Ki(t).every(s => s.dispatchEvent(pe(e, !0, !0, i)))
-  }
-
-  function pe(t, e = !0, i = !1, s) {
-    return H(t) && (t = new CustomEvent(t, {
-      bubbles: e,
-      cancelable: i,
-      detail: s
-    })), t
-  }
-
-  function Ji(t) {
-    return t[0] = Ki(t[0]), H(t[1]) && (t[1] = t[1].split(" ")), ot(t[2]) && t.splice(2, 0, !1), t
-  }
-
-  function mr(t, e) {
-    return i => {
-      const s = t[0] === ">" ? Ne(t, i.currentTarget).reverse().find(n => n.contains(i.target)) : i.target.closest(t);
-      s && (i.current = s, e.call(this, i), delete i.current)
+      parent = parent.parentNode;
     }
+
+    return elements;
   }
 
-  function vr(t) {
-    return e => J(e.detail) ? t(e, ...e.detail) : t(e)
+  var escapeFn = window.CSS && CSS.escape || function (css) { return css.replace(/([^\x7f-\uFFFF\w-])/g, function (match) { return ("\\" + match); }); };
+  function escape(css) {
+    return isString(css) ? escapeFn.call(null, css) : '';
   }
 
-  function br(t) {
+  var voidElements = {
+    area: true,
+    base: true,
+    br: true,
+    col: true,
+    embed: true,
+    hr: true,
+    img: true,
+    input: true,
+    keygen: true,
+    link: true,
+    menuitem: true,
+    meta: true,
+    param: true,
+    source: true,
+    track: true,
+    wbr: true
+  };
+  function isVoidElement(element) {
+    return toNodes(element).some(function (element) { return voidElements[element.tagName.toLowerCase()]; });
+  }
+
+  function isVisible(element) {
+    return toNodes(element).some(function (element) { return element.offsetWidth || element.offsetHeight || element.getClientRects().length; });
+  }
+
+  var selInput = 'input,select,textarea,button';
+  function isInput(element) {
+    return toNodes(element).some(function (element) { return matches(element, selInput); });
+  }
+
+  function filter(element, selector) {
+    return toNodes(element).filter(function (element) { return matches(element, selector); });
+  }
+
+  function within(element, selector) {
+    return !isString(selector)
+      ? element === selector || (isDocument(selector)
+      ? selector.documentElement
+      : toNode(selector)).contains(toNode(element)) // IE 11 document does not implement contains
+      : matches(element, selector) || closest(element, selector);
+  }
+
+  /* global DocumentTouch */
+
+  var isIE = /msie|trident/i.test(window.navigator.userAgent);
+  var isRtl = attr(document.documentElement, 'dir') === 'rtl';
+
+  var hasTouchEvents = 'ontouchstart' in window;
+  var hasPointerEvents = window.PointerEvent;
+  var hasTouch = hasTouchEvents
+    || window.DocumentTouch && document instanceof DocumentTouch
+    || navigator.maxTouchPoints; // IE >=11
+
+  var pointerDown = hasPointerEvents ? 'pointerdown' : hasTouchEvents ? 'touchstart' : 'mousedown';
+  var pointerMove = hasPointerEvents ? 'pointermove' : hasTouchEvents ? 'touchmove' : 'mousemove';
+  var pointerUp = hasPointerEvents ? 'pointerup' : hasTouchEvents ? 'touchend' : 'mouseup';
+  var pointerEnter = hasPointerEvents ? 'pointerenter' : hasTouchEvents ? '' : 'mouseenter';
+  var pointerLeave = hasPointerEvents ? 'pointerleave' : hasTouchEvents ? '' : 'mouseleave';
+  var pointerCancel = hasPointerEvents ? 'pointercancel' : 'touchcancel';
+
+  function on() {
+    var args = [], len = arguments.length;
+    while ( len-- ) args[ len ] = arguments[ len ];
+
+
+    var ref = getArgs(args);
+    var targets = ref[0];
+    var type = ref[1];
+    var selector = ref[2];
+    var listener = ref[3];
+    var useCapture = ref[4];
+
+    targets = toEventTargets(targets);
+
+    if (selector) {
+      listener = delegate(targets, selector, listener);
+    }
+
+    if (listener.length > 1) {
+      listener = detail(listener);
+    }
+
+    type.split(' ').forEach(function (type) { return targets.forEach(function (target) { return target.addEventListener(type, listener, useCapture); }
+      ); }
+    );
+    return function () { return off(targets, type, listener, useCapture); };
+  }
+
+  function off(targets, type, listener, useCapture) {
+    if ( useCapture === void 0 ) useCapture = false;
+
+    targets = toEventTargets(targets);
+    type.split(' ').forEach(function (type) { return targets.forEach(function (target) { return target.removeEventListener(type, listener, useCapture); }
+      ); }
+    );
+  }
+
+  function once() {
+    var args = [], len = arguments.length;
+    while ( len-- ) args[ len ] = arguments[ len ];
+
+
+    var ref = getArgs(args);
+    var element = ref[0];
+    var type = ref[1];
+    var selector = ref[2];
+    var listener = ref[3];
+    var useCapture = ref[4];
+    var condition = ref[5];
+    var off = on(element, type, selector, function (e) {
+      var result = !condition || condition(e);
+      if (result) {
+        off();
+        listener(e, result);
+      }
+    }, useCapture);
+
+    return off;
+  }
+
+  function trigger(targets, event, detail) {
+    return toEventTargets(targets).reduce(function (notCanceled, target) { return notCanceled && target.dispatchEvent(createEvent(event, true, true, detail)); }
+      , true);
+  }
+
+  function createEvent(e, bubbles, cancelable, detail) {
+    if ( bubbles === void 0 ) bubbles = true;
+    if ( cancelable === void 0 ) cancelable = false;
+
+    if (isString(e)) {
+      var event = document.createEvent('CustomEvent'); // IE 11
+      event.initCustomEvent(e, bubbles, cancelable, detail);
+      e = event;
+    }
+
+    return e;
+  }
+
+  function getArgs(args) {
+    if (isFunction(args[2])) {
+      args.splice(2, 0, false);
+    }
+    return args;
+  }
+
+  function delegate(delegates, selector, listener) {
+    var this$1 = this;
+
     return function (e) {
-      if (e.target === e.currentTarget || e.target === e.current) return t.call(null, e)
-    }
-  }
 
-  function Qs(t) {
-    return t && "addEventListener" in t
-  }
+      delegates.forEach(function (delegate) {
 
-  function wr(t) {
-    return Qs(t) ? t : R(t)
-  }
+        var current = selector[0] === '>'
+          ? findAll(selector, delegate).reverse().filter(function (element) { return within(e.target, element); })[0]
+          : closest(e.target, selector);
 
-  function Ki(t) {
-    return J(t) ? t.map(wr).filter(Boolean) : H(t) ? Ne(t) : Qs(t) ? [t] : E(t)
-  }
+        if (current) {
+          e.delegate = delegate;
+          e.current = current;
 
-  function pt(t) {
-    return t.pointerType === "touch" || !!t.touches
-  }
+          listener.call(this$1, e);
+        }
 
-  function kt(t) {
-    var e, i;
-    const {
-      clientX: s,
-      clientY: n
-    } = ((e = t.touches) == null ? void 0 : e[0]) || ((i = t.changedTouches) == null ? void 0 : i[0]) || t;
-    return {
-      x: s,
-      y: n
-    }
-  }
-  const xr = {
-    "animation-iteration-count": !0,
-    "column-count": !0,
-    "fill-opacity": !0,
-    "flex-grow": !0,
-    "flex-shrink": !0,
-    "font-weight": !0,
-    "line-height": !0,
-    opacity: !0,
-    order: !0,
-    orphans: !0,
-    "stroke-dasharray": !0,
-    "stroke-dashoffset": !0,
-    widows: !0,
-    "z-index": !0,
-    zoom: !0
-  };
+      });
 
-  function h(t, e, i, s) {
-    const n = E(t);
-    for (const o of n)
-      if (H(e)) {
-        if (e = ui(e), X(i)) return getComputedStyle(o).getPropertyValue(e);
-        o.style.setProperty(e, vt(i) && !xr[e] ? `${i}px` : i || _e(i) ? i : "", s)
-      } else if (J(e)) {
-        const r = {};
-        for (const a of e) r[a] = h(o, a);
-        return r
-      } else if (Ct(e))
-        for (const r in e) h(o, r, e[r], i);
-    return n[0]
-  }
-
-  function St(t, e) {
-    for (const i in e) h(t, i, "")
-  }
-  const ui = ct(t => {
-      if (mt(t, "--")) return t;
-      t = zt(t);
-      const {
-        style: e
-      } = document.documentElement;
-      if (t in e) return t;
-      for (const i of ["webkit", "moz"]) {
-        const s = `-${i}-${t}`;
-        if (s in e) return s
-      }
-    }),
-    Zi = "uk-transition",
-    Qi = "transitionend",
-    ts = "transitioncanceled";
-
-  function $r(t, e, i = 400, s = "linear") {
-    return i = Math.round(i), Promise.all(E(t).map(n => new Promise((o, r) => {
-      for (const c in e) h(n, c);
-      const a = setTimeout(() => v(n, Qi), i);
-      z(n, [Qi, ts], ({
-                        type: c
-                      }) => {
-        clearTimeout(a), _(n, Zi), St(n, l), c === ts ? r() : o(n)
-      }, {
-        self: !0
-      }), I(n, Zi);
-      const l = {
-        transitionProperty: Object.keys(e).map(ui).join(","),
-        transitionDuration: `${i}ms`,
-        transitionTimingFunction: s
-      };
-      h(n, {
-        ...l,
-        ...e
-      })
-    })))
-  }
-  const M = {
-      start: $r,
-      async stop(t) {
-        v(t, Qi), await Promise.resolve()
-      },
-      async cancel(t) {
-        v(t, ts), await Promise.resolve()
-      },
-      inProgress(t) {
-        return $(t, Zi)
-      }
-    },
-    ze = "uk-animation",
-    tn = "animationend",
-    di = "animationcanceled";
-
-  function en(t, e, i = 200, s, n) {
-    return Promise.all(E(t).map(o => new Promise((r, a) => {
-      $(o, ze) && v(o, di);
-      const l = [e, ze, `${ze}-${n?"leave":"enter"}`, s && `uk-transform-origin-${s}`, n && `${ze}-reverse`],
-        c = setTimeout(() => v(o, tn), i);
-      z(o, [tn, di], ({
-                        type: u
-                      }) => {
-        clearTimeout(c), u === di ? a() : r(o), h(o, "animationDuration", ""), _(o, l)
-      }, {
-        self: !0
-      }), h(o, "animationDuration", `${i}ms`), I(o, l)
-    })))
-  }
-  const At = {
-    in: en,
-    out(t, e, i, s) {
-      return en(t, e, i, s, !0)
-    },
-    inProgress(t) {
-      return $(t, ze)
-    },
-    cancel(t) {
-      v(t, di)
-    }
-  };
-
-  function yr(t) {
-    if (document.readyState !== "loading") {
-      t();
-      return
-    }
-    z(document, "DOMContentLoaded", t)
-  }
-
-  function F(t, ...e) {
-    return e.some(i => {
-      var s;
-      return ((s = t == null ? void 0 : t.tagName) == null ? void 0 : s.toLowerCase()) === i.toLowerCase()
-    })
-  }
-
-  function sn(t) {
-    return t = x(t), t && (t.innerHTML = ""), t
-  }
-
-  function bt(t, e) {
-    return X(e) ? x(t).innerHTML : W(sn(t), e)
-  }
-  const kr = gi("prepend"),
-    W = gi("append"),
-    fi = gi("before"),
-    pi = gi("after");
-
-  function gi(t) {
-    return function (e, i) {
-      var s;
-      const n = E(H(i) ? It(i) : i);
-      return (s = x(e)) == null || s[t](...n), nn(n)
-    }
-  }
-
-  function Q(t) {
-    E(t).forEach(e => e.remove())
-  }
-
-  function Fe(t, e) {
-    for (e = R(fi(t, e)); e.firstElementChild;) e = e.firstElementChild;
-    return W(e, t), e
-  }
-
-  function es(t, e) {
-    return E(E(t).map(i => i.hasChildNodes() ? Fe(ne(i.childNodes), e) : W(i, e)))
-  }
-
-  function He(t) {
-    E(t).map(O).filter((e, i, s) => s.indexOf(e) === i).forEach(e => e.replaceWith(...e.childNodes))
-  }
-  const Sr = /^<(\w+)\s*\/?>(?:<\/\1>)?$/;
-
-  function It(t) {
-    const e = Sr.exec(t);
-    if (e) return document.createElement(e[1]);
-    const i = document.createElement("template");
-    return i.innerHTML = t.trim(), nn(i.content.childNodes)
-  }
-
-  function nn(t) {
-    return t.length > 1 ? t : t[0]
-  }
-
-  function Ot(t, e) {
-    if (oe(t))
-      for (e(t), t = t.firstElementChild; t;) Ot(t, e), t = t.nextElementSibling
-  }
-
-  function x(t, e) {
-    return on(t) ? R(It(t)) : Yi(t, e)
-  }
-
-  function D(t, e) {
-    return on(t) ? E(It(t)) : Ne(t, e)
-  }
-
-  function on(t) {
-    return H(t) && mt(t.trim(), "<")
-  }
-  const Vt = {
-    width: ["left", "right"],
-    height: ["top", "bottom"]
-  };
-
-  function m(t) {
-    const e = oe(t) ? R(t).getBoundingClientRect() : {
-      height: tt(t),
-      width: mi(t),
-      top: 0,
-      left: 0
     };
-    return {
-      height: e.height,
-      width: e.width,
-      top: e.top,
-      left: e.left,
-      bottom: e.top + e.height,
-      right: e.left + e.width
-    }
   }
 
-  function T(t, e) {
-    e && h(t, {
-      left: 0,
-      top: 0
+  function detail(listener) {
+    return function (e) { return isArray(e.detail) ? listener.apply(void 0, [e].concat(e.detail)) : listener(e); };
+  }
+
+  function isEventTarget(target) {
+    return target && 'addEventListener' in target;
+  }
+
+  function toEventTarget(target) {
+    return isEventTarget(target) ? target : toNode(target);
+  }
+
+  function toEventTargets(target) {
+    return isArray(target)
+      ? target.map(toEventTarget).filter(Boolean)
+      : isString(target)
+        ? findAll(target)
+        : isEventTarget(target)
+          ? [target]
+          : toNodes(target);
+  }
+
+  function preventClick() {
+
+    var timer = setTimeout(once(document, 'click', function (e) {
+
+      e.preventDefault();
+      e.stopImmediatePropagation();
+
+      clearTimeout(timer);
+
+    }, true));
+
+    trigger(document, pointerCancel);
+
+  }
+
+  /* global setImmediate */
+
+  var Promise = 'Promise' in window ? window.Promise : PromiseFn;
+
+  var Deferred = function() {
+    var this$1 = this;
+
+    this.promise = new Promise(function (resolve, reject) {
+      this$1.reject = reject;
+      this$1.resolve = resolve;
     });
-    const i = m(t);
-    if (t) {
-      const {
-        scrollY: s,
-        scrollX: n
-      } = Ht(t), o = {
-        height: s,
-        width: n
-      };
-      for (const r in Vt)
-        for (const a of Vt[r]) i[a] += o[r]
-    }
-    if (!e) return i;
-    for (const s of ["left", "top"]) h(t, s, e[s] - i[s])
-  }
-
-  function is(t) {
-    let {
-      top: e,
-      left: i
-    } = T(t);
-    const {
-      ownerDocument: {
-        body: s,
-        documentElement: n
-      },
-      offsetParent: o
-    } = R(t);
-    let r = o || n;
-    for (; r && (r === s || r === n) && h(r, "position") === "static";) r = r.parentNode;
-    if (oe(r)) {
-      const a = T(r);
-      e -= a.top + S(h(r, "borderTopWidth")), i -= a.left + S(h(r, "borderLeftWidth"))
-    }
-    return {
-      top: e - S(h(t, "marginTop")),
-      left: i - S(h(t, "marginLeft"))
-    }
-  }
-
-  function Le(t) {
-    t = R(t);
-    const e = [t.offsetTop, t.offsetLeft];
-    for (; t = t.offsetParent;)
-      if (e[0] += t.offsetTop + S(h(t, "borderTopWidth")), e[1] += t.offsetLeft + S(h(t, "borderLeftWidth")), h(t, "position") === "fixed") {
-        const i = Ht(t);
-        return e[0] += i.scrollY, e[1] += i.scrollX, e
-      } return e
-  }
-  const tt = rn("height"),
-    mi = rn("width");
-
-  function rn(t) {
-    const e = Ft(t);
-    return (i, s) => {
-      if (X(s)) {
-        if (ei(i)) return i[`inner${e}`];
-        if (Ce(i)) {
-          const n = i.documentElement;
-          return Math.max(n[`offset${e}`], n[`scroll${e}`])
-        }
-        return i = R(i), s = h(i, t), s = s === "auto" ? i[`offset${e}`] : S(s) || 0, s - ge(i, t)
-      } else return h(i, t, !s && s !== 0 ? "" : +s + ge(i, t) + "px")
-    }
-  }
-
-  function ge(t, e, i = "border-box") {
-    return h(t, "boxSizing") === i ? Wt(Vt[e], s => S(h(t, `padding-${s}`)) + S(h(t, `border-${s}-width`))) : 0
-  }
-
-  function vi(t) {
-    for (const e in Vt)
-      for (const i in Vt[e])
-        if (Vt[e][i] === t) return Vt[e][1 - i];
-    return t
-  }
-
-  function G(t, e = "width", i = window, s = !1) {
-    return H(t) ? Wt(Er(t), n => {
-      const o = Cr(n);
-      return o ? Pr(o === "vh" ? _r() : o === "vw" ? mi(Ht(i)) : s ? i[`offset${Ft(e)}`] : m(i)[e], n) : n
-    }) : S(t)
-  }
-  const Ir = /-?\d+(?:\.\d+)?(?:v[wh]|%|px)?/g,
-    Er = ct(t => t.toString().replace(/\s/g, "").match(Ir) || []),
-    Tr = /(?:v[hw]|%)$/,
-    Cr = ct(t => (t.match(Tr) || [])[0]);
-
-  function Pr(t, e) {
-    return t * S(e) / 100
-  }
-  let We, me;
-
-  function _r() {
-    return We || (me || (me = x("<div>"), h(me, {
-      height: "100vh",
-      position: "fixed"
-    }), y(window, "resize", () => We = null)), W(document.body, me), We = me.clientHeight, Q(me), We)
-  }
-  const Mt = {
-      read: Ar,
-      write: Or,
-      clear: Mr,
-      flush: an
-    },
-    bi = [],
-    wi = [];
-
-  function Ar(t) {
-    return bi.push(t), ns(), t
-  }
-
-  function Or(t) {
-    return wi.push(t), ns(), t
-  }
-
-  function Mr(t) {
-    hn(bi, t), hn(wi, t)
-  }
-  let ss = !1;
-
-  function an() {
-    ln(bi), ln(wi.splice(0)), ss = !1, (bi.length || wi.length) && ns()
-  }
-
-  function ns() {
-    ss || (ss = !0, queueMicrotask(an))
-  }
-
-  function ln(t) {
-    let e;
-    for (; e = t.shift();) try {
-      e()
-    } catch (i) {
-      console.error(i)
-    }
-  }
-
-  function hn(t, e) {
-    const i = t.indexOf(e);
-    return ~i && t.splice(i, 1)
-  }
-  class cn {
-    init() {
-      this.positions = [];
-      let e;
-      this.unbind = y(document, "mousemove", i => e = kt(i)), this.interval = setInterval(() => {
-        e && (this.positions.push(e), this.positions.length > 5 && this.positions.shift())
-      }, 50)
-    }
-    cancel() {
-      var e;
-      (e = this.unbind) == null || e.call(this), clearInterval(this.interval)
-    }
-    movesTo(e) {
-      if (!this.positions || this.positions.length < 2) return !1;
-      const i = m(e),
-        {
-          left: s,
-          right: n,
-          top: o,
-          bottom: r
-        } = i,
-        [a] = this.positions,
-        l = Lt(this.positions),
-        c = [a, l];
-      return oi(l, i) ? !1 : [
-        [{
-          x: s,
-          y: o
-        }, {
-          x: n,
-          y: r
-        }],
-        [{
-          x: s,
-          y: r
-        }, {
-          x: n,
-          y: o
-        }]
-      ].some(d => {
-        const f = Dr(c, d);
-        return f && oi(f, i)
-      })
-    }
-  }
-
-  function Dr([{
-    x: t,
-    y: e
-  }, {
-    x: i,
-    y: s
-  }], [{
-    x: n,
-    y: o
-  }, {
-    x: r,
-    y: a
-  }]) {
-    const l = (a - o) * (i - t) - (r - n) * (s - e);
-    if (l === 0) return !1;
-    const c = ((r - n) * (e - o) - (a - o) * (t - n)) / l;
-    return c < 0 ? !1 : {
-      x: t + c * (i - t),
-      y: e + c * (s - e)
-    }
-  }
-
-  function un(t, e, i = {}, {
-    intersecting: s = !0
-  } = {}) {
-    const n = new IntersectionObserver(s ? (o, r) => {
-      o.some(a => a.isIntersecting) && e(o, r)
-    } : e, i);
-    for (const o of E(t)) n.observe(o);
-    return n
-  }
-  const Br = Rt && window.ResizeObserver;
-
-  function je(t, e, i = {
-    box: "border-box"
-  }) {
-    if (Br) return dn(ResizeObserver, t, e, i);
-    const s = [y(window, "load resize", e), y(document, "loadedmetadata load", e, !0)];
-    return {
-      disconnect: () => s.map(n => n())
-    }
-  }
-
-  function os(t) {
-    return {
-      disconnect: y([window, window.visualViewport], "resize", t)
-    }
-  }
-
-  function rs(t, e, i) {
-    return dn(MutationObserver, t, e, i)
-  }
-
-  function dn(t, e, i, s) {
-    const n = new t(i);
-    for (const o of E(e)) n.observe(o, s);
-    return n
-  }
-
-  function as(t) {
-    hs(t) && cs(t, {
-      func: "playVideo",
-      method: "play"
-    }), ls(t) && t.play().catch(A)
-  }
-
-  function xi(t) {
-    hs(t) && cs(t, {
-      func: "pauseVideo",
-      method: "pause"
-    }), ls(t) && t.pause()
-  }
-
-  function fn(t) {
-    hs(t) && cs(t, {
-      func: "mute",
-      method: "setVolume",
-      value: 0
-    }), ls(t) && (t.muted = !0)
-  }
-
-  function ls(t) {
-    return F(t, "video")
-  }
-
-  function hs(t) {
-    return F(t, "iframe") && (pn(t) || gn(t))
-  }
-
-  function pn(t) {
-    return !!t.src.match(/\/\/.*?youtube(-nocookie)?\.[a-z]+\/(watch\?v=[^&\s]+|embed)|youtu\.be\/.*/)
-  }
-
-  function gn(t) {
-    return !!t.src.match(/vimeo\.com\/video\/.*/)
-  }
-  async function cs(t, e) {
-    await zr(t), mn(t, e)
-  }
-
-  function mn(t, e) {
-    t.contentWindow.postMessage(JSON.stringify({
-      event: "command",
-      ...e
-    }), "*")
-  }
-  const us = "_ukPlayer";
-  let Nr = 0;
-
-  function zr(t) {
-    if (t[us]) return t[us];
-    const e = pn(t),
-      i = gn(t),
-      s = ++Nr;
-    let n;
-    return t[us] = new Promise(o => {
-      e && z(t, "load", () => {
-        const r = () => mn(t, {
-          event: "listening",
-          id: s
-        });
-        n = setInterval(r, 100), r()
-      }), z(window, "message", o, !1, ({
-                                         data: r
-                                       }) => {
-        try {
-          return r = JSON.parse(r), e && (r == null ? void 0 : r.id) === s && r.event === "onReady" || i && Number(r == null ? void 0 : r.player_id) === s
-        } catch {}
-      }), t.src = `${t.src}${b(t.src,"?")?"&":"?"}${e?"enablejsapi=1":`api=1&player_id=${s}`}`
-    }).then(() => clearInterval(n))
-  }
-
-  function Fr(t, e = 0, i = 0) {
-    return q(t) ? ni(...Gt(t).map(s => {
-      const {
-        top: n,
-        left: o,
-        bottom: r,
-        right: a
-      } = at(s);
-      return {
-        top: n - e,
-        left: o - i,
-        bottom: r + e,
-        right: a + i
-      }
-    }).concat(T(t))) : !1
-  }
-
-  function vn(t, {
-    offset: e = 0
-  } = {}) {
-    const i = q(t) ? Yt(t, !1, ["hidden"]) : [];
-    return i.reduce((r, a, l) => {
-      const {
-        scrollTop: c,
-        scrollHeight: u,
-        offsetHeight: d
-      } = a, f = at(a), g = u - f.height, {
-        height: w,
-        top: k
-      } = i[l - 1] ? at(i[l - 1]) : T(t);
-      let P = Math.ceil(k - f.top - e + c);
-      return e > 0 && d < w + e ? P += e : e = 0, P > g ? (e -= P - g, P = g) : P < 0 && (e -= P, P = 0), () => s(a, P - c, t, g).then(r)
-    }, () => Promise.resolve())();
-
-    function s(r, a, l, c) {
-      return new Promise(u => {
-        const d = r.scrollTop,
-          f = n(Math.abs(a)),
-          g = Date.now(),
-          w = ps(r) === r,
-          k = T(l).top + (w ? 0 : d);
-        let P = 0,
-          it = 15;
-        (function Tt() {
-          const Nt = o(K((Date.now() - g) / f));
-          let wt = 0;
-          i[0] === r && d + a < c && (wt = T(l).top + (w ? 0 : r.scrollTop) - k - m(ds(l)).height), h(r, "scrollBehavior") !== "auto" && h(r, "scrollBehavior", "auto"), r.scrollTop = d + (a + wt) * Nt, h(r, "scrollBehavior", ""), Nt === 1 && (P === wt || !it--) ? u() : (P = wt, requestAnimationFrame(Tt))
-        })()
-      })
-    }
-
-    function n(r) {
-      return 40 * Math.pow(r, .375)
-    }
-
-    function o(r) {
-      return .5 * (1 - Math.cos(Math.PI * r))
-    }
-  }
-
-  function $i(t, e = 0, i = 0) {
-    if (!q(t)) return 0;
-    const s = Dt(t, !0),
-      {
-        scrollHeight: n,
-        scrollTop: o
-      } = s,
-      {
-        height: r
-      } = at(s),
-      a = n - r,
-      l = Le(t)[0] - Le(s)[0],
-      c = Math.max(0, l - r + e),
-      u = Math.min(a, l + t.offsetHeight - i);
-    return c < u ? K((o - c) / (u - c)) : 1
-  }
-
-  function Yt(t, e = !1, i = []) {
-    const s = ps(t);
-    let n = de(t).reverse();
-    n = n.slice(n.indexOf(s) + 1);
-    const o = xt(n, r => h(r, "position") === "fixed");
-    return ~o && (n = n.slice(o)), [s].concat(n.filter(r => h(r, "overflow").split(" ").some(a => b(["auto", "scroll", ...i], a)) && (!e || r.scrollHeight > at(r).height))).reverse()
-  }
-
-  function Dt(...t) {
-    return Yt(...t)[0]
-  }
-
-  function Gt(t) {
-    return Yt(t, !1, ["hidden", "clip"])
-  }
-
-  function at(t) {
-    const e = Ht(t),
-      i = ps(t),
-      s = !Pe(t) || t.contains(i);
-    if (s && e.visualViewport) {
-      let {
-        height: l,
-        width: c,
-        scale: u,
-        pageTop: d,
-        pageLeft: f
-      } = e.visualViewport;
-      return l = Math.round(l * u), c = Math.round(c * u), {
-        height: l,
-        width: c,
-        top: d,
-        left: f,
-        bottom: d + l,
-        right: f + c
-      }
-    }
-    let n = T(s ? e : t);
-    if (h(t, "display") === "inline") return n;
-    const {
-      body: o,
-      documentElement: r
-    } = e.document, a = s ? i === r || i.clientHeight < o.clientHeight ? i : o : t;
-    for (let [l, c, u, d] of [
-      ["width", "x", "left", "right"],
-      ["height", "y", "top", "bottom"]
-    ]) {
-      const f = n[l] % 1;
-      n[u] += S(h(a, `border-${u}-width`)), n[l] = n[c] = a[`client${Ft(l)}`] - (f ? f < .5 ? -f : 1 - f : 0), n[d] = n[l] + n[u]
-    }
-    return n
-  }
-
-  function ds(t) {
-    const {
-      left: e,
-      width: i,
-      top: s
-    } = m(t);
-    for (const n of s ? [0, s] : [0]) {
-      let o;
-      for (const r of Ht(t).document.elementsFromPoint(e + i / 2, n)) !r.contains(t) && !$(r, "uk-togglable-leave") && (fs(r, "fixed") && bn(de(t).reverse().find(a => !a.contains(r) && !fs(a, "static"))) < bn(r) || fs(r, "sticky") && O(r).contains(t)) && (!o || m(o).height < m(r).height) && (o = r);
-      if (o) return o
-    }
-  }
-
-  function bn(t) {
-    return S(h(t, "zIndex"))
-  }
-
-  function fs(t, e) {
-    return h(t, "position") === e
-  }
-
-  function ps(t) {
-    return Ht(t).document.scrollingElement
-  }
-  const lt = [
-    ["width", "x", "left", "right"],
-    ["height", "y", "top", "bottom"]
-  ];
-
-  function wn(t, e, i) {
-    i = {
-      attach: {
-        element: ["left", "top"],
-        target: ["left", "top"],
-        ...i.attach
-      },
-      offset: [0, 0],
-      placement: [],
-      ...i
-    }, J(e) || (e = [e, e]), T(t, xn(t, e, i))
-  }
-
-  function xn(t, e, i) {
-    const s = $n(t, e, i),
-      {
-        boundary: n,
-        viewportOffset: o = 0,
-        placement: r
-      } = i;
-    let a = s;
-    for (const [l, [c, , u, d]] of Object.entries(lt)) {
-      const f = Hr(t, e[l], o, n, l);
-      if (yi(s, f, l)) continue;
-      let g = 0;
-      if (r[l] === "flip") {
-        const w = i.attach.target[l];
-        if (w === d && s[d] <= f[d] || w === u && s[u] >= f[u]) continue;
-        g = Wr(t, e, i, l)[u] - s[u];
-        const k = Lr(t, e[l], o, l);
-        if (!yi(gs(s, g, l), k, l)) {
-          if (yi(s, k, l)) continue;
-          if (i.recursion) return !1;
-          const P = jr(t, e, i);
-          if (P && yi(P, k, 1 - l)) return P;
-          continue
-        }
-      } else if (r[l] === "shift") {
-        const w = T(e[l]),
-          {
-            offset: k
-          } = i;
-        g = K(K(s[u], f[u], f[d] - s[c]), w[u] - s[c] + k[l], w[d] - k[l]) - s[u]
-      }
-      a = gs(a, g, l)
-    }
-    return a
-  }
-
-  function $n(t, e, i) {
-    let {
-      attach: s,
-      offset: n
-    } = {
-      attach: {
-        element: ["left", "top"],
-        target: ["left", "top"],
-        ...i.attach
-      },
-      offset: [0, 0],
-      ...i
-    }, o = T(t);
-    for (const [r, [a, , l, c]] of Object.entries(lt)) {
-      const u = s.target[r] === s.element[r] ? at(e[r]) : T(e[r]);
-      o = gs(o, u[l] - o[l] + yn(s.target[r], c, u[a]) - yn(s.element[r], c, o[a]) + +n[r], r)
-    }
-    return o
-  }
-
-  function gs(t, e, i) {
-    const [, s, n, o] = lt[i], r = {
-      ...t
-    };
-    return r[n] = t[s] = t[n] + e, r[o] += e, r
-  }
-
-  function yn(t, e, i) {
-    return t === "center" ? i / 2 : t === e ? i : 0
-  }
-
-  function Hr(t, e, i, s, n) {
-    let o = Sn(...kn(t, e).map(at));
-    return i && (o[lt[n][2]] += i, o[lt[n][3]] -= i), s && (o = Sn(o, T(J(s) ? s[n] : s))), o
-  }
-
-  function Lr(t, e, i, s) {
-    const [n, o, r, a] = lt[s], [l] = kn(t, e), c = at(l);
-    return ["auto", "scroll"].includes(h(l, `overflow-${o}`)) && (c[r] -= l[`scroll${Ft(r)}`], c[a] = c[r] + l[`scroll${Ft(n)}`]), c[r] += i, c[a] -= i, c
-  }
-
-  function kn(t, e) {
-    return Gt(e).filter(i => i.contains(t))
-  }
-
-  function Sn(...t) {
-    let e = {};
-    for (const i of t)
-      for (const [, , s, n] of lt) e[s] = Math.max(e[s] || 0, i[s]), e[n] = Math.min(...[e[n], i[n]].filter(Boolean));
-    return e
-  }
-
-  function yi(t, e, i) {
-    const [, , s, n] = lt[i];
-    return t[s] >= e[s] && t[n] <= e[n]
-  }
-
-  function Wr(t, e, {
-    offset: i,
-    attach: s
-  }, n) {
-    return $n(t, e, {
-      attach: {
-        element: In(s.element, n),
-        target: In(s.target, n)
-      },
-      offset: Rr(i, n)
-    })
-  }
-
-  function jr(t, e, i) {
-    return xn(t, e, {
-      ...i,
-      attach: {
-        element: i.attach.element.map(En).reverse(),
-        target: i.attach.target.map(En).reverse()
-      },
-      offset: i.offset.reverse(),
-      placement: i.placement.reverse(),
-      recursion: !0
-    })
-  }
-
-  function In(t, e) {
-    const i = [...t],
-      s = lt[e].indexOf(t[e]);
-    return ~s && (i[e] = lt[e][1 - s % 2 + 2]), i
-  }
-
-  function En(t) {
-    for (let e = 0; e < lt.length; e++) {
-      const i = lt[e].indexOf(t);
-      if (~i) return lt[1 - e][i % 2 + 2]
-    }
-  }
-
-  function Rr(t, e) {
-    return t = [...t], t[e] *= -1, t
-  }
-  var qr = Object.freeze({
-      __proto__: null,
-      $: x,
-      $$: D,
-      Animation: At,
-      Dimensions: qi,
-      MouseTracker: cn,
-      Transition: M,
-      addClass: I,
-      after: pi,
-      append: W,
-      apply: Ot,
-      assign: ft,
-      attr: p,
-      before: fi,
-      boxModelAdjust: ge,
-      camelize: Ee,
-      children: N,
-      clamp: K,
-      createEvent: pe,
-      css: h,
-      data: Z,
-      dimensions: m,
-      each: ae,
-      empty: sn,
-      endsWith: se,
-      escape: Xi,
-      fastdom: Mt,
-      filter: De,
-      find: Yi,
-      findAll: Ne,
-      findIndex: xt,
-      flipPosition: vi,
-      fragment: It,
-      getCoveringElement: ds,
-      getEventPos: kt,
-      getIndex: rt,
-      getTargetedElement: Vi,
-      hasAttr: Pt,
-      hasClass: $,
-      hasOwn: gt,
-      hasTouch: le,
-      height: tt,
-      html: bt,
-      hyphenate: zt,
-      inBrowser: Rt,
-      includes: b,
-      index: yt,
-      intersectRect: ni,
-      isArray: J,
-      isBoolean: re,
-      isDocument: Ce,
-      isElement: oe,
-      isEmpty: ii,
-      isEqual: Ae,
-      isFocusable: ci,
-      isFunction: ot,
-      isInView: Fr,
-      isInput: hi,
-      isNode: Pe,
-      isNumber: _e,
-      isNumeric: vt,
-      isObject: Ct,
-      isPlainObject: Te,
-      isRtl: U,
-      isSameSiteAnchor: fe,
-      isString: H,
-      isTag: F,
-      isTouch: pt,
-      isUndefined: X,
-      isVisible: q,
-      isVoidElement: Ui,
-      isWindow: ei,
-      last: Lt,
-      matches: C,
-      memoize: ct,
-      mute: fn,
-      noop: A,
-      observeIntersection: un,
-      observeMutation: rs,
-      observeResize: je,
-      observeViewportResize: os,
-      off: Ut,
-      offset: T,
-      offsetPosition: Le,
-      offsetViewport: at,
-      on: y,
-      once: z,
-      overflowParents: Gt,
-      parent: O,
-      parents: de,
-      pause: xi,
-      pick: si,
-      play: as,
-      pointInRect: oi,
-      pointerCancel: li,
-      pointerDown: ut,
-      pointerEnter: qt,
-      pointerLeave: ce,
-      pointerMove: ai,
-      pointerUp: _t,
-      position: is,
-      positionAt: wn,
-      prepend: kr,
-      propName: ui,
-      query: et,
-      queryAll: Be,
-      ready: yr,
-      remove: Q,
-      removeAttr: Oe,
-      removeClass: _,
-      replaceClass: ri,
-      resetProps: St,
-      scrollIntoView: vn,
-      scrollParent: Dt,
-      scrollParents: Yt,
-      scrolledOver: $i,
-      selFocusable: ue,
-      selInput: Me,
-      sortBy: Vs,
-      startsWith: mt,
-      sumBy: Wt,
-      swap: ji,
-      toArray: ne,
-      toBoolean: Wi,
-      toEventTargets: Ki,
-      toFloat: S,
-      toNode: R,
-      toNodes: E,
-      toNumber: $t,
-      toPx: G,
-      toWindow: Ht,
-      toggleClass: L,
-      trigger: v,
-      ucfirst: Ft,
-      uniqueBy: Ys,
-      unwrap: He,
-      width: mi,
-      wrapAll: Fe,
-      wrapInner: es
-    }),
-    st = {
-      connected() {
-        I(this.$el, this.$options.id)
-      }
-    };
-  const Ur = ["days", "hours", "minutes", "seconds"];
-  var Vr = {
-    mixins: [st],
-    props: {
-      date: String,
-      clsWrapper: String,
-      role: String,
-      reload: Boolean
-    },
-    data: {
-      date: "",
-      clsWrapper: ".uk-countdown-%unit%",
-      role: "timer",
-      reload: !1
-    },
-    connected() {
-      p(this.$el, "role", this.role), this.date = S(Date.parse(this.$props.date)), this.started = this.end = !1, this.start()
-    },
-    disconnected() {
-      this.stop()
-    },
-    events: {
-      name: "visibilitychange",
-      el: () => document,
-      handler() {
-        document.hidden ? this.stop() : this.start()
-      }
-    },
-    methods: {
-      start() {
-        this.stop(), this.update()
-      },
-      stop() {
-        this.timer && (clearInterval(this.timer), v(this.$el, "countdownstop"), this.timer = null)
-      },
-      update() {
-        const t = Yr(this.date);
-        t.total ? this.timer || (this.started = !0, this.timer = setInterval(this.update, 1e3), v(this.$el, "countdownstart")) : (this.stop(), this.end || (v(this.$el, "countdownend"), this.end = !0, this.reload && this.started && window.location.reload()));
-        for (const e of Ur) {
-          const i = x(this.clsWrapper.replace("%unit%", e), this.$el);
-          if (!i) continue;
-          let s = Math.trunc(t[e]).toString().padStart(2, "0");
-          i.textContent !== s && (s = s.split(""), s.length !== i.children.length && bt(i, s.map(() => "<span></span>").join("")), s.forEach((n, o) => i.children[o].textContent = n))
-        }
-      }
-    }
   };
 
-  function Yr(t) {
-    const e = Math.max(0, t - Date.now()) / 1e3;
-    return {
-      total: e,
-      seconds: e % 60,
-      minutes: e / 60 % 60,
-      hours: e / 60 / 60 % 24,
-      days: e / 60 / 60 / 24
-    }
-  }
-  const V = {};
-  V.events = V.watch = V.observe = V.created = V.beforeConnect = V.connected = V.beforeDisconnect = V.disconnected = V.destroy = ms, V.args = function (t, e) {
-    return e !== !1 && ms(e || t)
-  }, V.update = function (t, e) {
-    return Vs(ms(t, ot(e) ? {
-      read: e
-    } : e), "order")
-  }, V.props = function (t, e) {
-    if (J(e)) {
-      const i = {};
-      for (const s of e) i[s] = String;
-      e = i
-    }
-    return V.methods(t, e)
-  }, V.computed = V.methods = function (t, e) {
-    return e ? t ? {
-      ...t,
-      ...e
-    } : e : t
-  }, V.i18n = V.data = function (t, e, i) {
-    return i ? Tn(t, e, i) : e ? t ? function (s) {
-      return Tn(t, e, s)
-    } : e : t
-  };
+  /**
+   * Promises/A+ polyfill v1.1.4 (https://github.com/bramstein/promis)
+   */
 
-  function Tn(t, e, i) {
-    return V.computed(ot(t) ? t.call(i, i) : t, ot(e) ? e.call(i, i) : e)
-  }
+  var RESOLVED = 0;
+  var REJECTED = 1;
+  var PENDING = 2;
 
-  function ms(t, e) {
-    return t = t && !J(t) ? [t] : t, e ? t ? t.concat(e) : J(e) ? e : [e] : t
-  }
+  var async = 'setImmediate' in window ? setImmediate : setTimeout;
 
-  function Gr(t, e) {
-    return X(e) ? t : e
-  }
+  function PromiseFn(executor) {
 
-  function Re(t, e, i) {
-    const s = {};
-    if (ot(e) && (e = e.options), e.extends && (t = Re(t, e.extends, i)), e.mixins)
-      for (const o of e.mixins) t = Re(t, o, i);
-    for (const o in t) n(o);
-    for (const o in e) gt(t, o) || n(o);
+    this.state = PENDING;
+    this.value = undefined;
+    this.deferred = [];
 
-    function n(o) {
-      s[o] = (V[o] || Gr)(t[o], e[o], i)
-    }
-    return s
-  }
+    var promise = this;
 
-  function ve(t, e = []) {
     try {
-      return t ? mt(t, "{") ? JSON.parse(t) : e.length && !b(t, ":") ? {
-        [e[0]]: t
-      } : t.split(";").reduce((i, s) => {
-        const [n, o] = s.split(/:(.*)/);
-        return n && !X(o) && (i[n.trim()] = o.trim()), i
-      }, {}) : {}
-    } catch {
-      return {}
+      executor(
+        function (x) {
+          promise.resolve(x);
+        },
+        function (r) {
+          promise.reject(r);
+        }
+      );
+    } catch (e) {
+      promise.reject(e);
     }
   }
 
-  function vs(t, e) {
-    return t === Boolean ? Wi(e) : t === Number ? $t(e) : t === "list" ? Jr(e) : t === Object && H(e) ? ve(e) : t ? t(e) : e
-  }
-  const Xr = /,(?![^(]*\))/;
+  PromiseFn.reject = function (r) {
+    return new PromiseFn(function (resolve, reject) {
+      reject(r);
+    });
+  };
 
-  function Jr(t) {
-    return J(t) ? t : H(t) ? t.split(Xr).map(e => vt(e) ? $t(e) : Wi(e.trim())) : [t]
+  PromiseFn.resolve = function (x) {
+    return new PromiseFn(function (resolve, reject) {
+      resolve(x);
+    });
+  };
+
+  PromiseFn.all = function all(iterable) {
+    return new PromiseFn(function (resolve, reject) {
+      var result = [];
+      var count = 0;
+
+      if (iterable.length === 0) {
+        resolve(result);
+      }
+
+      function resolver(i) {
+        return function (x) {
+          result[i] = x;
+          count += 1;
+
+          if (count === iterable.length) {
+            resolve(result);
+          }
+        };
+      }
+
+      for (var i = 0; i < iterable.length; i += 1) {
+        PromiseFn.resolve(iterable[i]).then(resolver(i), reject);
+      }
+    });
+  };
+
+  PromiseFn.race = function race(iterable) {
+    return new PromiseFn(function (resolve, reject) {
+      for (var i = 0; i < iterable.length; i += 1) {
+        PromiseFn.resolve(iterable[i]).then(resolve, reject);
+      }
+    });
+  };
+
+  var p = PromiseFn.prototype;
+
+  p.resolve = function resolve(x) {
+    var promise = this;
+
+    if (promise.state === PENDING) {
+      if (x === promise) {
+        throw new TypeError('Promise settled with itself.');
+      }
+
+      var called = false;
+
+      try {
+        var then = x && x.then;
+
+        if (x !== null && isObject(x) && isFunction(then)) {
+          then.call(
+            x,
+            function (x) {
+              if (!called) {
+                promise.resolve(x);
+              }
+              called = true;
+            },
+            function (r) {
+              if (!called) {
+                promise.reject(r);
+              }
+              called = true;
+            }
+          );
+          return;
+        }
+      } catch (e) {
+        if (!called) {
+          promise.reject(e);
+        }
+        return;
+      }
+
+      promise.state = RESOLVED;
+      promise.value = x;
+      promise.notify();
+    }
+  };
+
+  p.reject = function reject(reason) {
+    var promise = this;
+
+    if (promise.state === PENDING) {
+      if (reason === promise) {
+        throw new TypeError('Promise settled with itself.');
+      }
+
+      promise.state = REJECTED;
+      promise.value = reason;
+      promise.notify();
+    }
+  };
+
+  p.notify = function notify() {
+    var this$1 = this;
+
+    async(function () {
+      if (this$1.state !== PENDING) {
+        while (this$1.deferred.length) {
+          var ref = this$1.deferred.shift();
+          var onResolved = ref[0];
+          var onRejected = ref[1];
+          var resolve = ref[2];
+          var reject = ref[3];
+
+          try {
+            if (this$1.state === RESOLVED) {
+              if (isFunction(onResolved)) {
+                resolve(onResolved.call(undefined, this$1.value));
+              } else {
+                resolve(this$1.value);
+              }
+            } else if (this$1.state === REJECTED) {
+              if (isFunction(onRejected)) {
+                resolve(onRejected.call(undefined, this$1.value));
+              } else {
+                reject(this$1.value);
+              }
+            }
+          } catch (e) {
+            reject(e);
+          }
+        }
+      }
+    });
+  };
+
+  p.then = function then(onResolved, onRejected) {
+    var this$1 = this;
+
+    return new PromiseFn(function (resolve, reject) {
+      this$1.deferred.push([onResolved, onRejected, resolve, reject]);
+      this$1.notify();
+    });
+  };
+
+  p.catch = function (onRejected) {
+    return this.then(undefined, onRejected);
+  };
+
+  function ajax(url, options) {
+    return new Promise(function (resolve, reject) {
+
+      var env = assign({
+        data: null,
+        method: 'GET',
+        headers: {},
+        xhr: new XMLHttpRequest(),
+        beforeSend: noop,
+        responseType: ''
+      }, options);
+
+      env.beforeSend(env);
+
+      var xhr = env.xhr;
+
+      for (var prop in env) {
+        if (prop in xhr) {
+          try {
+
+            xhr[prop] = env[prop];
+
+          } catch (e) {}
+        }
+      }
+
+      xhr.open(env.method.toUpperCase(), url);
+
+      for (var header in env.headers) {
+        xhr.setRequestHeader(header, env.headers[header]);
+      }
+
+      on(xhr, 'load', function () {
+
+        if (xhr.status === 0 || xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
+          resolve(xhr);
+        } else {
+          reject(assign(Error(xhr.statusText), {
+            xhr: xhr,
+            status: xhr.status
+          }));
+        }
+
+      });
+
+      on(xhr, 'error', function () { return reject(assign(Error('Network Error'), {xhr: xhr})); });
+      on(xhr, 'timeout', function () { return reject(assign(Error('Network Timeout'), {xhr: xhr})); });
+
+      xhr.send(env.data);
+    });
   }
 
-  function Kr(t) {
-    t._data = {}, t._updates = [...t.$options.update || []], t._disconnect.push(() => t._updates = t._data = null)
+  function getImage(src, srcset, sizes) {
+
+    return new Promise(function (resolve, reject) {
+      var img = new Image();
+
+      img.onerror = reject;
+      img.onload = function () { return resolve(img); };
+
+      sizes && (img.sizes = sizes);
+      srcset && (img.srcset = srcset);
+      img.src = src;
+    });
+
   }
 
-  function Zr(t, e) {
-    t._updates.unshift(e)
+  function isReady() {
+    return document.readyState === 'complete' || document.readyState !== 'loading' && !document.documentElement.doScroll;
   }
 
-  function qe(t, e = "update") {
-    t._connected && t._updates.length && (t._queued || (t._queued = new Set, Mt.read(() => {
-      t._connected && Qr(t, t._queued), t._queued = null
-    })), t._queued.add(e.type || e))
+  function ready(fn) {
+
+    if (isReady()) {
+      fn();
+      return;
+    }
+
+    var handle = function () {
+      unbind1();
+      unbind2();
+      fn();
+    };
+    var unbind1 = on(document, 'DOMContentLoaded', handle);
+    var unbind2 = on(window, 'load', handle);
   }
 
-  function Qr(t, e) {
-    for (const {
-      read: i,
-      write: s,
-      events: n = []
-    } of t._updates) {
-      if (!e.has("update") && !n.some(r => e.has(r))) continue;
-      let o;
-      i && (o = i.call(t, t._data, e), o && Te(o) && ft(t._data, o)), s && o !== !1 && Mt.write(() => {
-        t._connected && s.call(t, t._data, e)
-      })
+  function index(element, ref) {
+    return ref
+      ? toNodes(element).indexOf(toNode(ref))
+      : toNodes((element = toNode(element)) && element.parentNode.children).indexOf(element);
+  }
+
+  function getIndex(i, elements, current, finite) {
+    if ( current === void 0 ) current = 0;
+    if ( finite === void 0 ) finite = false;
+
+
+    elements = toNodes(elements);
+
+    var length = elements.length;
+
+    i = isNumeric(i)
+      ? toNumber(i)
+      : i === 'next'
+        ? current + 1
+        : i === 'previous'
+          ? current - 1
+          : index(elements, i);
+
+    if (finite) {
+      return clamp(i, 0, length - 1);
+    }
+
+    i %= length;
+
+    return i < 0 ? i + length : i;
+  }
+
+  function empty(element) {
+    element = $(element);
+    element.innerHTML = '';
+    return element;
+  }
+
+  function html(parent, html) {
+    parent = $(parent);
+    return isUndefined(html)
+      ? parent.innerHTML
+      : append(parent.hasChildNodes() ? empty(parent) : parent, html);
+  }
+
+  function prepend(parent, element) {
+
+    parent = $(parent);
+
+    if (!parent.hasChildNodes()) {
+      return append(parent, element);
+    } else {
+      return insertNodes(element, function (element) { return parent.insertBefore(element, parent.firstChild); });
     }
   }
 
-  function dt(t) {
-    return Ve(je, t, "resize")
+  function append(parent, element) {
+    parent = $(parent);
+    return insertNodes(element, function (element) { return parent.appendChild(element); });
   }
 
-  function be(t) {
-    return Ve(un, t)
+  function before(ref, element) {
+    ref = $(ref);
+    return insertNodes(element, function (element) { return ref.parentNode.insertBefore(element, ref); });
   }
 
-  function ki(t) {
-    return Ve(rs, t)
+  function after(ref, element) {
+    ref = $(ref);
+    return insertNodes(element, function (element) { return ref.nextSibling
+      ? before(ref.nextSibling, element)
+      : append(ref.parentNode, element); }
+    );
   }
 
-  function Si(t = {}) {
-    return be({
-      handler: function (e, i) {
-        const {
-          targets: s = this.$el,
-          preload: n = 5
-        } = t;
-        for (const o of E(ot(s) ? s(this) : s)) D('[loading="lazy"]', o).slice(0, n - 1).forEach(r => Oe(r, "loading"));
-        for (const o of e.filter(({
-                                    isIntersecting: r
-                                  }) => r).map(({
-                                                  target: r
-                                                }) => r)) i.unobserve(o)
-      },
-      ...t
-    })
+  function insertNodes(element, fn) {
+    element = isString(element) ? fragment(element) : element;
+    return element
+      ? 'length' in element
+        ? toNodes(element).map(fn)
+        : fn(element)
+      : null;
   }
 
-  function bs(t) {
-    return Ve((e, i) => os(i), t, "resize")
+  function remove(element) {
+    toNodes(element).map(function (element) { return element.parentNode && element.parentNode.removeChild(element); });
   }
 
-  function Ue(t) {
-    return Ve((e, i) => ({
-      disconnect: y(ea(e), "scroll", i, {
-        passive: !0
-      })
-    }), t, "scroll")
+  function wrapAll(element, structure) {
+
+    structure = toNode(before(element, structure));
+
+    while (structure.firstChild) {
+      structure = structure.firstChild;
+    }
+
+    append(structure, element);
+
+    return structure;
   }
 
-  function Cn(t) {
+  function wrapInner(element, structure) {
+    return toNodes(toNodes(element).map(function (element) { return element.hasChildNodes ? wrapAll(toNodes(element.childNodes), structure) : append(element, structure); }
+    ));
+  }
+
+  function unwrap(element) {
+    toNodes(element)
+      .map(function (element) { return element.parentNode; })
+      .filter(function (value, index, self) { return self.indexOf(value) === index; })
+      .forEach(function (parent) {
+        before(parent, parent.childNodes);
+        remove(parent);
+      });
+  }
+
+  var fragmentRe = /^\s*<(\w+|!)[^>]*>/;
+  var singleTagRe = /^<(\w+)\s*\/?>(?:<\/\1>)?$/;
+
+  function fragment(html) {
+
+    var matches$$1 = singleTagRe.exec(html);
+    if (matches$$1) {
+      return document.createElement(matches$$1[1]);
+    }
+
+    var container = document.createElement('div');
+    if (fragmentRe.test(html)) {
+      container.insertAdjacentHTML('beforeend', html.trim());
+    } else {
+      container.textContent = html;
+    }
+
+    return container.childNodes.length > 1 ? toNodes(container.childNodes) : container.firstChild;
+
+  }
+
+  function apply(node, fn) {
+
+    if (!node || node.nodeType !== 1) {
+      return;
+    }
+
+    fn(node);
+    node = node.firstElementChild;
+    while (node) {
+      apply(node, fn);
+      node = node.nextElementSibling;
+    }
+  }
+
+  function $(selector, context) {
+    return !isString(selector)
+      ? toNode(selector)
+      : isHtml(selector)
+        ? toNode(fragment(selector))
+        : find(selector, context);
+  }
+
+  function $$(selector, context) {
+    return !isString(selector)
+      ? toNodes(selector)
+      : isHtml(selector)
+        ? toNodes(fragment(selector))
+        : findAll(selector, context);
+  }
+
+  function isHtml(str) {
+    return str[0] === '<' || str.match(/^\s*</);
+  }
+
+  function addClass(element) {
+    var args = [], len = arguments.length - 1;
+    while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+    apply$1(element, args, 'add');
+  }
+
+  function removeClass(element) {
+    var args = [], len = arguments.length - 1;
+    while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+    apply$1(element, args, 'remove');
+  }
+
+  function removeClasses(element, cls) {
+    attr(element, 'class', function (value) { return (value || '').replace(new RegExp(("\\b" + cls + "\\b"), 'g'), ''); });
+  }
+
+  function replaceClass(element) {
+    var args = [], len = arguments.length - 1;
+    while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+    args[0] && removeClass(element, args[0]);
+    args[1] && addClass(element, args[1]);
+  }
+
+  function hasClass(element, cls) {
+    return cls && toNodes(element).some(function (element) { return element.classList.contains(cls.split(' ')[0]); });
+  }
+
+  function toggleClass(element) {
+    var args = [], len = arguments.length - 1;
+    while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+
+    if (!args.length) {
+      return;
+    }
+
+    args = getArgs$1(args);
+
+    var force = !isString(args[args.length - 1]) ? args.pop() : []; // in iOS 9.3 force === undefined evaluates to false
+
+    args = args.filter(Boolean);
+
+    toNodes(element).forEach(function (ref) {
+      var classList = ref.classList;
+
+      for (var i = 0; i < args.length; i++) {
+        supports.Force
+          ? classList.toggle.apply(classList, [args[i]].concat(force))
+          : (classList[(!isUndefined(force) ? force : !classList.contains(args[i])) ? 'add' : 'remove'](args[i]));
+      }
+    });
+
+  }
+
+  function apply$1(element, args, fn) {
+    args = getArgs$1(args).filter(Boolean);
+
+    args.length && toNodes(element).forEach(function (ref) {
+      var classList = ref.classList;
+
+      supports.Multiple
+        ? classList[fn].apply(classList, args)
+        : args.forEach(function (cls) { return classList[fn](cls); });
+    });
+  }
+
+  function getArgs$1(args) {
+    return args.reduce(function (args, arg) { return args.concat.call(args, isString(arg) && includes(arg, ' ') ? arg.trim().split(' ') : arg); }
+      , []);
+  }
+
+  var supports = {};
+
+  // IE 11
+  (function () {
+
+    var list = document.createElement('_').classList;
+    if (list) {
+      list.add('a', 'b');
+      list.toggle('c', false);
+      supports.Multiple = list.contains('b');
+      supports.Force = !list.contains('c');
+    }
+    list = null;
+
+  })();
+
+  var cssNumber = {
+    'animation-iteration-count': true,
+    'column-count': true,
+    'fill-opacity': true,
+    'flex-grow': true,
+    'flex-shrink': true,
+    'font-weight': true,
+    'line-height': true,
+    'opacity': true,
+    'order': true,
+    'orphans': true,
+    'widows': true,
+    'z-index': true,
+    'zoom': true
+  };
+
+  function css(element, property, value) {
+
+    return toNodes(element).map(function (element) {
+
+      if (isString(property)) {
+
+        property = propName(property);
+
+        if (isUndefined(value)) {
+          return getStyle(element, property);
+        } else if (!value && !isNumber(value)) {
+          element.style.removeProperty(property);
+        } else {
+          element.style[property] = isNumeric(value) && !cssNumber[property] ? (value + "px") : value;
+        }
+
+      } else if (isArray(property)) {
+
+        var styles = getStyles(element);
+
+        return property.reduce(function (props, property) {
+          props[property] = styles[propName(property)];
+          return props;
+        }, {});
+
+      } else if (isObject(property)) {
+        each(property, function (value, property) { return css(element, property, value); });
+      }
+
+      return element;
+
+    })[0];
+
+  }
+
+  function getStyles(element, pseudoElt) {
+    element = toNode(element);
+    return element.ownerDocument.defaultView.getComputedStyle(element, pseudoElt);
+  }
+
+  function getStyle(element, property, pseudoElt) {
+    return getStyles(element, pseudoElt)[property];
+  }
+
+  var vars = {};
+
+  function getCssVar(name) {
+
+    var docEl = document.documentElement;
+
+    if (!isIE) {
+      return getStyles(docEl).getPropertyValue(("--uk-" + name));
+    }
+
+    if (!(name in vars)) {
+
+      /* usage in css: .uk-name:before { content:"xyz" } */
+
+      var element = append(docEl, document.createElement('div'));
+
+      addClass(element, ("uk-" + name));
+
+      vars[name] = getStyle(element, 'content', ':before').replace(/^["'](.*)["']$/, '$1');
+
+      remove(element);
+
+    }
+
+    return vars[name];
+
+  }
+
+  var cssProps = {};
+
+  function propName(name) {
+
+    var ret = cssProps[name];
+    if (!ret) {
+      ret = cssProps[name] = vendorPropName(name) || name;
+    }
+    return ret;
+  }
+
+  var cssPrefixes = ['webkit', 'moz', 'ms'];
+  var ref = document.createElement('_');
+  var style = ref.style;
+
+  function vendorPropName(name) {
+
+    name = hyphenate(name);
+
+    if (name in style) {
+      return name;
+    }
+
+    var i = cssPrefixes.length, prefixedName;
+
+    while (i--) {
+      prefixedName = "-" + (cssPrefixes[i]) + "-" + name;
+      if (prefixedName in style) {
+        return prefixedName;
+      }
+    }
+  }
+
+  function transition(element, props, duration, timing) {
+    if ( duration === void 0 ) duration = 400;
+    if ( timing === void 0 ) timing = 'linear';
+
+
+    return Promise.all(toNodes(element).map(function (element) { return new Promise(function (resolve, reject) {
+
+        for (var name in props) {
+          var value = css(element, name);
+          if (value === '') {
+            css(element, name, value);
+          }
+        }
+
+        var timer = setTimeout(function () { return trigger(element, 'transitionend'); }, duration);
+
+        once(element, 'transitionend transitioncanceled', function (ref) {
+          var type = ref.type;
+
+          clearTimeout(timer);
+          removeClass(element, 'uk-transition');
+          css(element, {
+            'transition-property': '',
+            'transition-duration': '',
+            'transition-timing-function': ''
+          });
+          type === 'transitioncanceled' ? reject() : resolve();
+        }, false, function (ref) {
+          var target = ref.target;
+
+          return element === target;
+        });
+
+        addClass(element, 'uk-transition');
+        css(element, assign({
+          'transition-property': Object.keys(props).map(propName).join(','),
+          'transition-duration': (duration + "ms"),
+          'transition-timing-function': timing
+        }, props));
+
+      }); }
+    ));
+
+  }
+
+  var Transition = {
+
+    start: transition,
+
+    stop: function(element) {
+      trigger(element, 'transitionend');
+      return Promise.resolve();
+    },
+
+    cancel: function(element) {
+      trigger(element, 'transitioncanceled');
+    },
+
+    inProgress: function(element) {
+      return hasClass(element, 'uk-transition');
+    }
+
+  };
+
+  var animationPrefix = 'uk-animation-';
+  var clsCancelAnimation = 'uk-cancel-animation';
+
+  function animate(element, animation, duration, origin, out) {
+    var arguments$1 = arguments;
+    if ( duration === void 0 ) duration = 200;
+
+
+    return Promise.all(toNodes(element).map(function (element) { return new Promise(function (resolve, reject) {
+
+        if (hasClass(element, clsCancelAnimation)) {
+          requestAnimationFrame(function () { return Promise.resolve().then(function () { return animate.apply(void 0, arguments$1).then(resolve, reject); }
+            ); }
+          );
+          return;
+        }
+
+        var cls = animation + " " + animationPrefix + (out ? 'leave' : 'enter');
+
+        if (startsWith(animation, animationPrefix)) {
+
+          if (origin) {
+            cls += " uk-transform-origin-" + origin;
+          }
+
+          if (out) {
+            cls += " " + animationPrefix + "reverse";
+          }
+
+        }
+
+        reset();
+
+        once(element, 'animationend animationcancel', function (ref) {
+          var type = ref.type;
+
+
+          var hasReset = false;
+
+          if (type === 'animationcancel') {
+            reject();
+            reset();
+          } else {
+            resolve();
+            Promise.resolve().then(function () {
+              hasReset = true;
+              reset();
+            });
+          }
+
+          requestAnimationFrame(function () {
+            if (!hasReset) {
+              addClass(element, clsCancelAnimation);
+
+              requestAnimationFrame(function () { return removeClass(element, clsCancelAnimation); });
+            }
+          });
+
+        }, false, function (ref) {
+          var target = ref.target;
+
+          return element === target;
+        });
+
+        css(element, 'animationDuration', (duration + "ms"));
+        addClass(element, cls);
+
+        function reset() {
+          css(element, 'animationDuration', '');
+          removeClasses(element, (animationPrefix + "\\S*"));
+        }
+
+      }); }
+    ));
+
+  }
+
+  var inProgress = new RegExp((animationPrefix + "(enter|leave)"));
+  var Animation = {
+
+    in: function(element, animation, duration, origin) {
+      return animate(element, animation, duration, origin, false);
+    },
+
+    out: function(element, animation, duration, origin) {
+      return animate(element, animation, duration, origin, true);
+    },
+
+    inProgress: function(element) {
+      return inProgress.test(attr(element, 'class'));
+    },
+
+    cancel: function(element) {
+      trigger(element, 'animationcancel');
+    }
+
+  };
+
+  var dirs = {
+    width: ['x', 'left', 'right'],
+    height: ['y', 'top', 'bottom']
+  };
+
+  function positionAt(element, target, elAttach, targetAttach, elOffset, targetOffset, flip, boundary) {
+
+    elAttach = getPos(elAttach);
+    targetAttach = getPos(targetAttach);
+
+    var flipped = {element: elAttach, target: targetAttach};
+
+    if (!element || !target) {
+      return flipped;
+    }
+
+    var dim = getDimensions(element);
+    var targetDim = getDimensions(target);
+    var position = targetDim;
+
+    moveTo(position, elAttach, dim, -1);
+    moveTo(position, targetAttach, targetDim, 1);
+
+    elOffset = getOffsets(elOffset, dim.width, dim.height);
+    targetOffset = getOffsets(targetOffset, targetDim.width, targetDim.height);
+
+    elOffset['x'] += targetOffset['x'];
+    elOffset['y'] += targetOffset['y'];
+
+    position.left += elOffset['x'];
+    position.top += elOffset['y'];
+
+    if (flip) {
+
+      var boundaries = [getDimensions(window$1(element))];
+
+      if (boundary) {
+        boundaries.unshift(getDimensions(boundary));
+      }
+
+      each(dirs, function (ref, prop) {
+        var dir = ref[0];
+        var align = ref[1];
+        var alignFlip = ref[2];
+
+
+        if (!(flip === true || includes(flip, dir))) {
+          return;
+        }
+
+        boundaries.some(function (boundary) {
+
+          var elemOffset = elAttach[dir] === align
+            ? -dim[prop]
+            : elAttach[dir] === alignFlip
+              ? dim[prop]
+              : 0;
+
+          var targetOffset = targetAttach[dir] === align
+            ? targetDim[prop]
+            : targetAttach[dir] === alignFlip
+              ? -targetDim[prop]
+              : 0;
+
+          if (position[align] < boundary[align] || position[align] + dim[prop] > boundary[alignFlip]) {
+
+            var centerOffset = dim[prop] / 2;
+            var centerTargetOffset = targetAttach[dir] === 'center' ? -targetDim[prop] / 2 : 0;
+
+            return elAttach[dir] === 'center' && (
+              apply(centerOffset, centerTargetOffset)
+              || apply(-centerOffset, -centerTargetOffset)
+            ) || apply(elemOffset, targetOffset);
+
+          }
+
+          function apply(elemOffset, targetOffset) {
+
+            var newVal = position[align] + elemOffset + targetOffset - elOffset[dir] * 2;
+
+            if (newVal >= boundary[align] && newVal + dim[prop] <= boundary[alignFlip]) {
+              position[align] = newVal;
+
+              ['element', 'target'].forEach(function (el) {
+                flipped[el][dir] = !elemOffset
+                  ? flipped[el][dir]
+                  : flipped[el][dir] === dirs[prop][1]
+                    ? dirs[prop][2]
+                    : dirs[prop][1];
+              });
+
+              return true;
+            }
+
+          }
+
+        });
+
+      });
+    }
+
+    offset(element, position);
+
+    return flipped;
+  }
+
+  function offset(element, coordinates) {
+
+    element = toNode(element);
+
+    if (coordinates) {
+
+      var currentOffset = offset(element);
+      var pos = css(element, 'position');
+
+      ['left', 'top'].forEach(function (prop) {
+        if (prop in coordinates) {
+          var value = css(element, prop);
+          css(element, prop, coordinates[prop] - currentOffset[prop]
+            + toFloat(pos === 'absolute' && value === 'auto'
+              ? position(element)[prop]
+              : value)
+          );
+        }
+      });
+
+      return;
+    }
+
+    return getDimensions(element);
+  }
+
+  function getDimensions(element) {
+
+    element = toNode(element);
+
+    var ref = window$1(element);
+    var top = ref.pageYOffset;
+    var left = ref.pageXOffset;
+
+    if (isWindow(element)) {
+
+      var height = element.innerHeight;
+      var width = element.innerWidth;
+
+      return {
+        top: top,
+        left: left,
+        height: height,
+        width: width,
+        bottom: top + height,
+        right: left + width,
+      };
+    }
+
+    var style, hidden;
+
+    if (!isVisible(element)) {
+      style = attr(element, 'style');
+      hidden = attr(element, 'hidden');
+
+      attr(element, {
+        style: ((style || '') + ";display:block !important;"),
+        hidden: null
+      });
+    }
+
+    var rect = element.getBoundingClientRect();
+
+    if (!isUndefined(style)) {
+      attr(element, {style: style, hidden: hidden});
+    }
+
     return {
-      observe(e, i) {
-        return {
-          observe: A,
-          unobserve: A,
-          disconnect: y(e, ut, i, {
-            passive: !0
-          })
+      height: rect.height,
+      width: rect.width,
+      top: rect.top + top,
+      left: rect.left + left,
+      bottom: rect.bottom + top,
+      right: rect.right + left,
+    };
+  }
+
+  function position(element) {
+    element = toNode(element);
+
+    var parent = element.offsetParent || docEl(element);
+    var parentOffset = offset(parent);
+    var ref = ['top', 'left'].reduce(function (props, prop) {
+      var propName$$1 = ucfirst(prop);
+      props[prop] -= parentOffset[prop]
+        + toFloat(css(element, ("margin" + propName$$1)))
+        + toFloat(css(parent, ("border" + propName$$1 + "Width")));
+      return props;
+    }, offset(element));
+    var top = ref.top;
+    var left = ref.left;
+
+    return {top: top, left: left};
+  }
+
+  var height = dimension('height');
+  var width = dimension('width');
+
+  function dimension(prop) {
+    var propName$$1 = ucfirst(prop);
+    return function (element, value) {
+
+      element = toNode(element);
+
+      if (isUndefined(value)) {
+
+        if (isWindow(element)) {
+          return element[("inner" + propName$$1)];
+        }
+
+        if (isDocument(element)) {
+          var doc = element.documentElement;
+          return Math.max(doc[("offset" + propName$$1)], doc[("scroll" + propName$$1)]);
+        }
+
+        value = css(element, prop);
+        value = value === 'auto' ? element[("offset" + propName$$1)] : toFloat(value) || 0;
+
+        return value - boxModelAdjust(prop, element);
+
+      } else {
+
+        css(element, prop, !value && value !== 0
+          ? ''
+          : +value + boxModelAdjust(prop, element) + 'px'
+        );
+
+      }
+
+    };
+  }
+
+  function boxModelAdjust(prop, element, sizing) {
+    if ( sizing === void 0 ) sizing = 'border-box';
+
+    return css(element, 'boxSizing') === sizing
+      ? dirs[prop].slice(1).map(ucfirst).reduce(function (value, prop) { return value
+          + toFloat(css(element, ("padding" + prop)))
+          + toFloat(css(element, ("border" + prop + "Width"))); }
+        , 0)
+      : 0;
+  }
+
+  function moveTo(position, attach, dim, factor) {
+    each(dirs, function (ref, prop) {
+      var dir = ref[0];
+      var align = ref[1];
+      var alignFlip = ref[2];
+
+      if (attach[dir] === alignFlip) {
+        position[align] += dim[prop] * factor;
+      } else if (attach[dir] === 'center') {
+        position[align] += dim[prop] * factor / 2;
+      }
+    });
+  }
+
+  function getPos(pos) {
+
+    var x = /left|center|right/;
+    var y = /top|center|bottom/;
+
+    pos = (pos || '').split(' ');
+
+    if (pos.length === 1) {
+      pos = x.test(pos[0])
+        ? pos.concat(['center'])
+        : y.test(pos[0])
+          ? ['center'].concat(pos)
+          : ['center', 'center'];
+    }
+
+    return {
+      x: x.test(pos[0]) ? pos[0] : 'center',
+      y: y.test(pos[1]) ? pos[1] : 'center'
+    };
+  }
+
+  function getOffsets(offsets, width, height) {
+
+    var ref = (offsets || '').split(' ');
+    var x = ref[0];
+    var y = ref[1];
+
+    return {
+      x: x ? toFloat(x) * (endsWith(x, '%') ? width / 100 : 1) : 0,
+      y: y ? toFloat(y) * (endsWith(y, '%') ? height / 100 : 1) : 0
+    };
+  }
+
+  function flipPosition(pos) {
+    switch (pos) {
+      case 'left':
+        return 'right';
+      case 'right':
+        return 'left';
+      case 'top':
+        return 'bottom';
+      case 'bottom':
+        return 'top';
+      default:
+        return pos;
+    }
+  }
+
+  function isInView(element, topOffset, leftOffset) {
+    if ( topOffset === void 0 ) topOffset = 0;
+    if ( leftOffset === void 0 ) leftOffset = 0;
+
+
+    if (!isVisible(element)) {
+      return false;
+    }
+
+    element = toNode(element);
+
+    var win = window$1(element);
+    var client = element.getBoundingClientRect();
+    var bounding = {
+      top: -topOffset,
+      left: -leftOffset,
+      bottom: topOffset + height(win),
+      right: leftOffset + width(win)
+    };
+
+    return intersectRect(client, bounding) || pointInRect({x: client.left, y: client.top}, bounding);
+
+  }
+
+  function scrolledOver(element, heightOffset) {
+    if ( heightOffset === void 0 ) heightOffset = 0;
+
+
+    if (!isVisible(element)) {
+      return 0;
+    }
+
+    element = toNode(element);
+
+    var win = window$1(element);
+    var doc = document$1(element);
+    var elHeight = element.offsetHeight + heightOffset;
+    var ref = offsetPosition(element);
+    var top = ref[0];
+    var vp = height(win);
+    var vh = vp + Math.min(0, top - vp);
+    var diff = Math.max(0, vp - (height(doc) + heightOffset - (top + elHeight)));
+
+    return clamp(((vh + win.pageYOffset - top) / ((vh + (elHeight - (diff < vp ? diff : 0))) / 100)) / 100);
+  }
+
+  function scrollTop(element, top) {
+    element = toNode(element);
+
+    if (isWindow(element) || isDocument(element)) {
+      var ref = window$1(element);
+      var scrollTo = ref.scrollTo;
+      var pageXOffset = ref.pageXOffset;
+      scrollTo(pageXOffset, top);
+    } else {
+      element.scrollTop = top;
+    }
+  }
+
+  function offsetPosition(element) {
+    var offset = [0, 0];
+
+    do {
+
+      offset[0] += element.offsetTop;
+      offset[1] += element.offsetLeft;
+
+      if (css(element, 'position') === 'fixed') {
+        var win = window$1(element);
+        offset[0] += win.pageYOffset;
+        offset[1] += win.pageXOffset;
+        return offset;
+      }
+
+    } while ((element = element.offsetParent));
+
+    return offset;
+  }
+
+  function window$1(element) {
+    return isWindow(element) ? element : document$1(element).defaultView;
+  }
+
+  function document$1(element) {
+    return toNode(element).ownerDocument;
+  }
+
+  function docEl(element) {
+    return document$1(element).documentElement;
+  }
+
+  /*
+        Based on:
+        Copyright (c) 2016 Wilson Page wilsonpage@me.com
+        https://github.com/wilsonpage/fastdom
+    */
+
+  var fastdom = {
+
+    reads: [],
+    writes: [],
+
+    read: function(task) {
+      this.reads.push(task);
+      scheduleFlush();
+      return task;
+    },
+
+    write: function(task) {
+      this.writes.push(task);
+      scheduleFlush();
+      return task;
+    },
+
+    clear: function(task) {
+      return remove$1(this.reads, task) || remove$1(this.writes, task);
+    },
+
+    flush: function() {
+
+      runTasks(this.reads);
+      runTasks(this.writes.splice(0, this.writes.length));
+
+      this.scheduled = false;
+
+      if (this.reads.length || this.writes.length) {
+        scheduleFlush();
+      }
+
+    }
+
+  };
+
+  function scheduleFlush() {
+    if (!fastdom.scheduled) {
+      fastdom.scheduled = true;
+      requestAnimationFrame(fastdom.flush.bind(fastdom));
+    }
+  }
+
+  function runTasks(tasks) {
+    var task;
+    while ((task = tasks.shift())) {
+      task();
+    }
+  }
+
+  function remove$1(array, item) {
+    var index = array.indexOf(item);
+    return !!~index && !!array.splice(index, 1);
+  }
+
+  function MouseTracker() {}
+
+  MouseTracker.prototype = {
+
+    positions: [],
+    position: null,
+
+    init: function() {
+      var this$1 = this;
+
+
+      this.positions = [];
+      this.position = null;
+
+      var ticking = false;
+      this.unbind = on(document, 'mousemove', function (e) {
+
+        if (ticking) {
+          return;
+        }
+
+        setTimeout(function () {
+
+          var time = Date.now();
+          var ref = this$1.positions;
+          var length = ref.length;
+
+          if (length && (time - this$1.positions[length - 1].time > 100)) {
+            this$1.positions.splice(0, length);
+          }
+
+          this$1.positions.push({time: time, x: e.pageX, y: e.pageY});
+
+          if (this$1.positions.length > 5) {
+            this$1.positions.shift();
+          }
+
+          ticking = false;
+        }, 5);
+
+        ticking = true;
+      });
+
+    },
+
+    cancel: function() {
+      if (this.unbind) {
+        this.unbind();
+      }
+    },
+
+    movesTo: function(target) {
+
+      if (this.positions.length < 2) {
+        return false;
+      }
+
+      var p = offset(target);
+      var position$$1 = this.positions[this.positions.length - 1];
+      var ref = this.positions;
+      var prevPos = ref[0];
+
+      if (p.left <= position$$1.x && position$$1.x <= p.right && p.top <= position$$1.y && position$$1.y <= p.bottom) {
+        return false;
+      }
+
+      var points = [
+        [{x: p.left, y: p.top}, {x: p.right, y: p.bottom}],
+        [{x: p.right, y: p.top}, {x: p.left, y: p.bottom}]
+      ];
+
+      if (p.right <= position$$1.x) ; else if (p.left >= position$$1.x) {
+        points[0].reverse();
+        points[1].reverse();
+      } else if (p.bottom <= position$$1.y) {
+        points[0].reverse();
+      } else if (p.top >= position$$1.y) {
+        points[1].reverse();
+      }
+
+      return !!points.reduce(function (result, point) {
+        return result + (slope(prevPos, point[0]) < slope(position$$1, point[0]) && slope(prevPos, point[1]) > slope(position$$1, point[1]));
+      }, 0);
+    }
+
+  };
+
+  function slope(a, b) {
+    return (b.y - a.y) / (b.x - a.x);
+  }
+
+  var strats = {};
+
+  strats.events =
+    strats.created =
+      strats.beforeConnect =
+        strats.connected =
+          strats.beforeDisconnect =
+            strats.disconnected =
+              strats.destroy = concatStrat;
+
+  // args strategy
+  strats.args = function (parentVal, childVal) {
+    return concatStrat(childVal || parentVal);
+  };
+
+  // update strategy
+  strats.update = function (parentVal, childVal) {
+    return sortBy(concatStrat(parentVal, isFunction(childVal) ? {read: childVal} : childVal), 'order');
+  };
+
+  // property strategy
+  strats.props = function (parentVal, childVal) {
+
+    if (isArray(childVal)) {
+      childVal = childVal.reduce(function (value, key) {
+        value[key] = String;
+        return value;
+      }, {});
+    }
+
+    return strats.methods(parentVal, childVal);
+  };
+
+  // extend strategy
+  strats.computed =
+    strats.methods = function (parentVal, childVal) {
+      return childVal
+        ? parentVal
+          ? assign({}, parentVal, childVal)
+          : childVal
+        : parentVal;
+    };
+
+  // data strategy
+  strats.data = function (parentVal, childVal, vm) {
+
+    if (!vm) {
+
+      if (!childVal) {
+        return parentVal;
+      }
+
+      if (!parentVal) {
+        return childVal;
+      }
+
+      return function (vm) {
+        return mergeFnData(parentVal, childVal, vm);
+      };
+
+    }
+
+    return mergeFnData(parentVal, childVal, vm);
+  };
+
+  function mergeFnData(parentVal, childVal, vm) {
+    return strats.computed(
+      isFunction(parentVal)
+        ? parentVal.call(vm, vm)
+        : parentVal,
+      isFunction(childVal)
+        ? childVal.call(vm, vm)
+        : childVal
+    );
+  }
+
+  // concat strategy
+  function concatStrat(parentVal, childVal) {
+
+    parentVal = parentVal && !isArray(parentVal) ? [parentVal] : parentVal;
+
+    return childVal
+      ? parentVal
+        ? parentVal.concat(childVal)
+        : isArray(childVal)
+          ? childVal
+          : [childVal]
+      : parentVal;
+  }
+
+  // default strategy
+  function defaultStrat(parentVal, childVal) {
+    return isUndefined(childVal) ? parentVal : childVal;
+  }
+
+  function mergeOptions(parent, child, vm) {
+
+    var options = {};
+
+    if (isFunction(child)) {
+      child = child.options;
+    }
+
+    if (child.extends) {
+      parent = mergeOptions(parent, child.extends, vm);
+    }
+
+    if (child.mixins) {
+      for (var i = 0, l = child.mixins.length; i < l; i++) {
+        parent = mergeOptions(parent, child.mixins[i], vm);
+      }
+    }
+
+    for (var key in parent) {
+      mergeKey(key);
+    }
+
+    for (var key$1 in child) {
+      if (!hasOwn(parent, key$1)) {
+        mergeKey(key$1);
+      }
+    }
+
+    function mergeKey(key) {
+      options[key] = (strats[key] || defaultStrat)(parent[key], child[key], vm);
+    }
+
+    return options;
+  }
+
+  function parseOptions(options, args) {
+    var obj;
+
+    if ( args === void 0 ) args = [];
+
+    try {
+
+      return !options
+        ? {}
+        : startsWith(options, '{')
+          ? JSON.parse(options)
+          : args.length && !includes(options, ':')
+            ? (( obj = {}, obj[args[0]] = options, obj ))
+            : options.split(';').reduce(function (options, option) {
+              var ref = option.split(/:(.*)/);
+              var key = ref[0];
+              var value = ref[1];
+              if (key && !isUndefined(value)) {
+                options[key.trim()] = value.trim();
+              }
+              return options;
+            }, {});
+
+    } catch (e) {
+      return {};
+    }
+
+  }
+
+  var id = 0;
+
+  var Player = function(el) {
+    this.id = ++id;
+    this.el = toNode(el);
+  };
+
+  Player.prototype.isVideo = function () {
+    return this.isYoutube() || this.isVimeo() || this.isHTML5();
+  };
+
+  Player.prototype.isHTML5 = function () {
+    return this.el.tagName === 'VIDEO';
+  };
+
+  Player.prototype.isIFrame = function () {
+    return this.el.tagName === 'IFRAME';
+  };
+
+  Player.prototype.isYoutube = function () {
+    return this.isIFrame() && !!this.el.src.match(/\/\/.*?youtube(-nocookie)?\.[a-z]+\/(watch\?v=[^&\s]+|embed)|youtu\.be\/.*/);
+  };
+
+  Player.prototype.isVimeo = function () {
+    return this.isIFrame() && !!this.el.src.match(/vimeo\.com\/video\/.*/);
+  };
+
+  Player.prototype.enableApi = function () {
+    var this$1 = this;
+
+
+    if (this.ready) {
+      return this.ready;
+    }
+
+    var youtube = this.isYoutube();
+    var vimeo = this.isVimeo();
+
+    var poller;
+
+    if (youtube || vimeo) {
+
+      return this.ready = new Promise(function (resolve) {
+
+        once(this$1.el, 'load', function () {
+          if (youtube) {
+            var listener = function () { return post(this$1.el, {event: 'listening', id: this$1.id}); };
+            poller = setInterval(listener, 100);
+            listener();
+          }
+        });
+
+        listen(function (data$$1) { return youtube && data$$1.id === this$1.id && data$$1.event === 'onReady' || vimeo && Number(data$$1.player_id) === this$1.id; })
+          .then(function () {
+            resolve();
+            poller && clearInterval(poller);
+          });
+
+        attr(this$1.el, 'src', ("" + (this$1.el.src) + (includes(this$1.el.src, '?') ? '&' : '?') + (youtube ? 'enablejsapi=1' : ("api=1&player_id=" + (this$1.id)))));
+
+      });
+
+    }
+
+    return Promise.resolve();
+
+  };
+
+  Player.prototype.play = function () {
+    var this$1 = this;
+
+
+    if (!this.isVideo()) {
+      return;
+    }
+
+    if (this.isIFrame()) {
+      this.enableApi().then(function () { return post(this$1.el, {func: 'playVideo', method: 'play'}); });
+    } else if (this.isHTML5()) {
+      try {
+        var promise = this.el.play();
+
+        if (promise) {
+          promise.catch(noop);
+        }
+      } catch (e) {}
+    }
+  };
+
+  Player.prototype.pause = function () {
+    var this$1 = this;
+
+
+    if (!this.isVideo()) {
+      return;
+    }
+
+    if (this.isIFrame()) {
+      this.enableApi().then(function () { return post(this$1.el, {func: 'pauseVideo', method: 'pause'}); });
+    } else if (this.isHTML5()) {
+      this.el.pause();
+    }
+  };
+
+  Player.prototype.mute = function () {
+    var this$1 = this;
+
+
+    if (!this.isVideo()) {
+      return;
+    }
+
+    if (this.isIFrame()) {
+      this.enableApi().then(function () { return post(this$1.el, {func: 'mute', method: 'setVolume', value: 0}); });
+    } else if (this.isHTML5()) {
+      this.el.muted = true;
+      attr(this.el, 'muted', '');
+    }
+
+  };
+
+  function post(el, cmd) {
+    try {
+      el.contentWindow.postMessage(JSON.stringify(assign({event: 'command'}, cmd)), '*');
+    } catch (e) {}
+  }
+
+  function listen(cb) {
+
+    return new Promise(function (resolve) {
+
+      once(window, 'message', function (_, data$$1) { return resolve(data$$1); }, false, function (ref) {
+        var data$$1 = ref.data;
+
+
+        if (!data$$1 || !isString(data$$1)) {
+          return;
+        }
+
+        try {
+          data$$1 = JSON.parse(data$$1);
+        } catch (e) {
+          return;
+        }
+
+        return data$$1 && cb(data$$1);
+
+      });
+
+    });
+
+  }
+
+  var touch = {}, swipeTimeout, touching;
+
+  on(document, pointerDown, function (e) {
+
+    if (touch.el) {
+      touch = {};
+    }
+
+    var target = e.target;
+    var ref = getPos$1(e);
+    var x = ref.x;
+    var y = ref.y;
+
+    touch.el = 'tagName' in target ? target : target.parentNode;
+    touch.x = x;
+    touch.y = y;
+
+    touching = true;
+
+  });
+
+  on(document, pointerUp, function (e) {
+
+    var ref = getPos$1(e);
+    var x = ref.x;
+    var y = ref.y;
+
+    // swipe
+    if (touch.el && x && Math.abs(touch.x - x) > 100 || y && Math.abs(touch.y - y) > 100) {
+
+      swipeTimeout = setTimeout(function () {
+        if (touch.el) {
+          trigger(touch.el, 'swipe');
+          trigger(touch.el, ("swipe" + (swipeDirection(touch.x, touch.y, x, y))));
+        }
+        touch = {};
+      });
+
+    } else {
+      touch = {};
+    }
+
+    setTimeout(function () { return touching = false; });
+
+  });
+
+  on(document, pointerCancel, cancelAll);
+
+  function isTouch(e) {
+    return e.pointerType === 'touch' || e.touches || touching;
+  }
+
+  function getPos$1(e, prop) {
+    if ( prop === void 0 ) prop = 'client';
+
+    var touches = e.touches;
+    var changedTouches = e.changedTouches;
+    var ref = touches && touches[0] || changedTouches && changedTouches[0] || e;
+    var x = ref[(prop + "X")];
+    var y = ref[(prop + "Y")];
+
+    return {x: x, y: y};
+  }
+
+  function swipeDirection(x1, y1, x2, y2) {
+    return Math.abs(x1 - x2) >= Math.abs(y1 - y2)
+      ? x1 - x2 > 0
+        ? 'Left'
+        : 'Right'
+      : y1 - y2 > 0
+        ? 'Up'
+        : 'Down';
+  }
+
+  function cancelAll() {
+    swipeTimeout && clearTimeout(swipeTimeout);
+    swipeTimeout = null;
+    touch = {};
+  }
+
+
+
+  var util = /*#__PURE__*/Object.freeze({
+    ajax: ajax,
+    getImage: getImage,
+    transition: transition,
+    Transition: Transition,
+    animate: animate,
+    Animation: Animation,
+    attr: attr,
+    hasAttr: hasAttr,
+    removeAttr: removeAttr,
+    data: data,
+    addClass: addClass,
+    removeClass: removeClass,
+    removeClasses: removeClasses,
+    replaceClass: replaceClass,
+    hasClass: hasClass,
+    toggleClass: toggleClass,
+    positionAt: positionAt,
+    offset: offset,
+    position: position,
+    height: height,
+    width: width,
+    boxModelAdjust: boxModelAdjust,
+    flipPosition: flipPosition,
+    isInView: isInView,
+    scrolledOver: scrolledOver,
+    scrollTop: scrollTop,
+    offsetPosition: offsetPosition,
+    isReady: isReady,
+    ready: ready,
+    index: index,
+    getIndex: getIndex,
+    empty: empty,
+    html: html,
+    prepend: prepend,
+    append: append,
+    before: before,
+    after: after,
+    remove: remove,
+    wrapAll: wrapAll,
+    wrapInner: wrapInner,
+    unwrap: unwrap,
+    fragment: fragment,
+    apply: apply,
+    $: $,
+    $$: $$,
+    isIE: isIE,
+    isRtl: isRtl,
+    hasTouch: hasTouch,
+    pointerDown: pointerDown,
+    pointerMove: pointerMove,
+    pointerUp: pointerUp,
+    pointerEnter: pointerEnter,
+    pointerLeave: pointerLeave,
+    pointerCancel: pointerCancel,
+    on: on,
+    off: off,
+    once: once,
+    trigger: trigger,
+    createEvent: createEvent,
+    toEventTargets: toEventTargets,
+    preventClick: preventClick,
+    fastdom: fastdom,
+    isVoidElement: isVoidElement,
+    isVisible: isVisible,
+    selInput: selInput,
+    isInput: isInput,
+    filter: filter,
+    within: within,
+    bind: bind,
+    hasOwn: hasOwn,
+    hyphenate: hyphenate,
+    camelize: camelize,
+    ucfirst: ucfirst,
+    startsWith: startsWith,
+    endsWith: endsWith,
+    includes: includes,
+    isArray: isArray,
+    isFunction: isFunction,
+    isObject: isObject,
+    isPlainObject: isPlainObject,
+    isWindow: isWindow,
+    isDocument: isDocument,
+    isJQuery: isJQuery,
+    isNode: isNode,
+    isNodeCollection: isNodeCollection,
+    isBoolean: isBoolean,
+    isString: isString,
+    isNumber: isNumber,
+    isNumeric: isNumeric,
+    isUndefined: isUndefined,
+    toBoolean: toBoolean,
+    toNumber: toNumber,
+    toFloat: toFloat,
+    toNode: toNode,
+    toNodes: toNodes,
+    toList: toList,
+    toMs: toMs,
+    swap: swap,
+    assign: assign,
+    each: each,
+    sortBy: sortBy,
+    clamp: clamp,
+    noop: noop,
+    intersectRect: intersectRect,
+    pointInRect: pointInRect,
+    Dimensions: Dimensions,
+    MouseTracker: MouseTracker,
+    mergeOptions: mergeOptions,
+    parseOptions: parseOptions,
+    Player: Player,
+    Promise: Promise,
+    Deferred: Deferred,
+    query: query,
+    queryAll: queryAll,
+    find: find,
+    findAll: findAll,
+    matches: matches,
+    closest: closest,
+    parents: parents,
+    escape: escape,
+    css: css,
+    getStyles: getStyles,
+    getStyle: getStyle,
+    getCssVar: getCssVar,
+    propName: propName,
+    isTouch: isTouch,
+    getPos: getPos$1
+  });
+
+  function componentAPI (UIkit) {
+
+    var DATA = UIkit.data;
+
+    var components = {};
+
+    UIkit.component = function (name, options) {
+
+      if (!options) {
+
+        if (isPlainObject(components[name])) {
+          components[name] = UIkit.extend(components[name]);
+        }
+
+        return components[name];
+
+      }
+
+      UIkit[name] = function (element, data$$1) {
+        var i = arguments.length, argsArray = Array(i);
+        while ( i-- ) argsArray[i] = arguments[i];
+
+
+        var component = UIkit.component(name);
+
+        if (isPlainObject(element)) {
+          return new component({data: element});
+        }
+
+        if (component.options.functional) {
+          return new component({data: [].concat( argsArray )});
+        }
+
+        return element && element.nodeType ? init(element) : $$(element).map(init)[0];
+
+        function init(element) {
+
+          var instance = UIkit.getComponent(element, name);
+
+          if (instance) {
+            if (!data$$1) {
+              return instance;
+            } else {
+              instance.$destroy();
+            }
+          }
+
+          return new component({el: element, data: data$$1});
+
+        }
+
+      };
+
+      var opt = isPlainObject(options) ? assign({}, options) : options.options;
+
+      opt.name = name;
+
+      if (opt.install) {
+        opt.install(UIkit, opt, name);
+      }
+
+      if (UIkit._initialized && !opt.functional) {
+        var id = hyphenate(name);
+        fastdom.read(function () { return UIkit[name](("[uk-" + id + "],[data-uk-" + id + "]")); });
+      }
+
+      return components[name] = isPlainObject(options) ? opt : options;
+    };
+
+    UIkit.getComponents = function (element) { return element && element[DATA] || {}; };
+    UIkit.getComponent = function (element, name) { return UIkit.getComponents(element)[name]; };
+
+    UIkit.connect = function (node) {
+
+      if (node[DATA]) {
+        for (var name in node[DATA]) {
+          node[DATA][name]._callConnected();
+        }
+      }
+
+      for (var i = 0; i < node.attributes.length; i++) {
+
+        var name$1 = getComponentName(node.attributes[i].name);
+
+        if (name$1 && name$1 in components) {
+          UIkit[name$1](node);
+        }
+
+      }
+
+    };
+
+    UIkit.disconnect = function (node) {
+      for (var name in node[DATA]) {
+        node[DATA][name]._callDisconnected();
+      }
+    };
+
+  }
+
+  function getComponentName(attribute) {
+    return startsWith(attribute, 'uk-') || startsWith(attribute, 'data-uk-')
+      ? camelize(attribute.replace('data-uk-', '').replace('uk-', ''))
+      : false;
+  }
+
+  function boot (UIkit) {
+
+    var connect = UIkit.connect;
+    var disconnect = UIkit.disconnect;
+
+    if (!('MutationObserver' in window)) {
+      return;
+    }
+
+    if (document.body) {
+
+      init();
+
+    } else {
+
+      (new MutationObserver(function () {
+
+        if (document.body) {
+          this.disconnect();
+          init();
+        }
+
+      })).observe(document, {childList: true, subtree: true});
+
+    }
+
+    function init() {
+
+      apply$$1(document.body, connect);
+
+      fastdom.flush();
+
+      (new MutationObserver(function (mutations) { return mutations.forEach(applyMutation); })).observe(document, {
+        childList: true,
+        subtree: true,
+        characterData: true,
+        attributes: true
+      });
+
+      UIkit._initialized = true;
+    }
+
+    function applyMutation(mutation) {
+
+      var target = mutation.target;
+      var type = mutation.type;
+
+      var update = type !== 'attributes'
+        ? applyChildList(mutation)
+        : applyAttribute(mutation);
+
+      update && UIkit.update(target);
+
+    }
+
+    function applyAttribute(ref) {
+      var target = ref.target;
+      var attributeName = ref.attributeName;
+
+
+      if (attributeName === 'href') {
+        return true;
+      }
+
+      var name = getComponentName(attributeName);
+
+      if (!name || !(name in UIkit)) {
+        return;
+      }
+
+      if (hasAttr(target, attributeName)) {
+        UIkit[name](target);
+        return true;
+      }
+
+      var component = UIkit.getComponent(target, name);
+
+      if (component) {
+        component.$destroy();
+        return true;
+      }
+
+    }
+
+    function applyChildList(ref) {
+      var addedNodes = ref.addedNodes;
+      var removedNodes = ref.removedNodes;
+
+
+      for (var i = 0; i < addedNodes.length; i++) {
+        apply$$1(addedNodes[i], connect);
+      }
+
+      for (var i$1 = 0; i$1 < removedNodes.length; i$1++) {
+        apply$$1(removedNodes[i$1], disconnect);
+      }
+
+      return true;
+    }
+
+    function apply$$1(node, fn) {
+
+      if (node.nodeType !== 1 || hasAttr(node, 'uk-no-boot')) {
+        return;
+      }
+
+      fn(node);
+      node = node.firstElementChild;
+      while (node) {
+        var next = node.nextElementSibling;
+        apply$$1(node, fn);
+        node = next;
+      }
+    }
+
+  }
+
+  function globalAPI (UIkit) {
+
+    var DATA = UIkit.data;
+
+    UIkit.use = function (plugin) {
+
+      if (plugin.installed) {
+        return;
+      }
+
+      plugin.call(null, this);
+      plugin.installed = true;
+
+      return this;
+    };
+
+    UIkit.mixin = function (mixin, component) {
+      component = (isString(component) ? UIkit.component(component) : component) || this;
+      component.options = mergeOptions(component.options, mixin);
+    };
+
+    UIkit.extend = function (options) {
+
+      options = options || {};
+
+      var Super = this;
+      var Sub = function UIkitComponent (options) {
+        this._init(options);
+      };
+
+      Sub.prototype = Object.create(Super.prototype);
+      Sub.prototype.constructor = Sub;
+      Sub.options = mergeOptions(Super.options, options);
+
+      Sub.super = Super;
+      Sub.extend = Super.extend;
+
+      return Sub;
+    };
+
+    UIkit.update = function (element, e) {
+
+      e = createEvent(e || 'update');
+      element = element ? toNode(element) : document.body;
+
+      path(element, function (element) { return update(element[DATA], e); });
+      apply(element, function (element) { return update(element[DATA], e); });
+
+    };
+
+    var container;
+    Object.defineProperty(UIkit, 'container', {
+
+      get: function() {
+        return container || document.body;
+      },
+
+      set: function(element) {
+        container = $(element);
+      }
+
+    });
+
+    function update(data$$1, e) {
+
+      if (!data$$1) {
+        return;
+      }
+
+      for (var name in data$$1) {
+        if (data$$1[name]._connected) {
+          data$$1[name]._callUpdate(e);
+        }
+      }
+
+    }
+
+    function path(node, fn) {
+      if (node && node !== document.body && node.parentNode) {
+        path(node.parentNode, fn);
+        fn(node.parentNode);
+      }
+    }
+
+  }
+
+  function hooksAPI (UIkit) {
+
+    UIkit.prototype._callHook = function (hook) {
+      var this$1 = this;
+
+
+      var handlers = this.$options[hook];
+
+      if (handlers) {
+        handlers.forEach(function (handler) { return handler.call(this$1); });
+      }
+    };
+
+    UIkit.prototype._callConnected = function () {
+
+      if (this._connected) {
+        return;
+      }
+
+      this._data = {};
+      this._initProps();
+
+      this._callHook('beforeConnect');
+      this._connected = true;
+
+      this._initEvents();
+      this._initObserver();
+
+      this._callHook('connected');
+      this._callUpdate();
+    };
+
+    UIkit.prototype._callDisconnected = function () {
+
+      if (!this._connected) {
+        return;
+      }
+
+      this._callHook('beforeDisconnect');
+
+      if (this._observer) {
+        this._observer.disconnect();
+        this._observer = null;
+      }
+
+      this._unbindEvents();
+      this._callHook('disconnected');
+
+      this._connected = false;
+
+    };
+
+    UIkit.prototype._callUpdate = function (e) {
+      var this$1 = this;
+
+
+      e = createEvent(e || 'update');
+
+      var type = e.type;
+
+      if (includes(['update', 'load', 'resize'], type)) {
+        this._resetComputeds();
+      }
+
+      var updates = this.$options.update;
+      var ref = this._frames;
+      var reads = ref.reads;
+      var writes = ref.writes;
+
+      if (!updates) {
+        return;
+      }
+
+      updates.forEach(function (ref, i) {
+        var read = ref.read;
+        var write = ref.write;
+        var events = ref.events;
+
+
+        if (type !== 'update' && !includes(events, type)) {
+          return;
+        }
+
+        if (read && !includes(fastdom.reads, reads[i])) {
+          reads[i] = fastdom.read(function () {
+
+            var result = this$1._connected && read.call(this$1, this$1._data, e);
+
+            if (result === false && write) {
+              fastdom.clear(writes[i]);
+            } else if (isPlainObject(result)) {
+              assign(this$1._data, result);
+            }
+          });
+        }
+
+        if (write && !includes(fastdom.writes, writes[i])) {
+          writes[i] = fastdom.write(function () { return this$1._connected && write.call(this$1, this$1._data, e); });
+        }
+
+      });
+
+    };
+
+  }
+
+  function stateAPI (UIkit) {
+
+    var uid = 0;
+
+    UIkit.prototype._init = function (options) {
+
+      options = options || {};
+      options.data = normalizeData(options, this.constructor.options);
+
+      this.$options = mergeOptions(this.constructor.options, options, this);
+      this.$el = null;
+      this.$props = {};
+
+      this._frames = {reads: {}, writes: {}};
+      this._events = [];
+
+      this._uid = uid++;
+      this._initData();
+      this._initMethods();
+      this._initComputeds();
+      this._callHook('created');
+
+      if (options.el) {
+        this.$mount(options.el);
+      }
+    };
+
+    UIkit.prototype._initData = function () {
+
+      var ref = this.$options;
+      var data$$1 = ref.data; if ( data$$1 === void 0 ) data$$1 = {};
+
+      for (var key in data$$1) {
+        this.$props[key] = this[key] = data$$1[key];
+      }
+    };
+
+    UIkit.prototype._initMethods = function () {
+
+      var ref = this.$options;
+      var methods = ref.methods;
+
+      if (methods) {
+        for (var key in methods) {
+          this[key] = bind(methods[key], this);
+        }
+      }
+    };
+
+    UIkit.prototype._initComputeds = function () {
+
+      var ref = this.$options;
+      var computed = ref.computed;
+
+      this._resetComputeds();
+
+      if (computed) {
+        for (var key in computed) {
+          registerComputed(this, key, computed[key]);
+        }
+      }
+    };
+
+    UIkit.prototype._resetComputeds = function () {
+      this._computeds = {};
+    };
+
+    UIkit.prototype._initProps = function (props) {
+
+      var key;
+
+      this._resetComputeds();
+
+      props = props || getProps(this.$options, this.$name);
+
+      for (key in props) {
+        if (!isUndefined(props[key])) {
+          this.$props[key] = props[key];
+        }
+      }
+
+      var exclude = [this.$options.computed, this.$options.methods];
+      for (key in this.$props) {
+        if (key in props && notIn(exclude, key)) {
+          this[key] = this.$props[key];
+        }
+      }
+    };
+
+    UIkit.prototype._initEvents = function () {
+      var this$1 = this;
+
+
+      var ref = this.$options;
+      var events = ref.events;
+
+      if (events) {
+
+        events.forEach(function (event) {
+
+          if (!hasOwn(event, 'handler')) {
+            for (var key in event) {
+              registerEvent(this$1, event[key], key);
+            }
+          } else {
+            registerEvent(this$1, event);
+          }
+
+        });
+      }
+    };
+
+    UIkit.prototype._unbindEvents = function () {
+      this._events.forEach(function (unbind) { return unbind(); });
+      this._events = [];
+    };
+
+    UIkit.prototype._initObserver = function () {
+      var this$1 = this;
+
+
+      var ref = this.$options;
+      var attrs = ref.attrs;
+      var props = ref.props;
+      var el = ref.el;
+      if (this._observer || !props || attrs === false) {
+        return;
+      }
+
+      attrs = isArray(attrs) ? attrs : Object.keys(props);
+
+      this._observer = new MutationObserver(function () {
+
+        var data$$1 = getProps(this$1.$options, this$1.$name);
+        if (attrs.some(function (key) { return !isUndefined(data$$1[key]) && data$$1[key] !== this$1.$props[key]; })) {
+          this$1.$reset();
+        }
+
+      });
+
+      var filter$$1 = attrs.map(function (key) { return hyphenate(key); }).concat(this.$name);
+
+      this._observer.observe(el, {
+        attributes: true,
+        attributeFilter: filter$$1.concat(filter$$1.map(function (key) { return ("data-" + key); }))
+      });
+    };
+
+    function getProps(opts, name) {
+
+      var data$$1 = {};
+      var args = opts.args; if ( args === void 0 ) args = [];
+      var props = opts.props; if ( props === void 0 ) props = {};
+      var el = opts.el;
+
+      if (!props) {
+        return data$$1;
+      }
+
+      for (var key in props) {
+        var prop = hyphenate(key);
+        var value = data(el, prop);
+
+        if (!isUndefined(value)) {
+
+          value = props[key] === Boolean && value === ''
+            ? true
+            : coerce(props[key], value);
+
+          if (prop === 'target' && (!value || startsWith(value, '_'))) {
+            continue;
+          }
+
+          data$$1[key] = value;
+        }
+      }
+
+      var options = parseOptions(data(el, name), args);
+
+      for (var key$1 in options) {
+        var prop$1 = camelize(key$1);
+        if (props[prop$1] !== undefined) {
+          data$$1[prop$1] = coerce(props[prop$1], options[key$1]);
+        }
+      }
+
+      return data$$1;
+    }
+
+    function registerComputed(component, key, cb) {
+      Object.defineProperty(component, key, {
+
+        enumerable: true,
+
+        get: function() {
+
+          var _computeds = component._computeds;
+          var $props = component.$props;
+          var $el = component.$el;
+
+          if (!hasOwn(_computeds, key)) {
+            _computeds[key] = (cb.get || cb).call(component, $props, $el);
+          }
+
+          return _computeds[key];
+        },
+
+        set: function(value) {
+
+          var _computeds = component._computeds;
+
+          _computeds[key] = cb.set ? cb.set.call(component, value) : value;
+
+          if (isUndefined(_computeds[key])) {
+            delete _computeds[key];
+          }
+        }
+
+      });
+    }
+
+    function registerEvent(component, event, key) {
+
+      if (!isPlainObject(event)) {
+        event = ({name: key, handler: event});
+      }
+
+      var name = event.name;
+      var el = event.el;
+      var handler = event.handler;
+      var capture = event.capture;
+      var passive = event.passive;
+      var delegate = event.delegate;
+      var filter$$1 = event.filter;
+      var self = event.self;
+      el = isFunction(el)
+        ? el.call(component)
+        : el || component.$el;
+
+      if (isArray(el)) {
+        el.forEach(function (el) { return registerEvent(component, assign({}, event, {el: el}), key); });
+        return;
+      }
+
+      if (!el || filter$$1 && !filter$$1.call(component)) {
+        return;
+      }
+
+      handler = detail(isString(handler) ? component[handler] : bind(handler, component));
+
+      if (self) {
+        handler = selfFilter(handler);
+      }
+
+      component._events.push(
+        on(
+          el,
+          name,
+          !delegate
+            ? null
+            : isString(delegate)
+              ? delegate
+              : delegate.call(component),
+          handler,
+          isBoolean(passive)
+            ? {passive: passive, capture: capture}
+            : capture
+        )
+      );
+
+    }
+
+    function selfFilter(handler) {
+      return function selfHandler(e) {
+        if (e.target === e.currentTarget || e.target === e.current) {
+          return handler.call(null, e);
+        }
+      };
+    }
+
+    function notIn(options, key) {
+      return options.every(function (arr) { return !arr || !hasOwn(arr, key); });
+    }
+
+    function detail(listener) {
+      return function (e) { return isArray(e.detail) ? listener.apply(void 0, [e].concat(e.detail)) : listener(e); };
+    }
+
+    function coerce(type, value) {
+
+      if (type === Boolean) {
+        return toBoolean(value);
+      } else if (type === Number) {
+        return toNumber(value);
+      } else if (type === 'list') {
+        return toList(value);
+      }
+
+      return type ? type(value) : value;
+    }
+
+    function normalizeData(ref, ref$1) {
+      var data$$1 = ref.data;
+      var el = ref.el;
+      var args = ref$1.args;
+      var props = ref$1.props; if ( props === void 0 ) props = {};
+
+      data$$1 = isArray(data$$1)
+        ? args && args.length
+          ? data$$1.slice(0, args.length).reduce(function (data$$1, value, index$$1) {
+            if (isPlainObject(value)) {
+              assign(data$$1, value);
+            } else {
+              data$$1[args[index$$1]] = value;
+            }
+            return data$$1;
+          }, {})
+          : undefined
+        : data$$1;
+
+      if (data$$1) {
+        for (var key in data$$1) {
+          if (isUndefined(data$$1[key])) {
+            delete data$$1[key];
+          } else {
+            data$$1[key] = props[key] ? coerce(props[key], data$$1[key], el) : data$$1[key];
+          }
+        }
+      }
+
+      return data$$1;
+    }
+  }
+
+  function instanceAPI (UIkit) {
+
+    var DATA = UIkit.data;
+
+    UIkit.prototype.$mount = function (el) {
+
+      var ref = this.$options;
+      var name = ref.name;
+
+      if (!el[DATA]) {
+        el[DATA] = {};
+      }
+
+      if (el[DATA][name]) {
+        return;
+      }
+
+      el[DATA][name] = this;
+
+      this.$el = this.$options.el = this.$options.el || el;
+
+      if (within(el, document)) {
+        this._callConnected();
+      }
+    };
+
+    UIkit.prototype.$emit = function (e) {
+      this._callUpdate(e);
+    };
+
+    UIkit.prototype.$reset = function () {
+      this._callDisconnected();
+      this._callConnected();
+    };
+
+    UIkit.prototype.$destroy = function (removeEl) {
+      if ( removeEl === void 0 ) removeEl = false;
+
+
+      var ref = this.$options;
+      var el = ref.el;
+      var name = ref.name;
+
+      if (el) {
+        this._callDisconnected();
+      }
+
+      this._callHook('destroy');
+
+      if (!el || !el[DATA]) {
+        return;
+      }
+
+      delete el[DATA][name];
+
+      if (!Object.keys(el[DATA]).length) {
+        delete el[DATA];
+      }
+
+      if (removeEl) {
+        remove(this.$el);
+      }
+    };
+
+    UIkit.prototype.$create = function (component, element, data$$1) {
+      return UIkit[component](element, data$$1);
+    };
+
+    UIkit.prototype.$update = UIkit.update;
+    UIkit.prototype.$getComponent = UIkit.getComponent;
+
+    var names = {};
+    Object.defineProperties(UIkit.prototype, {
+
+      $container: Object.getOwnPropertyDescriptor(UIkit, 'container'),
+
+      $name: {
+
+        get: function() {
+          var ref = this.$options;
+          var name = ref.name;
+
+          if (!names[name]) {
+            names[name] = UIkit.prefix + hyphenate(name);
+          }
+
+          return names[name];
+        }
+
+      }
+
+    });
+
+  }
+
+  var UIkit = function (options) {
+    this._init(options);
+  };
+
+  UIkit.util = util;
+  UIkit.data = '__uikit__';
+  UIkit.prefix = 'uk-';
+  UIkit.options = {};
+
+  globalAPI(UIkit);
+  hooksAPI(UIkit);
+  stateAPI(UIkit);
+  componentAPI(UIkit);
+  instanceAPI(UIkit);
+
+  var Class = {
+
+    connected: function() {
+      !hasClass(this.$el, this.$name) && addClass(this.$el, this.$name);
+    }
+
+  };
+
+  var Togglable = {
+
+    props: {
+      cls: Boolean,
+      animation: 'list',
+      duration: Number,
+      origin: String,
+      transition: String,
+      queued: Boolean
+    },
+
+    data: {
+      cls: false,
+      animation: [false],
+      duration: 200,
+      origin: false,
+      transition: 'linear',
+      queued: false,
+
+      initProps: {
+        overflow: '',
+        height: '',
+        paddingTop: '',
+        paddingBottom: '',
+        marginTop: '',
+        marginBottom: ''
+      },
+
+      hideProps: {
+        overflow: 'hidden',
+        height: 0,
+        paddingTop: 0,
+        paddingBottom: 0,
+        marginTop: 0,
+        marginBottom: 0
+      }
+
+    },
+
+    computed: {
+
+      hasAnimation: function(ref) {
+        var animation = ref.animation;
+
+        return !!animation[0];
+      },
+
+      hasTransition: function(ref) {
+        var animation = ref.animation;
+
+        return this.hasAnimation && animation[0] === true;
+      }
+
+    },
+
+    methods: {
+
+      toggleElement: function(targets, show, animate$$1) {
+        var this$1 = this;
+
+        return new Promise(function (resolve) {
+
+          targets = toNodes(targets);
+
+          var all = function (targets) { return Promise.all(targets.map(function (el) { return this$1._toggleElement(el, show, animate$$1); })); };
+          var toggled = targets.filter(function (el) { return this$1.isToggled(el); });
+          var untoggled = targets.filter(function (el) { return !includes(toggled, el); });
+
+          var p;
+
+          if (!this$1.queued || !isUndefined(animate$$1) || !isUndefined(show) || !this$1.hasAnimation || targets.length < 2) {
+
+            p = all(untoggled.concat(toggled));
+
+          } else {
+
+            var body = document.body;
+            var scroll = body.scrollTop;
+            var el = toggled[0];
+            var inProgress = Animation.inProgress(el) && hasClass(el, 'uk-animation-leave')
+              || Transition.inProgress(el) && el.style.height === '0px';
+
+            p = all(toggled);
+
+            if (!inProgress) {
+              p = p.then(function () {
+                var p = all(untoggled);
+                body.scrollTop = scroll;
+                return p;
+              });
+            }
+
+          }
+
+          p.then(resolve, noop);
+
+        });
+      },
+
+      toggleNow: function(targets, show) {
+        var this$1 = this;
+
+        return new Promise(function (resolve) { return Promise.all(toNodes(targets).map(function (el) { return this$1._toggleElement(el, show, false); })).then(resolve, noop); });
+      },
+
+      isToggled: function(el) {
+        var nodes = toNodes(el || this.$el);
+        return this.cls
+          ? hasClass(nodes, this.cls.split(' ')[0])
+          : !hasAttr(nodes, 'hidden');
+      },
+
+      updateAria: function(el) {
+        if (this.cls === false) {
+          attr(el, 'aria-hidden', !this.isToggled(el));
         }
       },
-      handler(e) {
-        if (!pt(e)) return;
-        const i = kt(e),
-          s = "tagName" in e.target ? e.target : O(e.target);
-        z(document, `${_t} ${li} scroll`, n => {
-          const {
-            x: o,
-            y: r
-          } = kt(n);
-          (n.type !== "scroll" && s && o && Math.abs(i.x - o) > 100 || r && Math.abs(i.y - r) > 100) && setTimeout(() => {
-            v(s, "swipe"), v(s, `swipe${ta(i.x,i.y,o,r)}`)
-          })
-        })
+
+      _toggleElement: function(el, show, animate$$1) {
+        var this$1 = this;
+
+
+        show = isBoolean(show)
+          ? show
+          : Animation.inProgress(el)
+            ? hasClass(el, 'uk-animation-leave')
+            : Transition.inProgress(el)
+              ? el.style.height === '0px'
+              : !this.isToggled(el);
+
+        if (!trigger(el, ("before" + (show ? 'show' : 'hide')), [this])) {
+          return Promise.reject();
+        }
+
+        var promise = (
+          isFunction(animate$$1)
+            ? animate$$1
+            : animate$$1 === false || !this.hasAnimation
+              ? this._toggle
+              : this.hasTransition
+                ? toggleHeight(this)
+                : toggleAnimation(this)
+        )(el, show);
+
+        trigger(el, show ? 'show' : 'hide', [this]);
+
+        var final = function () {
+          trigger(el, show ? 'shown' : 'hidden', [this$1]);
+          this$1.$update(el);
+        };
+
+        return promise ? promise.then(final) : Promise.resolve(final());
       },
-      ...t
+
+      _toggle: function(el, toggled) {
+
+        if (!el) {
+          return;
+        }
+
+        var changed;
+        if (this.cls) {
+          changed = includes(this.cls, ' ') || Boolean(toggled) !== hasClass(el, this.cls);
+          changed && toggleClass(el, this.cls, includes(this.cls, ' ') ? undefined : toggled);
+        } else {
+          changed = Boolean(toggled) === hasAttr(el, 'hidden');
+          changed && attr(el, 'hidden', !toggled ? '' : null);
+        }
+
+        $$('[autofocus]', el).some(function (el) { return isVisible(el) && (el.focus() || true); });
+
+        this.updateAria(el);
+        changed && this.$update(el);
+      }
+
     }
+
+  };
+
+  function toggleHeight(ref) {
+    var isToggled = ref.isToggled;
+    var duration = ref.duration;
+    var initProps = ref.initProps;
+    var hideProps = ref.hideProps;
+    var transition$$1 = ref.transition;
+    var _toggle = ref._toggle;
+
+    return function (el, show) {
+
+      var inProgress = Transition.inProgress(el);
+      var inner = el.hasChildNodes ? toFloat(css(el.firstElementChild, 'marginTop')) + toFloat(css(el.lastElementChild, 'marginBottom')) : 0;
+      var currentHeight = isVisible(el) ? height(el) + (inProgress ? 0 : inner) : 0;
+
+      Transition.cancel(el);
+
+      if (!isToggled(el)) {
+        _toggle(el, true);
+      }
+
+      height(el, '');
+
+      // Update child components first
+      fastdom.flush();
+
+      var endHeight = height(el) + (inProgress ? 0 : inner);
+      height(el, currentHeight);
+
+      return (show
+          ? Transition.start(el, assign({}, initProps, {overflow: 'hidden', height: endHeight}), Math.round(duration * (1 - currentHeight / endHeight)), transition$$1)
+          : Transition.start(el, hideProps, Math.round(duration * (currentHeight / endHeight)), transition$$1).then(function () { return _toggle(el, false); })
+      ).then(function () { return css(el, initProps); });
+
+    };
   }
 
-  function Ve(t, e, i) {
-    return {
-      observe: t,
-      handler() {
-        qe(this, i)
+  function toggleAnimation(ref) {
+    var animation = ref.animation;
+    var duration = ref.duration;
+    var origin = ref.origin;
+    var _toggle = ref._toggle;
+
+    return function (el, show) {
+
+      Animation.cancel(el);
+
+      if (show) {
+        _toggle(el, true);
+        return Animation.in(el, animation[0], duration, origin);
+      }
+
+      return Animation.out(el, animation[1] || animation[0], duration, origin).then(function () { return _toggle(el, false); });
+    };
+  }
+
+  var Accordion = {
+
+    mixins: [Class, Togglable],
+
+    props: {
+      targets: String,
+      active: null,
+      collapsible: Boolean,
+      multiple: Boolean,
+      toggle: String,
+      content: String,
+      transition: String
+    },
+
+    data: {
+      targets: '> *',
+      active: false,
+      animation: [true],
+      collapsible: true,
+      multiple: false,
+      clsOpen: 'uk-open',
+      toggle: '> .uk-accordion-title',
+      content: '> .uk-accordion-content',
+      transition: 'ease'
+    },
+
+    computed: {
+
+      items: function(ref, $el) {
+        var targets = ref.targets;
+
+        return $$(targets, $el);
+      }
+
+    },
+
+    events: [
+
+      {
+
+        name: 'click',
+
+        delegate: function() {
+          return ((this.targets) + " " + (this.$props.toggle));
+        },
+
+        handler: function(e) {
+          e.preventDefault();
+          this.toggle(index($$(((this.targets) + " " + (this.$props.toggle)), this.$el), e.current));
+        }
+
+      }
+
+    ],
+
+    connected: function() {
+
+      if (this.active === false) {
+        return;
+      }
+
+      var active = this.items[Number(this.active)];
+      if (active && !hasClass(active, this.clsOpen)) {
+        this.toggle(active, false);
+      }
+    },
+
+    update: function() {
+      var this$1 = this;
+
+
+      this.items.forEach(function (el) { return this$1._toggle($(this$1.content, el), hasClass(el, this$1.clsOpen)); });
+
+      var active = !this.collapsible && !hasClass(this.items, this.clsOpen) && this.items[0];
+      if (active) {
+        this.toggle(active, false);
+      }
+    },
+
+    methods: {
+
+      toggle: function(item, animate$$1) {
+        var this$1 = this;
+
+
+        var index$$1 = getIndex(item, this.items);
+        var active = filter(this.items, ("." + (this.clsOpen)));
+
+        item = this.items[index$$1];
+
+        item && [item]
+          .concat(!this.multiple && !includes(active, item) && active || [])
+          .forEach(function (el) {
+
+            var isItem = el === item;
+            var state = isItem && !hasClass(el, this$1.clsOpen);
+
+            if (!state && isItem && !this$1.collapsible && active.length < 2) {
+              return;
+            }
+
+            toggleClass(el, this$1.clsOpen, state);
+
+            var content = el._wrapper ? el._wrapper.firstElementChild : $(this$1.content, el);
+
+            if (!el._wrapper) {
+              el._wrapper = wrapAll(content, '<div>');
+              attr(el._wrapper, 'hidden', state ? '' : null);
+            }
+
+            this$1._toggle(content, true);
+            this$1.toggleElement(el._wrapper, state, animate$$1).then(function () {
+
+              if (hasClass(el, this$1.clsOpen) !== state) {
+                return;
+              }
+
+              if (!state) {
+                this$1._toggle(content, false);
+              }
+
+              el._wrapper = null;
+              unwrap(content);
+
+            });
+
+          });
+      }
+
+    }
+
+  };
+
+  var Alert = {
+
+    mixins: [Class, Togglable],
+
+    args: 'animation',
+
+    props: {
+      close: String
+    },
+
+    data: {
+      animation: [true],
+      selClose: '.uk-alert-close',
+      duration: 150,
+      hideProps: assign({opacity: 0}, Togglable.data.hideProps)
+    },
+
+    events: [
+
+      {
+
+        name: 'click',
+
+        delegate: function() {
+          return this.selClose;
+        },
+
+        handler: function(e) {
+          e.preventDefault();
+          this.close();
+        }
+
+      }
+
+    ],
+
+    methods: {
+
+      close: function() {
+        var this$1 = this;
+
+        this.toggleElement(this.$el).then(function () { return this$1.$destroy(true); });
+      }
+
+    }
+
+  };
+
+  function Core (UIkit) {
+
+    ready(function () {
+
+      UIkit.update();
+
+      var scroll = 0;
+      var started = 0;
+
+      on(window, 'load resize', function (e) { return UIkit.update(null, e); });
+      on(window, 'scroll', function (e) {
+        var target = e.target;
+        e.dir = scroll <= window.pageYOffset ? 'down' : 'up';
+        e.pageYOffset = scroll = window.pageYOffset;
+        UIkit.update(target.nodeType !== 1 ? document.body : target, e);
+      }, {passive: true, capture: true});
+      on(document, 'loadedmetadata load', function (ref) {
+        var target = ref.target;
+
+        return UIkit.update(target, 'load');
+      }, true);
+
+      on(document, 'animationstart', function (ref) {
+        var target = ref.target;
+
+        if ((css(target, 'animationName') || '').match(/^uk-.*(left|right)/)) {
+
+          started++;
+          css(document.body, 'overflowX', 'hidden');
+          setTimeout(function () {
+            if (!--started) {
+              css(document.body, 'overflowX', '');
+            }
+          }, toMs(css(target, 'animationDuration')) + 100);
+        }
+      }, true);
+
+    });
+
+  }
+
+  var Video = {
+
+    args: 'autoplay',
+
+    props: {
+      automute: Boolean,
+      autoplay: Boolean,
+    },
+
+    data: {
+      automute: false,
+      autoplay: true
+    },
+
+    computed: {
+
+      inView: function(ref) {
+        var autoplay = ref.autoplay;
+
+        return autoplay === 'inview';
+      }
+
+    },
+
+    connected: function() {
+
+      if (this.inView && !hasAttr(this.$el, 'preload')) {
+        this.$el.preload = 'none';
+      }
+
+      this.player = new Player(this.$el);
+
+      if (this.automute) {
+        this.player.mute();
+      }
+
+    },
+
+    update: {
+
+      read: function(_, ref) {
+        var type = ref.type;
+
+
+        return !this.player || (type === 'scroll' || type === 'resize') && !this.inView
+          ? false
+          : {
+            visible: isVisible(this.$el) && css(this.$el, 'visibility') !== 'hidden',
+            inView: this.inView && isInView(this.$el)
+          };
       },
-      ...e
+
+      write: function(ref) {
+        var visible = ref.visible;
+        var inView = ref.inView;
+
+
+        if (!visible || this.inView && !inView) {
+          this.player.pause();
+        } else if (this.autoplay === true || this.inView && inView) {
+          this.player.play();
+        }
+
+      },
+
+      events: ['load', 'resize', 'scroll']
+
     }
+
+  };
+
+  var Cover = {
+
+    mixins: [Class, Video],
+
+    props: {
+      width: Number,
+      height: Number
+    },
+
+    data: {
+      automute: true
+    },
+
+    update: {
+
+      read: function() {
+
+        var el = this.$el;
+
+        if (!isVisible(el)) {
+          return false;
+        }
+
+        var ref = el.parentNode;
+        var height$$1 = ref.offsetHeight;
+        var width$$1 = ref.offsetWidth;
+
+        return {height: height$$1, width: width$$1};
+      },
+
+      write: function(ref) {
+        var height$$1 = ref.height;
+        var width$$1 = ref.width;
+
+
+        var el = this.$el;
+        var elWidth = this.width || el.naturalWidth || el.videoWidth || el.clientWidth;
+        var elHeight = this.height || el.naturalHeight || el.videoHeight || el.clientHeight;
+
+        if (!elWidth || !elHeight) {
+          return;
+        }
+
+        css(el, Dimensions.cover(
+          {
+            width: elWidth,
+            height: elHeight
+          },
+          {
+            width: width$$1 + (width$$1 % 2 ? 1 : 0),
+            height: height$$1 + (height$$1 % 2 ? 1 : 0)
+          }
+        ));
+
+      },
+
+      events: ['load', 'resize']
+
+    }
+
+  };
+
+  var Position = {
+
+    props: {
+      pos: String,
+      offset: null,
+      flip: Boolean,
+      clsPos: String
+    },
+
+    data: {
+      pos: ("bottom-" + (!isRtl ? 'left' : 'right')),
+      flip: true,
+      offset: false,
+      clsPos: ''
+    },
+
+    computed: {
+
+      pos: function(ref) {
+        var pos = ref.pos;
+
+        return (pos + (!includes(pos, '-') ? '-center' : '')).split('-');
+      },
+
+      dir: function() {
+        return this.pos[0];
+      },
+
+      align: function() {
+        return this.pos[1];
+      }
+
+    },
+
+    methods: {
+
+      positionAt: function(element, target, boundary) {
+
+        removeClasses(element, ((this.clsPos) + "-(top|bottom|left|right)(-[a-z]+)?"));
+        css(element, {top: '', left: ''});
+
+        var node;
+        var ref = this;
+        var offset$$1 = ref.offset;
+        var axis = this.getAxis();
+
+        offset$$1 = isNumeric(offset$$1)
+          ? offset$$1
+          : (node = $(offset$$1))
+            ? offset(node)[axis === 'x' ? 'left' : 'top'] - offset(target)[axis === 'x' ? 'right' : 'bottom']
+            : 0;
+
+        var ref$1 = positionAt(
+          element,
+          target,
+          axis === 'x' ? ((flipPosition(this.dir)) + " " + (this.align)) : ((this.align) + " " + (flipPosition(this.dir))),
+          axis === 'x' ? ((this.dir) + " " + (this.align)) : ((this.align) + " " + (this.dir)),
+          axis === 'x' ? ("" + (this.dir === 'left' ? -offset$$1 : offset$$1)) : (" " + (this.dir === 'top' ? -offset$$1 : offset$$1)),
+          null,
+          this.flip,
+          boundary
+        ).target;
+        var x = ref$1.x;
+        var y = ref$1.y;
+
+        this.dir = axis === 'x' ? x : y;
+        this.align = axis === 'x' ? y : x;
+
+        toggleClass(element, ((this.clsPos) + "-" + (this.dir) + "-" + (this.align)), this.offset === false);
+
+      },
+
+      getAxis: function() {
+        return this.dir === 'top' || this.dir === 'bottom' ? 'y' : 'x';
+      }
+
+    }
+
+  };
+
+  var active;
+
+  var Drop = {
+
+    mixins: [Position, Togglable],
+
+    args: 'pos',
+
+    props: {
+      mode: 'list',
+      toggle: Boolean,
+      boundary: Boolean,
+      boundaryAlign: Boolean,
+      delayShow: Number,
+      delayHide: Number,
+      clsDrop: String
+    },
+
+    data: {
+      mode: ['click', 'hover'],
+      toggle: '- *',
+      boundary: window,
+      boundaryAlign: false,
+      delayShow: 0,
+      delayHide: 800,
+      clsDrop: false,
+      hoverIdle: 200,
+      animation: ['uk-animation-fade'],
+      cls: 'uk-open'
+    },
+
+    computed: {
+
+      boundary: function(ref, $el) {
+        var boundary = ref.boundary;
+
+        return query(boundary, $el);
+      },
+
+      clsDrop: function(ref) {
+        var clsDrop = ref.clsDrop;
+
+        return clsDrop || ("uk-" + (this.$options.name));
+      },
+
+      clsPos: function() {
+        return this.clsDrop;
+      }
+
+    },
+
+    created: function() {
+      this.tracker = new MouseTracker();
+    },
+
+    connected: function() {
+
+      addClass(this.$el, this.clsDrop);
+
+      var ref = this.$props;
+      var toggle = ref.toggle;
+      this.toggle = toggle && this.$create('toggle', query(toggle, this.$el), {
+        target: this.$el,
+        mode: this.mode
+      });
+
+      !this.toggle && trigger(this.$el, 'updatearia');
+
+    },
+
+    events: [
+
+
+      {
+
+        name: 'click',
+
+        delegate: function() {
+          return ("." + (this.clsDrop) + "-close");
+        },
+
+        handler: function(e) {
+          e.preventDefault();
+          this.hide(false);
+        }
+
+      },
+
+      {
+
+        name: 'click',
+
+        delegate: function() {
+          return 'a[href^="#"]';
+        },
+
+        handler: function(e) {
+
+          if (e.defaultPrevented) {
+            return;
+          }
+
+          var id = e.target.hash;
+
+          if (!id) {
+            e.preventDefault();
+          }
+
+          if (!id || !within(id, this.$el)) {
+            this.hide(false);
+          }
+        }
+
+      },
+
+      {
+
+        name: 'beforescroll',
+
+        handler: function() {
+          this.hide(false);
+        }
+
+      },
+
+      {
+
+        name: 'toggle',
+
+        self: true,
+
+        handler: function(e, toggle) {
+
+          e.preventDefault();
+
+          if (this.isToggled()) {
+            this.hide(false);
+          } else {
+            this.show(toggle, false);
+          }
+        }
+
+      },
+
+      {
+
+        name: pointerEnter,
+
+        filter: function() {
+          return includes(this.mode, 'hover');
+        },
+
+        handler: function(e) {
+
+          if (isTouch(e)) {
+            return;
+          }
+
+          if (active
+            && active !== this
+            && active.toggle
+            && includes(active.toggle.mode, 'hover')
+            && !within(e.target, active.toggle.$el)
+            && !pointInRect({x: e.pageX, y: e.pageY}, offset(active.$el))
+          ) {
+            active.hide(false);
+          }
+
+          e.preventDefault();
+          this.show(this.toggle);
+        }
+
+      },
+
+      {
+
+        name: 'toggleshow',
+
+        handler: function(e, toggle) {
+
+          if (toggle && !includes(toggle.target, this.$el)) {
+            return;
+          }
+
+          e.preventDefault();
+          this.show(toggle || this.toggle);
+        }
+
+      },
+
+      {
+
+        name: ("togglehide " + pointerLeave),
+
+        handler: function(e, toggle) {
+
+          if (isTouch(e) || toggle && !includes(toggle.target, this.$el)) {
+            return;
+          }
+
+          e.preventDefault();
+
+          if (this.toggle && includes(this.toggle.mode, 'hover')) {
+            this.hide();
+          }
+        }
+
+      },
+
+      {
+
+        name: 'beforeshow',
+
+        self: true,
+
+        handler: function() {
+          this.clearTimers();
+          Animation.cancel(this.$el);
+          this.position();
+        }
+
+      },
+
+      {
+
+        name: 'show',
+
+        self: true,
+
+        handler: function() {
+          this.tracker.init();
+          trigger(this.$el, 'updatearia');
+          registerEvent();
+        }
+
+      },
+
+      {
+
+        name: 'beforehide',
+
+        self: true,
+
+        handler: function() {
+          this.clearTimers();
+        }
+
+      },
+
+      {
+
+        name: 'hide',
+
+        handler: function(ref) {
+          var target = ref.target;
+
+
+          if (this.$el !== target) {
+            active = active === null && within(target, this.$el) && this.isToggled() ? this : active;
+            return;
+          }
+
+          active = this.isActive() ? null : active;
+          trigger(this.$el, 'updatearia');
+          this.tracker.cancel();
+        }
+
+      },
+
+      {
+
+        name: 'updatearia',
+
+        self: true,
+
+        handler: function(e, toggle) {
+
+          e.preventDefault();
+
+          this.updateAria(this.$el);
+
+          if (toggle || this.toggle) {
+            attr((toggle || this.toggle).$el, 'aria-expanded', this.isToggled() ? 'true' : 'false');
+            toggleClass(this.toggle.$el, this.cls, this.isToggled());
+          }
+        }
+      }
+
+    ],
+
+    update: {
+
+      write: function() {
+
+        if (this.isToggled() && !Animation.inProgress(this.$el)) {
+          this.position();
+        }
+
+      },
+
+      events: ['resize']
+
+    },
+
+    methods: {
+
+      show: function(toggle, delay) {
+        var this$1 = this;
+        if ( delay === void 0 ) delay = true;
+
+
+        var show = function () { return !this$1.isToggled() && this$1.toggleElement(this$1.$el, true); };
+        var tryShow = function () {
+
+          this$1.toggle = toggle || this$1.toggle;
+
+          this$1.clearTimers();
+
+          if (this$1.isActive()) {
+            return;
+          } else if (delay && active && active !== this$1 && active.isDelaying) {
+            this$1.showTimer = setTimeout(this$1.show, 10);
+            return;
+          } else if (this$1.isParentOf(active)) {
+
+            if (active.hideTimer) {
+              active.hide(false);
+            } else {
+              return;
+            }
+
+          } else if (active && this$1.isChildOf(active)) {
+
+            active.clearTimers();
+
+          } else if (active && !this$1.isChildOf(active) && !this$1.isParentOf(active)) {
+
+            var prev;
+            while (active && active !== prev && !this$1.isChildOf(active)) {
+              prev = active;
+              active.hide(false);
+            }
+
+          }
+
+          if (delay && this$1.delayShow) {
+            this$1.showTimer = setTimeout(show, this$1.delayShow);
+          } else {
+            show();
+          }
+
+          active = this$1;
+        };
+
+        if (toggle && this.toggle && toggle.$el !== this.toggle.$el) {
+
+          once(this.$el, 'hide', tryShow);
+          this.hide(false);
+
+        } else {
+          tryShow();
+        }
+      },
+
+      hide: function(delay) {
+        var this$1 = this;
+        if ( delay === void 0 ) delay = true;
+
+
+        var hide = function () { return this$1.toggleNow(this$1.$el, false); };
+
+        this.clearTimers();
+
+        this.isDelaying = this.tracker.movesTo(this.$el);
+
+        if (delay && this.isDelaying) {
+          this.hideTimer = setTimeout(this.hide, this.hoverIdle);
+        } else if (delay && this.delayHide) {
+          this.hideTimer = setTimeout(hide, this.delayHide);
+        } else {
+          hide();
+        }
+      },
+
+      clearTimers: function() {
+        clearTimeout(this.showTimer);
+        clearTimeout(this.hideTimer);
+        this.showTimer = null;
+        this.hideTimer = null;
+        this.isDelaying = false;
+      },
+
+      isActive: function() {
+        return active === this;
+      },
+
+      isChildOf: function(drop) {
+        return drop && drop !== this && within(this.$el, drop.$el);
+      },
+
+      isParentOf: function(drop) {
+        return drop && drop !== this && within(drop.$el, this.$el);
+      },
+
+      position: function() {
+
+        removeClasses(this.$el, ((this.clsDrop) + "-(stack|boundary)"));
+        css(this.$el, {top: '', left: '', display: 'block'});
+        toggleClass(this.$el, ((this.clsDrop) + "-boundary"), this.boundaryAlign);
+
+        var boundary = offset(this.boundary);
+        var alignTo = this.boundaryAlign ? boundary : offset(this.toggle.$el);
+
+        if (this.align === 'justify') {
+          var prop = this.getAxis() === 'y' ? 'width' : 'height';
+          css(this.$el, prop, alignTo[prop]);
+        } else if (this.$el.offsetWidth > Math.max(boundary.right - alignTo.left, alignTo.right - boundary.left)) {
+          addClass(this.$el, ((this.clsDrop) + "-stack"));
+        }
+
+        this.positionAt(this.$el, this.boundaryAlign ? this.boundary : this.toggle.$el, this.boundary);
+
+        css(this.$el, 'display', '');
+
+      }
+
+    }
+
+  };
+
+  var registered;
+
+  function registerEvent() {
+
+    if (registered) {
+      return;
+    }
+
+    registered = true;
+    on(document, pointerUp, function (ref) {
+      var target = ref.target;
+      var defaultPrevented = ref.defaultPrevented;
+
+      var prev;
+
+      if (defaultPrevented) {
+        return;
+      }
+
+      while (active && active !== prev && !within(target, active.$el) && !(active.toggle && within(target, active.toggle.$el))) {
+        prev = active;
+        active.hide(false);
+      }
+    });
   }
 
-  function ta(t, e, i, s) {
-    return Math.abs(t - i) >= Math.abs(e - s) ? t - i > 0 ? "Left" : "Right" : e - s > 0 ? "Up" : "Down"
-  }
+  var Dropdown = {
 
-  function ea(t) {
-    return E(t).map(e => {
-      const {
-        ownerDocument: i
-      } = e, s = Dt(e, !0);
-      return s === i.scrollingElement ? i : s
-    })
-  }
-  var Pn = {
+    extends: Drop
+
+  };
+
+  var FormCustom = {
+
+    mixins: [Class],
+
+    args: 'target',
+
+    props: {
+      target: Boolean
+    },
+
+    data: {
+      target: false
+    },
+
+    computed: {
+
+      input: function(_, $el) {
+        return $(selInput, $el);
+      },
+
+      state: function() {
+        return this.input.nextElementSibling;
+      },
+
+      target: function(ref, $el) {
+        var target = ref.target;
+
+        return target && (target === true
+          && this.input.parentNode === $el
+          && this.input.nextElementSibling
+          || query(target, $el));
+      }
+
+    },
+
+    update: function() {
+
+      var ref = this;
+      var target = ref.target;
+      var input = ref.input;
+
+      if (!target) {
+        return;
+      }
+
+      var option;
+      var prop = isInput(target) ? 'value' : 'textContent';
+      var prev = target[prop];
+      var value = input.files && input.files[0]
+        ? input.files[0].name
+        : matches(input, 'select') && (option = $$('option', input).filter(function (el) { return el.selected; })[0])
+          ? option.textContent
+          : input.value;
+
+      if (prev !== value) {
+        target[prop] = value;
+      }
+
+    },
+
+    events: [
+
+      {
+
+        name: 'focusin focusout mouseenter mouseleave',
+
+        delegate: selInput,
+
+        handler: function(ref) {
+          var type = ref.type;
+          var current = ref.current;
+
+          if (current === this.input) {
+            toggleClass(
+              this.state,
+              ("uk-" + (includes(type, 'focus') ? 'focus' : 'hover')),
+              includes(['focusin', 'mouseenter'], type)
+            );
+          }
+        }
+
+      },
+
+      {
+
+        name: 'change',
+
+        handler: function() {
+          this.$emit();
+        }
+
+      }
+
+    ]
+
+  };
+
+  // Deprecated
+  var Gif = {
+
+    update: {
+
+      read: function(data$$1) {
+
+        var inview = isInView(this.$el);
+
+        if (!inview || data$$1.isInView === inview) {
+          return false;
+        }
+
+        data$$1.isInView = inview;
+      },
+
+      write: function() {
+        this.$el.src = this.$el.src;
+      },
+
+      events: ['scroll', 'load', 'resize']
+    }
+
+  };
+
+  var Margin = {
+
     props: {
       margin: String,
       firstColumn: Boolean
     },
+
     data: {
-      margin: "uk-margin-small-top",
-      firstColumn: "uk-first-column"
+      margin: 'uk-margin-small-top',
+      firstColumn: 'uk-first-column'
     },
-    observe: [ki({
-      options: {
-        childList: !0
-      }
-    }), ki({
-      options: {
-        attributes: !0,
-        attributeFilter: ["style"]
-      }
-    }), dt({
-      handler(t) {
-        for (const {
-          borderBoxSize: [{
-            inlineSize: e,
-            blockSize: i
-          }]
-        } of t)
-          if (e || i) {
-            this.$emit("resize");
-            return
-          }
-      },
-      target: ({
-                 $el: t
-               }) => [t, ...N(t)]
-    })],
+
     update: {
-      read() {
-        return {
-          rows: ws(N(this.$el))
+
+      read: function(data$$1) {
+
+        var items = this.$el.children;
+        var rows = [[]];
+
+        if (!items.length || !isVisible(this.$el)) {
+          return data$$1.rows = rows;
         }
+
+        data$$1.rows = getRows(items);
+        data$$1.stacks = !data$$1.rows.some(function (row) { return row.length > 1; });
+
       },
-      write({
-              rows: t
-            }) {
-        for (const e of t)
-          for (const i of e) L(i, this.margin, t[0] !== e), L(i, this.firstColumn, e[U ? e.length - 1 : 0] === i)
+
+      write: function(ref) {
+        var this$1 = this;
+        var rows = ref.rows;
+
+
+        rows.forEach(function (row, i) { return row.forEach(function (el, j) {
+            toggleClass(el, this$1.margin, i !== 0);
+            toggleClass(el, this$1.firstColumn, j === 0);
+          }); }
+        );
+
       },
-      events: ["resize"]
+
+      events: ['load', 'resize']
+
     }
+
   };
 
-  function ws(t) {
-    const e = [
-        []
-      ],
-      i = t.some((s, n) => n && t[n - 1].offsetParent !== s.offsetParent);
-    for (const s of t) {
-      if (!q(s)) continue;
-      const n = xs(s, i);
-      for (let o = e.length - 1; o >= 0; o--) {
-        const r = e[o];
-        if (!r[0]) {
-          r.push(s);
-          break
+  function getRows(items) {
+    var rows = [[]];
+
+    for (var i = 0; i < items.length; i++) {
+
+      var el = items[i];
+      var dim = getOffset(el);
+
+      if (!dim.height) {
+        continue;
+      }
+
+      for (var j = rows.length - 1; j >= 0; j--) {
+
+        var row = rows[j];
+
+        if (!row[0]) {
+          row.push(el);
+          break;
         }
-        const a = xs(r[0], i);
-        if (n.top >= a.bottom - 1 && n.top !== a.top) {
-          e.push([s]);
-          break
+
+        var leftDim = (void 0);
+        if (row[0].offsetParent === el.offsetParent) {
+          leftDim = getOffset(row[0]);
+        } else {
+          dim = getOffset(el, true);
+          leftDim = getOffset(row[0], true);
         }
-        if (n.bottom - 1 > a.top || n.top === a.top) {
-          let l = r.length - 1;
-          for (; l >= 0; l--) {
-            const c = xs(r[l], i);
-            if (n.left >= c.left) break
+
+        if (dim.top >= leftDim.bottom - 1) {
+          rows.push([el]);
+          break;
+        }
+
+        if (dim.bottom > leftDim.top) {
+
+          if (dim.left < leftDim.left && !isRtl) {
+            row.unshift(el);
+            break;
           }
-          r.splice(l + 1, 0, s);
-          break
+
+          row.push(el);
+          break;
         }
-        if (o === 0) {
-          e.unshift([s]);
-          break
+
+        if (j === 0) {
+          rows.unshift([el]);
+          break;
         }
+
       }
+
     }
-    return e
+
+    return rows;
+
   }
 
-  function xs(t, e = !1) {
-    let {
-      offsetTop: i,
-      offsetLeft: s,
-      offsetHeight: n,
-      offsetWidth: o
-    } = t;
-    return e && ([i, s] = Le(t)), {
-      top: i,
-      left: s,
-      bottom: i + n,
-      right: s + o
+  function getOffset(element, offset$$1) {
+    var assign$$1;
+
+    if ( offset$$1 === void 0 ) offset$$1 = false;
+
+    var offsetTop = element.offsetTop;
+    var offsetLeft = element.offsetLeft;
+    var offsetHeight = element.offsetHeight;
+
+    if (offset$$1) {
+      (assign$$1 = offsetPosition(element), offsetTop = assign$$1[0], offsetLeft = assign$$1[1]);
     }
-  }
-  const $s = "uk-transition-leave",
-    ys = "uk-transition-enter";
 
-  function _n(t, e, i, s = 0) {
-    const n = ks(e, !0),
-      o = {
-        opacity: 1
-      },
-      r = {
-        opacity: 0
-      },
-      a = () => n === ks(e),
-      l = d => () => a() ? d() : Promise.reject(),
-      c = l(async () => {
-        I(e, $s), await (s ? Promise.all(On(e).map(async (d, f) => (await Ss(f * s), M.start(d, r, i / 2, "ease")))) : M.start(e, r, i / 2, "ease")), _(e, $s)
-      }),
-      u = l(async () => {
-        const d = tt(e);
-        I(e, ys), t(), h(s ? N(e) : e, r), tt(e, d), await Ss(), tt(e, "");
-        const f = tt(e);
-        h(e, "alignContent", "flex-start"), tt(e, d);
-        let g = [],
-          w = i / 2;
-        if (s) {
-          const k = On(e);
-          h(N(e), r), g = k.map(async (P, it) => {
-            await Ss(it * s), await M.start(P, o, i / 2, "ease"), a() && St(P, o)
-          }), w += k.length * s
-        }
-        if (!s || d !== f) {
-          const k = {
-            height: f,
-            ...s ? {} : o
-          };
-          g.push(M.start(e, k, w, "ease"))
-        }
-        await Promise.all(g), _(e, ys), a() && (St(e, {
-          height: "",
-          alignContent: "",
-          ...o
-        }), delete e.dataset.transition)
-      });
-    return $(e, $s) ? An(e).then(u) : $(e, ys) ? An(e).then(c).then(u) : c().then(u)
-  }
-
-  function ks(t, e) {
-    return e && (t.dataset.transition = 1 + ks(t)), $t(t.dataset.transition) || 0
-  }
-
-  function An(t) {
-    return Promise.all(N(t).filter(M.inProgress).map(e => new Promise(i => z(e, "transitionend transitioncanceled", i))))
-  }
-
-  function On(t) {
-    return ws(N(t)).flat().filter(q)
-  }
-
-  function Ss(t) {
-    return new Promise(e => setTimeout(e, t))
-  }
-  async function ia(t, e, i) {
-    await Bn();
-    let s = N(e);
-    const n = s.map(g => Mn(g, !0)),
-      o = {
-        ...h(e, ["height", "padding"]),
-        display: "block"
-      },
-      r = s.concat(e);
-    await Promise.all(r.map(M.cancel)), h(r, "transitionProperty", "none"), await t(), s = s.concat(N(e).filter(g => !b(s, g))), await Promise.resolve(), h(r, "transitionProperty", "");
-    const a = p(e, "style"),
-      l = h(e, ["height", "padding"]),
-      [c, u] = sa(e, s, n),
-      d = s.map(g => ({
-        style: p(g, "style")
-      }));
-    s.forEach((g, w) => u[w] && h(g, u[w])), h(e, o), v(e, "scroll"), await Bn();
-    const f = s.map((g, w) => O(g) === e && M.start(g, c[w], i, "ease")).concat(M.start(e, l, i, "ease"));
-    try {
-      await Promise.all(f), s.forEach((g, w) => {
-        p(g, d[w]), O(g) === e && h(g, "display", c[w].opacity === 0 ? "none" : "")
-      }), p(e, "style", a)
-    } catch {
-      p(s, "style", ""), St(e, o)
-    }
-  }
-
-  function Mn(t, e) {
-    const i = h(t, "zIndex");
-    return q(t) ? {
-      display: "",
-      opacity: e ? h(t, "opacity") : "0",
-      pointerEvents: "none",
-      position: "absolute",
-      zIndex: i === "auto" ? yt(t) : i,
-      ...Dn(t)
-    } : !1
-  }
-
-  function sa(t, e, i) {
-    const s = e.map((o, r) => O(o) && r in i ? i[r] ? q(o) ? Dn(o) : {
-        opacity: 0
-      } : {
-        opacity: q(o) ? 1 : 0
-      } : !1),
-      n = s.map((o, r) => {
-        const a = O(e[r]) === t && (i[r] || Mn(e[r]));
-        if (!a) return !1;
-        if (!o) delete a.opacity;
-        else if (!("opacity" in o)) {
-          const {
-            opacity: l
-          } = a;
-          l % 1 ? o.opacity = 1 : delete a.opacity
-        }
-        return a
-      });
-    return [s, n]
-  }
-
-  function Dn(t) {
-    const {
-      height: e,
-      width: i
-    } = m(t);
     return {
-      height: e,
-      width: i,
-      transform: "",
-      ...is(t),
-      ...h(t, ["marginTop", "marginLeft"])
-    }
+      top: offsetTop,
+      left: offsetLeft,
+      height: offsetHeight,
+      bottom: offsetTop + offsetHeight
+    };
   }
 
-  function Bn() {
-    return new Promise(t => requestAnimationFrame(t))
-  }
-  var Nn = {
+  var Grid = {
+
+    extends: Margin,
+
+    mixins: [Class],
+
+    name: 'grid',
+
     props: {
-      duration: Number,
-      animation: Boolean
+      masonry: Boolean,
+      parallax: Number
     },
+
     data: {
-      duration: 150,
-      animation: "slide"
+      margin: 'uk-grid-margin',
+      clsStack: 'uk-grid-stack',
+      masonry: false,
+      parallax: 0
     },
-    methods: {
-      animate(t, e = this.$el) {
-        const i = this.animation;
-        return (i === "fade" ? _n : i === "delayed-fade" ? (...n) => _n(...n, 40) : i ? ia : () => (t(), Promise.resolve()))(t, e, this.duration).catch(A)
+
+    computed: {
+
+      length: function(_, $el) {
+        return $el.children.length;
+      },
+
+      parallax: function(ref) {
+        var parallax = ref.parallax;
+
+        return parallax && this.length ? Math.abs(parallax) : '';
       }
-    }
+
+    },
+
+    connected: function() {
+      this.masonry && addClass(this.$el, 'uk-flex-top uk-flex-wrap-top');
+    },
+
+    update: [
+
+      {
+
+        read: function(ref) {
+          var rows = ref.rows;
+
+
+          if (this.masonry || this.parallax) {
+            rows = rows.map(function (elements) { return sortBy(elements, 'offsetLeft'); });
+
+            if (isRtl) {
+              rows.map(function (row) { return row.reverse(); });
+            }
+
+          }
+
+          var transitionInProgress = rows.some(function (elements) { return elements.some(Transition.inProgress); });
+          var translates = false;
+          var elHeight = '';
+
+          if (this.masonry && this.length) {
+
+            var height$$1 = 0;
+
+            translates = rows.reduce(function (translates, row, i) {
+
+              translates[i] = row.map(function (_, j) { return i === 0 ? 0 : toFloat(translates[i - 1][j]) + (height$$1 - toFloat(rows[i - 1][j] && rows[i - 1][j].offsetHeight)); });
+              height$$1 = row.reduce(function (height$$1, el) { return Math.max(height$$1, el.offsetHeight); }, 0);
+
+              return translates;
+
+            }, []);
+
+            elHeight = maxColumnHeight(rows) + getMarginTop(this.$el, this.margin) * (rows.length - 1);
+
+          }
+
+          return {rows: rows, translates: translates, height: !transitionInProgress ? elHeight : false};
+
+        },
+
+        write: function(ref) {
+          var stacks = ref.stacks;
+          var height$$1 = ref.height;
+
+
+          toggleClass(this.$el, this.clsStack, stacks);
+
+          css(this.$el, 'paddingBottom', this.parallax);
+          height$$1 !== false && css(this.$el, 'height', height$$1);
+
+        },
+
+        events: ['load', 'resize']
+
+      },
+
+      {
+
+        read: function(ref) {
+          var height$$1 = ref.height;
+
+          return {
+            scrolled: this.parallax
+              ? scrolledOver(this.$el, height$$1 ? height$$1 - height(this.$el) : 0) * this.parallax
+              : false
+          };
+        },
+
+        write: function(ref) {
+          var rows = ref.rows;
+          var scrolled = ref.scrolled;
+          var translates = ref.translates;
+
+
+          if (scrolled === false && !translates) {
+            return;
+          }
+
+          rows.forEach(function (row, i) { return row.forEach(function (el, j) { return css(el, 'transform', !scrolled && !translates ? '' : ("translateY(" + ((translates && -translates[i][j]) + (scrolled ? j % 2 ? scrolled : scrolled / 8 : 0)) + "px)")); }
+            ); }
+          );
+
+        },
+
+        events: ['scroll', 'load', 'resize']
+
+      }
+
+    ]
+
   };
 
-  function Et(t) {
-    t.target.closest('a[href="#"],a[href=""]') && t.preventDefault()
+  function getMarginTop(root, cls) {
+
+    var nodes = toNodes(root.children);
+    var ref = nodes.filter(function (el) { return hasClass(el, cls); });
+    var node = ref[0];
+
+    return toFloat(node
+      ? css(node, 'marginTop')
+      : css(nodes[0], 'paddingLeft'));
   }
-  const B = {
-    TAB: 9,
-    ESC: 27,
-    SPACE: 32,
-    END: 35,
-    HOME: 36,
-    LEFT: 37,
-    UP: 38,
-    RIGHT: 39,
-    DOWN: 40
-  };
-  var na = {
-    mixins: [Nn],
-    args: "target",
+
+  function maxColumnHeight(rows) {
+    return Math.max.apply(Math, rows.reduce(function (sum, row) {
+      row.forEach(function (el, i) { return sum[i] = (sum[i] || 0) + el.offsetHeight; });
+      return sum;
+    }, []));
+  }
+
+  // IE 11 fix (min-height on a flex container won't apply to its flex items)
+  var FlexBug = isIE ? {
+
+    data: {
+      selMinHeight: false,
+      forceHeight: false
+    },
+
+    computed: {
+
+      elements: function(ref, $el) {
+        var selMinHeight = ref.selMinHeight;
+
+        return selMinHeight ? $$(selMinHeight, $el) : [$el];
+      }
+
+    },
+
+    update: [
+
+      {
+
+        read: function() {
+          css(this.elements, 'height', '');
+        },
+
+        order: -5,
+
+        events: ['load', 'resize']
+
+      },
+
+      {
+
+        write: function() {
+          var this$1 = this;
+
+          this.elements.forEach(function (el) {
+            var height$$1 = toFloat(css(el, 'minHeight'));
+            if (height$$1 && (this$1.forceHeight || Math.round(height$$1 + boxModelAdjust('height', el, 'content-box')) >= el.offsetHeight)) {
+              css(el, 'height', height$$1);
+            }
+          });
+        },
+
+        order: 5,
+
+        events: ['load', 'resize']
+
+      }
+
+    ]
+
+  } : {};
+
+  var HeightMatch = {
+
+    mixins: [FlexBug],
+
+    args: 'target',
+
     props: {
       target: String,
-      selActive: Boolean
+      row: Boolean
     },
+
     data: {
-      target: "",
-      selActive: !1,
-      attrItem: "uk-filter-control",
-      cls: "uk-active",
-      duration: 250
+      target: '> *',
+      row: true,
+      forceHeight: true
     },
+
     computed: {
-      children: ({
-                   target: t
-                 }, e) => D(`${t} > *`, e),
-      toggles: ({
-                  attrItem: t
-                }, e) => D(`[${t}],[data-${t}]`, e)
-    },
-    watch: {
-      toggles(t) {
-        this.updateState();
-        const e = D(this.selActive, this.$el);
-        for (const i of t) {
-          this.selActive !== !1 && L(i, this.cls, b(e, i));
-          const s = ha(i);
-          F(s, "a") && p(s, "role", "button")
-        }
-      },
-      children(t, e) {
-        e && this.updateState()
+
+      elements: function(ref, $el) {
+        var target = ref.target;
+
+        return $$(target, $el);
       }
+
     },
-    events: {
-      name: "click keydown",
-      delegate: ({
-                   attrItem: t
-                 }) => `[${t}],[data-${t}]`,
-      handler(t) {
-        t.type === "keydown" && t.keyCode !== B.SPACE || t.target.closest("a,button") && (Et(t), this.apply(t.current))
-      }
-    },
-    methods: {
-      apply(t) {
-        const e = this.getState(),
-          i = Fn(t, this.attrItem, this.getState());
-        oa(e, i) || this.setState(i)
+
+    update: {
+
+      read: function() {
+        return {
+          rows: (this.row ? getRows(this.elements) : [this.elements]).map(match)
+        };
       },
-      getState() {
-        return this.toggles.filter(t => $(t, this.cls)).reduce((t, e) => Fn(e, this.attrItem, t), {
-          filter: {
-            "": ""
-          },
-          sort: []
-        })
+
+      write: function(ref) {
+        var rows = ref.rows;
+
+        rows.forEach(function (ref) {
+            var heights = ref.heights;
+            var elements = ref.elements;
+
+            return elements.forEach(function (el, i) { return css(el, 'minHeight', heights[i]); }
+            );
+          }
+        );
       },
-      async setState(t, e = !0) {
-        t = {
-          filter: {
-            "": ""
-          },
-          sort: [],
-          ...t
-        }, v(this.$el, "beforeFilter", [this, t]);
-        for (const i of this.toggles) L(i, this.cls, aa(i, this.attrItem, t));
-        await Promise.all(D(this.target, this.$el).map(i => {
-          const s = () => ra(t, i, N(i));
-          return e ? this.animate(s, i) : s()
-        })), v(this.$el, "afterFilter", [this])
-      },
-      updateState() {
-        Mt.write(() => this.setState(this.getState(), !1))
-      }
+
+      events: ['load', 'resize']
+
     }
+
   };
 
-  function zn(t, e) {
-    return ve(Z(t, e), ["filter"])
-  }
+  function match(elements) {
+    var assign$$1;
 
-  function oa(t, e) {
-    return ["filter", "sort"].every(i => Ae(t[i], e[i]))
-  }
 
-  function ra(t, e, i) {
-    for (const o of i) h(o, "display", Object.values(t.filter).every(r => !r || C(o, r)) ? "" : "none");
-    const [s, n] = t.sort;
-    if (s) {
-      const o = la(i, s, n);
-      Ae(o, i) || W(e, o)
+    if (elements.length < 2) {
+      return {heights: [''], elements: elements};
     }
+
+    var ref = getHeights(elements);
+    var heights = ref.heights;
+    var max = ref.max;
+    var hasMinHeight = elements.some(function (el) { return el.style.minHeight; });
+    var hasShrunk = elements.some(function (el, i) { return !el.style.minHeight && heights[i] < max; });
+
+    if (hasMinHeight && hasShrunk) {
+      css(elements, 'minHeight', '');
+      ((assign$$1 = getHeights(elements), heights = assign$$1.heights, max = assign$$1.max));
+    }
+
+    heights = elements.map(function (el, i) { return heights[i] === max && toFloat(el.style.minHeight).toFixed(2) !== max.toFixed(2) ? '' : max; }
+    );
+
+    return {heights: heights, elements: elements};
   }
 
-  function Fn(t, e, i) {
-    const {
-      filter: s,
-      group: n,
-      sort: o,
-      order: r = "asc"
-    } = zn(t, e);
-    return (s || X(o)) && (n ? s ? (delete i.filter[""], i.filter[n] = s) : (delete i.filter[n], (ii(i.filter) || "" in i.filter) && (i.filter = {
-      "": s || ""
-    })) : i.filter = {
-      "": s || ""
-    }), X(o) || (i.sort = [o, r]), i
+  function getHeights(elements) {
+    var heights = elements.map(function (el) { return offset(el).height - boxModelAdjust('height', el, 'content-box'); });
+    var max = Math.max.apply(null, heights);
+
+    return {heights: heights, max: max};
   }
 
-  function aa(t, e, {
-    filter: i = {
-      "": ""
+  var HeightViewport = {
+
+    mixins: [FlexBug],
+
+    props: {
+      expand: Boolean,
+      offsetTop: Boolean,
+      offsetBottom: Boolean,
+      minHeight: Number
     },
-    sort: [s, n]
-  }) {
-    const {
-      filter: o = "",
-      group: r = "",
-      sort: a,
-      order: l = "asc"
-    } = zn(t, e);
-    return X(a) ? r in i && o === i[r] || !o && r && !(r in i) && !i[""] : s === a && n === l
+
+    data: {
+      expand: false,
+      offsetTop: false,
+      offsetBottom: false,
+      minHeight: 0
+    },
+
+    update: {
+
+      read: function() {
+
+        var minHeight = '';
+        var box = boxModelAdjust('height', this.$el, 'content-box');
+
+        if (this.expand) {
+
+          minHeight = height(window) - (offsetHeight(document.documentElement) - offsetHeight(this.$el)) - box || '';
+
+        } else {
+
+          // on mobile devices (iOS and Android) window.innerHeight !== 100vh
+          minHeight = 'calc(100vh';
+
+          if (this.offsetTop) {
+
+            var ref = offset(this.$el);
+            var top = ref.top;
+            minHeight += top < height(window) / 2 ? (" - " + top + "px") : '';
+
+          }
+
+          if (this.offsetBottom === true) {
+
+            minHeight += " - " + (offsetHeight(this.$el.nextElementSibling)) + "px";
+
+          } else if (isNumeric(this.offsetBottom)) {
+
+            minHeight += " - " + (this.offsetBottom) + "vh";
+
+          } else if (this.offsetBottom && endsWith(this.offsetBottom, 'px')) {
+
+            minHeight += " - " + (toFloat(this.offsetBottom)) + "px";
+
+          } else if (isString(this.offsetBottom)) {
+
+            minHeight += " - " + (offsetHeight(query(this.offsetBottom, this.$el))) + "px";
+
+          }
+
+          minHeight += (box ? (" - " + box + "px") : '') + ")";
+
+        }
+
+        return {minHeight: minHeight};
+      },
+
+      write: function(ref) {
+        var minHeight = ref.minHeight;
+
+
+        css(this.$el, {minHeight: minHeight});
+
+        if (this.minHeight && toFloat(css(this.$el, 'minHeight')) < this.minHeight) {
+          css(this.$el, 'minHeight', this.minHeight);
+        }
+
+      },
+
+      events: ['load', 'resize']
+
+    }
+
+  };
+
+  function offsetHeight(el) {
+    return el && el.offsetHeight || 0;
   }
 
-  function la(t, e, i) {
-    return [...t].sort((s, n) => Z(s, e).localeCompare(Z(n, e), void 0, {
-      numeric: !0
-    }) * (i === "asc" || -1))
+  var svgs = {};
+
+  var SVG = {
+
+    args: 'src',
+
+    props: {
+      id: String,
+      icon: String,
+      src: String,
+      style: String,
+      width: Number,
+      height: Number,
+      ratio: Number,
+      'class': String
+    },
+
+    data: {
+      ratio: 1,
+      id: false,
+      exclude: ['ratio', 'src', 'icon'],
+      'class': ''
+    },
+
+    connected: function() {
+      var this$1 = this;
+      var assign$$1;
+
+
+      this.class += ' uk-svg';
+
+      if (!this.icon && includes(this.src, '#')) {
+
+        var parts = this.src.split('#');
+
+        if (parts.length > 1) {
+          (assign$$1 = parts, this.src = assign$$1[0], this.icon = assign$$1[1]);
+        }
+      }
+
+      this.svg = this.getSvg().then(function (svg) {
+
+        var el;
+
+        if (isString(svg)) {
+
+          if (this$1.icon && includes(svg, '<symbol')) {
+            svg = parseSymbols(svg, this$1.icon) || svg;
+          }
+
+          el = $(svg.substr(svg.indexOf('<svg')));
+
+        } else {
+          el = svg.cloneNode(true);
+        }
+
+        if (!el) {
+          return Promise.reject('SVG not found.');
+        }
+
+        var dimensions = attr(el, 'viewBox');
+
+        if (dimensions) {
+          dimensions = dimensions.split(' ');
+          this$1.width = this$1.$props.width || dimensions[2];
+          this$1.height = this$1.$props.height || dimensions[3];
+        }
+
+        this$1.width *= this$1.ratio;
+        this$1.height *= this$1.ratio;
+
+        for (var prop in this$1.$options.props) {
+          if (this$1[prop] && !includes(this$1.exclude, prop)) {
+            attr(el, prop, this$1[prop]);
+          }
+        }
+
+        if (!this$1.id) {
+          removeAttr(el, 'id');
+        }
+
+        if (this$1.width && !this$1.height) {
+          removeAttr(el, 'height');
+        }
+
+        if (this$1.height && !this$1.width) {
+          removeAttr(el, 'width');
+        }
+
+        var src = this$1.icon || this$1.src;
+        attr(el, 'data-svg', src);
+
+        var root = this$1.$el;
+        if (isVoidElement(root) || root.tagName === 'CANVAS') {
+
+          attr(root, {hidden: true, id: null});
+
+          var next = root.nextElementSibling;
+          if (src === attr(next, 'data-svg')) {
+            el = next;
+          } else {
+            after(root, el);
+          }
+
+        } else {
+
+          var last = root.lastElementChild;
+          if (src === attr(last, 'data-svg')) {
+            el = last;
+          } else {
+            append(root, el);
+          }
+
+        }
+
+        this$1.svgEl = el;
+
+        return el;
+
+      }, noop);
+
+    },
+
+    disconnected: function() {
+      var this$1 = this;
+
+
+      if (isVoidElement(this.$el)) {
+        attr(this.$el, {hidden: null, id: this.id || null});
+      }
+
+      if (this.svg) {
+        this.svg.then(function (svg) { return (!this$1._connected || svg !== this$1.svgEl) && remove(svg); }, noop);
+      }
+
+      this.svg = this.svgEl = null;
+
+    },
+
+    methods: {
+
+      getSvg: function() {
+        var this$1 = this;
+
+
+        if (!this.src) {
+          return Promise.reject();
+        }
+
+        if (svgs[this.src]) {
+          return svgs[this.src];
+        }
+
+        svgs[this.src] = new Promise(function (resolve, reject) {
+
+          if (startsWith(this$1.src, 'data:')) {
+            resolve(decodeURIComponent(this$1.src.split(',')[1]));
+          } else {
+
+            ajax(this$1.src).then(
+              function (xhr) { return resolve(xhr.response); },
+              function () { return reject('SVG not found.'); }
+            );
+
+          }
+
+        });
+
+        return svgs[this.src];
+
+      }
+
+    }
+
+  };
+
+  var symbolRe = /<symbol(.*?id=(['"])(.*?)\2[^]*?<\/)symbol>/g;
+  var symbols = {};
+
+  function parseSymbols(svg, icon) {
+
+    if (!symbols[svg]) {
+
+      symbols[svg] = {};
+
+      var match;
+      while ((match = symbolRe.exec(svg))) {
+        symbols[svg][match[3]] = "<svg xmlns=\"http://www.w3.org/2000/svg\"" + (match[1]) + "svg>";
+      }
+
+      symbolRe.lastIndex = 0;
+
+    }
+
+    return symbols[svg][icon];
   }
 
-  function ha(t) {
-    return x("a,button", t) || t
+  var closeIcon = "<svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" xmlns=\"http://www.w3.org/2000/svg\"><line fill=\"none\" stroke=\"#000\" stroke-width=\"1.1\" x1=\"1\" y1=\"1\" x2=\"13\" y2=\"13\"/><line fill=\"none\" stroke=\"#000\" stroke-width=\"1.1\" x1=\"13\" y1=\"1\" x2=\"1\" y2=\"13\"/></svg>";
+
+  var closeLarge = "<svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"><line fill=\"none\" stroke=\"#000\" stroke-width=\"1.4\" x1=\"1\" y1=\"1\" x2=\"19\" y2=\"19\"/><line fill=\"none\" stroke=\"#000\" stroke-width=\"1.4\" x1=\"19\" y1=\"1\" x2=\"1\" y2=\"19\"/></svg>";
+
+  var marker = "<svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"9\" y=\"4\" width=\"1\" height=\"11\"/><rect x=\"4\" y=\"9\" width=\"11\" height=\"1\"/></svg>";
+
+  var navbarToggleIcon = "<svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"><rect y=\"9\" width=\"20\" height=\"2\"/><rect y=\"3\" width=\"20\" height=\"2\"/><rect y=\"15\" width=\"20\" height=\"2\"/></svg>";
+
+  var overlayIcon = "<svg width=\"40\" height=\"40\" viewBox=\"0 0 40 40\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"19\" y=\"0\" width=\"1\" height=\"40\"/><rect x=\"0\" y=\"19\" width=\"40\" height=\"1\"/></svg>";
+
+  var paginationNext = "<svg width=\"7\" height=\"12\" viewBox=\"0 0 7 12\" xmlns=\"http://www.w3.org/2000/svg\"><polyline fill=\"none\" stroke=\"#000\" stroke-width=\"1.2\" points=\"1 1 6 6 1 11\"/></svg>";
+
+  var paginationPrevious = "<svg width=\"7\" height=\"12\" viewBox=\"0 0 7 12\" xmlns=\"http://www.w3.org/2000/svg\"><polyline fill=\"none\" stroke=\"#000\" stroke-width=\"1.2\" points=\"6 1 1 6 6 11\"/></svg>";
+
+  var searchIcon = "<svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"><circle fill=\"none\" stroke=\"#000\" stroke-width=\"1.1\" cx=\"9\" cy=\"9\" r=\"7\"/><path fill=\"none\" stroke=\"#000\" stroke-width=\"1.1\" d=\"M14,14 L18,18 L14,14 Z\"/></svg>";
+
+  var searchLarge = "<svg width=\"40\" height=\"40\" viewBox=\"0 0 40 40\" xmlns=\"http://www.w3.org/2000/svg\"><circle fill=\"none\" stroke=\"#000\" stroke-width=\"1.8\" cx=\"17.5\" cy=\"17.5\" r=\"16.5\"/><line fill=\"none\" stroke=\"#000\" stroke-width=\"1.8\" x1=\"38\" y1=\"39\" x2=\"29\" y2=\"30\"/></svg>";
+
+  var searchNavbar = "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><circle fill=\"none\" stroke=\"#000\" stroke-width=\"1.1\" cx=\"10.5\" cy=\"10.5\" r=\"9.5\"/><line fill=\"none\" stroke=\"#000\" stroke-width=\"1.1\" x1=\"23\" y1=\"23\" x2=\"17\" y2=\"17\"/></svg>";
+
+  var slidenavNext = "<svg width=\"14px\" height=\"24px\" viewBox=\"0 0 14 24\" xmlns=\"http://www.w3.org/2000/svg\"><polyline fill=\"none\" stroke=\"#000\" stroke-width=\"1.4\" points=\"1.225,23 12.775,12 1.225,1 \"/></svg>";
+
+  var slidenavNextLarge = "<svg width=\"25px\" height=\"40px\" viewBox=\"0 0 25 40\" xmlns=\"http://www.w3.org/2000/svg\"><polyline fill=\"none\" stroke=\"#000\" stroke-width=\"2\" points=\"4.002,38.547 22.527,20.024 4,1.5 \"/></svg>";
+
+  var slidenavPrevious = "<svg width=\"14px\" height=\"24px\" viewBox=\"0 0 14 24\" xmlns=\"http://www.w3.org/2000/svg\"><polyline fill=\"none\" stroke=\"#000\" stroke-width=\"1.4\" points=\"12.775,1 1.225,12 12.775,23 \"/></svg>";
+
+  var slidenavPreviousLarge = "<svg width=\"25px\" height=\"40px\" viewBox=\"0 0 25 40\" xmlns=\"http://www.w3.org/2000/svg\"><polyline fill=\"none\" stroke=\"#000\" stroke-width=\"2\" points=\"20.527,1.5 2,20.024 20.525,38.547 \"/></svg>";
+
+  var spinner = "<svg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" xmlns=\"http://www.w3.org/2000/svg\"><circle fill=\"none\" stroke=\"#000\" cx=\"15\" cy=\"15\" r=\"14\"/></svg>";
+
+  var totop = "<svg width=\"18\" height=\"10\" viewBox=\"0 0 18 10\" xmlns=\"http://www.w3.org/2000/svg\"><polyline fill=\"none\" stroke=\"#000\" stroke-width=\"1.2\" points=\"1 9 9 1 17 9 \"/></svg>";
+
+  var parsed = {};
+  var icons = {
+    spinner: spinner,
+    totop: totop,
+    marker: marker,
+    'close-icon': closeIcon,
+    'close-large': closeLarge,
+    'navbar-toggle-icon': navbarToggleIcon,
+    'overlay-icon': overlayIcon,
+    'pagination-next': paginationNext,
+    'pagination-previous': paginationPrevious,
+    'search-icon': searchIcon,
+    'search-large': searchLarge,
+    'search-navbar': searchNavbar,
+    'slidenav-next': slidenavNext,
+    'slidenav-next-large': slidenavNextLarge,
+    'slidenav-previous': slidenavPrevious,
+    'slidenav-previous-large': slidenavPreviousLarge
+  };
+
+  var Icon = {
+
+    install: install,
+
+    attrs: ['icon', 'ratio'],
+
+    mixins: [Class, SVG],
+
+    args: 'icon',
+
+    props: ['icon'],
+
+    data: {exclude: ['id', 'style', 'class', 'src', 'icon', 'ratio']},
+
+    isIcon: true,
+
+    connected: function() {
+      addClass(this.$el, 'uk-icon');
+    },
+
+    methods: {
+
+      getSvg: function() {
+
+        var icon = getIcon(applyRtl(this.icon));
+
+        if (!icon) {
+          return Promise.reject('Icon not found.');
+        }
+
+        return Promise.resolve(icon);
+      }
+
+    }
+
+  };
+
+  var IconComponent = {
+
+    extends: Icon,
+
+    data: function (vm) { return ({
+      icon: hyphenate(vm.constructor.options.name)
+    }); }
+
+  };
+
+  var Slidenav = {
+
+    extends: IconComponent,
+
+    connected: function() {
+      addClass(this.$el, 'uk-slidenav');
+    },
+
+    computed: {
+
+      icon: function(ref, $el) {
+        var icon = ref.icon;
+
+        return hasClass($el, 'uk-slidenav-large')
+          ? (icon + "-large")
+          : icon;
+      }
+
+    }
+
+  };
+
+  var Search = {
+
+    extends: IconComponent,
+
+    computed: {
+
+      icon: function(ref, $el) {
+        var icon = ref.icon;
+
+        return hasClass($el, 'uk-search-icon') && parents($el, '.uk-search-large').length
+          ? 'search-large'
+          : parents($el, '.uk-search-navbar').length
+            ? 'search-navbar'
+            : icon;
+      }
+
+    }
+
+  };
+
+  var Close = {
+
+    extends: IconComponent,
+
+    computed: {
+
+      icon: function() {
+        return ("close-" + (hasClass(this.$el, 'uk-close-large') ? 'large' : 'icon'));
+      }
+
+    }
+
+  };
+
+  var Spinner = {
+
+    extends: IconComponent,
+
+    connected: function() {
+      var this$1 = this;
+
+      this.svg.then(function (svg) { return this$1.ratio !== 1 && css($('circle', svg), 'strokeWidth', 1 / this$1.ratio); }, noop);
+    }
+
+  };
+
+  function install(UIkit) {
+    UIkit.icon.add = function (name, svg) {
+      var obj;
+
+
+      var added = isString(name) ? (( obj = {}, obj[name] = svg, obj )) : name;
+      each(added, function (svg, name) {
+        icons[name] = svg;
+        delete parsed[name];
+      });
+
+      if (UIkit._initialized) {
+        apply(document.body, function (el) { return each(UIkit.getComponents(el), function (cmp) { return cmp.$options.isIcon && cmp.icon in added && cmp.$reset(); }
+          ); }
+        );
+      }
+    };
   }
-  var ca = {
-    args: "dataSrc",
+
+  function getIcon(icon) {
+
+    if (!icons[icon]) {
+      return null;
+    }
+
+    if (!parsed[icon]) {
+      parsed[icon] = $(icons[icon].trim());
+    }
+
+    return parsed[icon];
+  }
+
+  function applyRtl(icon) {
+    return isRtl ? swap(swap(icon, 'left', 'right'), 'previous', 'next') : icon;
+  }
+
+  var Img = {
+
     props: {
       dataSrc: String,
-      sources: String,
-      margin: String,
-      target: String,
-      loading: String
+      dataSrcset: Boolean,
+      sizes: String,
+      width: Number,
+      height: Number,
+      offsetTop: String,
+      offsetLeft: String,
+      target: String
     },
+
     data: {
-      dataSrc: "",
-      sources: !1,
-      margin: "50%",
-      target: !1,
-      loading: "lazy"
+      dataSrc: '',
+      dataSrcset: false,
+      sizes: false,
+      width: false,
+      height: false,
+      offsetTop: '50vh',
+      offsetLeft: 0,
+      target: false
     },
-    connected() {
-      this.loading !== "lazy" ? this.load() : Es(this.$el) && (this.$el.loading = "lazy", Is(this.$el))
-    },
-    disconnected() {
-      this.img && (this.img.onload = ""), delete this.img
-    },
-    observe: be({
-      handler(t, e) {
-        this.load(), e.disconnect()
-      },
-      options: ({
-                  margin: t
-                }) => ({
-        rootMargin: t
-      }),
-      filter: ({
-                 loading: t
-               }) => t === "lazy",
-      target: ({
-                 $el: t,
-                 $props: e
-               }) => e.target ? [t, ...Be(e.target, t)] : t
-    }),
-    methods: {
-      load() {
-        if (this.img) return this.img;
-        const t = Es(this.$el) ? this.$el : da(this.$el, this.dataSrc, this.sources);
-        return Oe(t, "loading"), Is(this.$el, t.currentSrc), this.img = t
-      }
-    }
-  };
 
-  function Is(t, e) {
-    if (Es(t)) {
-      const i = O(t);
-      (F(i, "picture") ? N(i) : [t]).forEach(n => Hn(n, n))
-    } else e && !b(t.style.backgroundImage, e) && (h(t, "backgroundImage", `url(${Xi(e)})`), v(t, pe("load", !1)))
-  }
-  const ua = ["data-src", "data-srcset", "sizes"];
-
-  function Hn(t, e) {
-    for (const i of ua) {
-      const s = Z(t, i);
-      s && p(e, i.replace(/data-/g, ""), s)
-    }
-  }
-
-  function da(t, e, i) {
-    const s = new Image;
-    return Ln(s, i), Hn(t, s), s.onload = () => Is(t, s.currentSrc), p(s, "src", e), s
-  }
-
-  function Ln(t, e) {
-    if (e = fa(e), e.length) {
-      const i = It("<picture>");
-      for (const s of e) {
-        const n = It("<source>");
-        p(n, s), W(i, n)
-      }
-      W(i, t)
-    }
-  }
-
-  function fa(t) {
-    if (!t) return [];
-    if (mt(t, "[")) try {
-      t = JSON.parse(t)
-    } catch {
-      t = []
-    } else t = ve(t);
-    return J(t) || (t = [t]), t.filter(e => !ii(e))
-  }
-
-  function Es(t) {
-    return F(t, "img")
-  }
-  let Ts;
-
-  function Wn(t) {
-    const e = y(t, "touchstart", n => {
-      if (n.targetTouches.length !== 1 || C(n.target, 'input[type="range"')) return;
-      let o = kt(n).y;
-      const r = y(t, "touchmove", a => {
-        const l = kt(a).y;
-        l !== o && (o = l, Yt(a.target).some(c => {
-          if (!t.contains(c)) return !1;
-          let {
-            scrollHeight: u,
-            clientHeight: d
-          } = c;
-          return d < u
-        }) || a.preventDefault())
-      }, {
-        passive: !1
-      });
-      z(t, "scroll touchend touchcanel", r, {
-        capture: !0
-      })
-    }, {
-      passive: !0
-    });
-    if (Ts) return e;
-    Ts = !0;
-    const {
-      scrollingElement: i
-    } = document, s = {
-      overflowY: CSS.supports("overflow", "clip") ? "clip" : "hidden",
-      touchAction: "none",
-      paddingRight: mi(window) - i.clientWidth || ""
-    };
-    return h(i, s), () => {
-      Ts = !1, e(), St(i, s)
-    }
-  }
-  var Ye = {
-      props: {
-        container: Boolean
-      },
-      data: {
-        container: !0
-      },
-      computed: {
-        container({
-                    container: t
-                  }) {
-          return t === !0 && this.$container || t && x(t)
-        }
-      }
-    },
-    jn = {
-      props: {
-        pos: String,
-        offset: Boolean,
-        flip: Boolean,
-        shift: Boolean,
-        inset: Boolean
-      },
-      data: {
-        pos: `bottom-${U?"right":"left"}`,
-        offset: !1,
-        flip: !0,
-        shift: !0,
-        inset: !1
-      },
-      connected() {
-        this.pos = this.$props.pos.split("-").concat("center").slice(0, 2), [this.dir, this.align] = this.pos, this.axis = b(["top", "bottom"], this.dir) ? "y" : "x"
-      },
-      methods: {
-        positionAt(t, e, i) {
-          let s = [this.getPositionOffset(t), this.getShiftOffset(t)];
-          const n = [this.flip && "flip", this.shift && "shift"],
-            o = {
-              element: [this.inset ? this.dir : vi(this.dir), this.align],
-              target: [this.dir, this.align]
-            };
-          if (this.axis === "y") {
-            for (const l in o) o[l].reverse();
-            s.reverse(), n.reverse()
-          }
-          const r = Cs(t),
-            a = m(t);
-          h(t, {
-            top: -a.height,
-            left: -a.width
-          }), wn(t, e, {
-            attach: o,
-            offset: s,
-            boundary: i,
-            placement: n,
-            viewportOffset: this.getViewportOffset(t)
-          }), r()
-        },
-        getPositionOffset(t = this.$el) {
-          return G(this.offset === !1 ? h(t, "--uk-position-offset") : this.offset, this.axis === "x" ? "width" : "height", t) * (b(["left", "top"], this.dir) ? -1 : 1) * (this.inset ? -1 : 1)
-        },
-        getShiftOffset(t = this.$el) {
-          return this.align === "center" ? 0 : G(h(t, "--uk-position-shift-offset"), this.axis === "y" ? "width" : "height", t) * (b(["left", "top"], this.align) ? 1 : -1)
-        },
-        getViewportOffset(t) {
-          return G(h(t, "--uk-position-viewport-offset"))
-        }
-      }
-    };
-
-  function Cs(t) {
-    const e = Dt(t),
-      {
-        scrollTop: i
-      } = e;
-    return () => {
-      i !== e.scrollTop && (e.scrollTop = i)
-    }
-  }
-  var Xt = {
-    props: {
-      cls: Boolean,
-      animation: "list",
-      duration: Number,
-      velocity: Number,
-      origin: String,
-      transition: String
-    },
-    data: {
-      cls: !1,
-      animation: [!1],
-      duration: 200,
-      velocity: .2,
-      origin: !1,
-      transition: "ease",
-      clsEnter: "uk-togglable-enter",
-      clsLeave: "uk-togglable-leave"
-    },
     computed: {
-      hasAnimation: ({
-                       animation: t
-                     }) => !!t[0],
-      hasTransition: ({
-                        animation: t
-                      }) => ["slide", "reveal"].some(e => mt(t[0], e))
-    },
-    methods: {
-      async toggleElement(t, e, i) {
-        try {
-          return await Promise.all(E(t).map(s => {
-            const n = re(e) ? e : !this.isToggled(s);
-            if (!v(s, `before${n?"show":"hide"}`, [this])) return Promise.reject();
-            const o = (ot(i) ? i : i === !1 || !this.hasAnimation ? pa : this.hasTransition ? ga : ma)(s, n, this),
-              r = n ? this.clsEnter : this.clsLeave;
-            I(s, r), v(s, n ? "show" : "hide", [this]);
-            const a = () => {
-              var l;
-              if (_(s, r), v(s, n ? "shown" : "hidden", [this]), n) {
-                const c = Cs(s);
-                (l = D("[autofocus]", s).find(q)) == null || l.focus(), c()
-              }
-            };
-            return o ? o.then(a, () => (_(s, r), Promise.reject())) : a()
-          })), !0
-        } catch {
-          return !1
-        }
+
+      cacheKey: function(ref) {
+        var dataSrc = ref.dataSrc;
+
+        return ((this.$name) + "." + dataSrc);
       },
-      isToggled(t = this.$el) {
-        return t = R(t), $(t, this.clsEnter) ? !0 : $(t, this.clsLeave) ? !1 : this.cls ? $(t, this.cls.split(" ")[0]) : q(t)
+
+      width: function(ref) {
+        var width$$1 = ref.width;
+        var dataWidth = ref.dataWidth;
+
+        return width$$1 || dataWidth;
       },
-      _toggle(t, e) {
-        if (!t) return;
-        e = !!e;
-        let i;
-        this.cls ? (i = b(this.cls, " ") || e !== $(t, this.cls), i && L(t, this.cls, b(this.cls, " ") ? void 0 : e)) : (i = e === t.hidden, i && (t.hidden = !e)), i && v(t, "toggled", [e, this])
+
+      height: function(ref) {
+        var height$$1 = ref.height;
+        var dataHeight = ref.dataHeight;
+
+        return height$$1 || dataHeight;
+      },
+
+      sizes: function(ref) {
+        var sizes = ref.sizes;
+        var dataSizes = ref.dataSizes;
+
+        return sizes || dataSizes;
+      },
+
+      isImg: function(_, $el) {
+        return isImg($el);
+      },
+
+      target: function(ref) {
+        var target = ref.target;
+
+        return [this.$el].concat(queryAll(target, this.$el));
+      },
+
+      offsetTop: function(ref) {
+        var offsetTop = ref.offsetTop;
+
+        return toPx(offsetTop, 'height');
+      },
+
+      offsetLeft: function(ref) {
+        var offsetLeft = ref.offsetLeft;
+
+        return toPx(offsetLeft, 'width');
       }
+
+    },
+
+    connected: function() {
+
+      if (storage[this.cacheKey]) {
+        setSrcAttrs(this.$el, storage[this.cacheKey] || this.dataSrc, this.dataSrcset, this.sizes);
+      } else if (this.isImg && this.width && this.height) {
+        setSrcAttrs(this.$el, getPlaceholderImage(this.width, this.height, this.sizes));
+      }
+
+    },
+
+    update: {
+
+      read: function(ref) {
+        var this$1 = this;
+        var update = ref.update;
+        var image = ref.image;
+
+
+        if (!update) {
+          return;
+        }
+
+        if (image || !this.target.some(function (el) { return isInView(el, this$1.offsetTop, this$1.offsetLeft); })) {
+
+          if (!this.isImg && image) {
+            image.then(function (img) { return img && img.currentSrc !== '' && setSrcAttrs(this$1.$el, currentSrc(img)); });
+          }
+
+          return;
+        }
+
+        if (this.$el.src && isVisible(this.$el) && !height(this.$el)) {
+          return;
+        }
+
+        return {
+          image: getImage(this.dataSrc, this.dataSrcset, this.sizes).then(function (img) {
+
+            setSrcAttrs(this$1.$el, currentSrc(img), img.srcset, img.sizes);
+            storage[this$1.cacheKey] = currentSrc(img);
+            return img;
+
+          }, noop)
+        };
+
+      },
+
+      write: function(data$$1) {
+
+        // Give placeholder images time to apply their dimensions
+        if (!data$$1.update) {
+          this.$emit();
+          return data$$1.update = true;
+        }
+
+        if (!this.isImg && this.dataSrcset && window.devicePixelRatio !== 1) {
+
+          var bgSize = css(this.$el, 'backgroundSize');
+          if (bgSize === 'auto' || toFloat(bgSize) === data$$1.bgSize) {
+            data$$1.bgSize = getSourceSize(this.dataSrcset, this.sizes);
+            css(this.$el, 'backgroundSize', ((data$$1.bgSize) + "px"));
+          }
+
+        }
+
+      },
+
+      events: ['scroll', 'load', 'resize']
+
     }
+
   };
 
-  function pa(t, e, {
-    _toggle: i
-  }) {
-    return At.cancel(t), M.cancel(t), i(t, e)
-  }
-  async function ga(t, e, {
-    animation: i,
-    duration: s,
-    velocity: n,
-    transition: o,
-    _toggle: r
-  }) {
-    var a;
-    const [l = "reveal", c = "top"] = ((a = i[0]) == null ? void 0 : a.split("-")) || [], u = [
-      ["left", "right"],
-      ["top", "bottom"]
-    ], d = u[b(u[0], c) ? 0 : 1], f = d[1] === c, w = ["width", "height"][u.indexOf(d)], k = `margin-${d[0]}`, P = `margin-${c}`;
-    let it = m(t)[w];
-    const Tt = M.inProgress(t);
-    await M.cancel(t), e && r(t, !0);
-    const Nt = Object.fromEntries(["padding", "border", "width", "height", "minWidth", "minHeight", "overflowY", "overflowX", k, P].map(rr => [rr, t.style[rr]])),
-      wt = m(t),
-      Us = S(h(t, k)),
-      sr = S(h(t, P)),
-      ie = wt[w] + sr;
-    !Tt && !e && (it += sr);
-    const [Hi] = es(t, "<div>");
-    h(Hi, {
-      boxSizing: "border-box",
-      height: wt.height,
-      width: wt.width,
-      ...h(t, ["overflow", "padding", "borderTop", "borderRight", "borderBottom", "borderLeft", "borderImage", P])
-    }), h(t, {
-      padding: 0,
-      border: 0,
-      minWidth: 0,
-      minHeight: 0,
-      [P]: 0,
-      width: wt.width,
-      height: wt.height,
-      overflow: "hidden",
-      [w]: it
-    });
-    const nr = it / ie;
-    s = (n * ie + s) * (e ? 1 - nr : nr);
-    const or = {
-      [w]: e ? ie : 0
-    };
-    f && (h(t, k, ie - it + Us), or[k] = e ? Us : ie + Us), !f ^ l === "reveal" && (h(Hi, k, -ie + it), M.start(Hi, {
-      [k]: e ? 0 : -ie
-    }, s, o));
-    try {
-      await M.start(t, or, s, o)
-    } finally {
-      h(t, Nt), He(Hi.firstChild), e || r(t, !1)
+  function setSrcAttrs(el, src, srcset, sizes) {
+
+    if (isImg(el)) {
+      sizes && (el.sizes = sizes);
+      srcset && (el.srcset = srcset);
+      src && (el.src = src);
+    } else if (src) {
+
+      var change = !includes(el.style.backgroundImage, src);
+      if (change) {
+        css(el, 'backgroundImage', ("url(" + (escape(src)) + ")"));
+        trigger(el, createEvent('load', false));
+      }
+
     }
+
   }
 
-  function ma(t, e, i) {
-    const {
-      animation: s,
-      duration: n,
-      _toggle: o
-    } = i;
-    return e ? (o(t, !0), At.in(t, s[0], n, i.origin)) : At.out(t, s[1] || s[0], n, i.origin).then(() => o(t, !1))
+  function getPlaceholderImage(width$$1, height$$1, sizes) {
+    var assign$$1;
+
+
+    if (sizes) {
+      ((assign$$1 = Dimensions.ratio({width: width$$1, height: height$$1}, 'width', toPx(sizesToPixel(sizes))), width$$1 = assign$$1.width, height$$1 = assign$$1.height));
+    }
+
+    return ("data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"" + width$$1 + "\" height=\"" + height$$1 + "\"></svg>");
   }
-  const nt = [];
-  var Ps = {
-    mixins: [st, Ye, Xt],
+
+  var sizesRe = /\s*(.*?)\s*(\w+|calc\(.*?\))\s*(?:,|$)/g;
+  function sizesToPixel(sizes) {
+    var matches$$1;
+
+    sizesRe.lastIndex = 0;
+
+    while ((matches$$1 = sizesRe.exec(sizes))) {
+      if (!matches$$1[1] || window.matchMedia(matches$$1[1]).matches) {
+        matches$$1 = evaluateSize(matches$$1[2]);
+        break;
+      }
+    }
+
+    return matches$$1;
+  }
+
+  var sizeRe = /\d+(?:\w+|%)/g;
+  var additionRe = /[+-]?(\d+)/g;
+  function evaluateSize(size) {
+    return startsWith(size, 'calc')
+      ? size
+        .substring(5, size.length - 1)
+        .replace(sizeRe, function (size) { return toPx(size); })
+        .replace(/ /g, '')
+        .match(additionRe)
+        .reduce(function (a, b) { return a + +b; }, 0)
+      : size;
+  }
+
+  function toPx(value, property, element) {
+    if ( property === void 0 ) property = 'width';
+    if ( element === void 0 ) element = window;
+
+    value = value || '100vw';
+    return isNumeric(value)
+      ? +value
+      : endsWith(value, 'vw')
+        ? percent(element, 'width', value)
+        : endsWith(value, 'vh')
+          ? percent(element, 'height', value)
+          : endsWith(value, '%')
+            ? percent(element, property, value)
+            : toFloat(value);
+  }
+
+  var srcSetRe = /\s+\d+w\s*,/g;
+  function getSourceSize(srcset, sizes) {
+    var srcSize = toPx(sizesToPixel(sizes));
+    var descriptors = (srcset.match(srcSetRe) || []).map(toFloat).sort(function (a, b) { return a - b; });
+
+    return descriptors.filter(function (size) { return size > srcSize; })[0] || descriptors[0] || '';
+  }
+
+  var dimensions = {height: height, width: width};
+  function percent(element, property, value) {
+    return dimensions[property](element) * toFloat(value) / 100;
+  }
+
+  function isImg(el) {
+    return el.tagName === 'IMG';
+  }
+
+  function currentSrc(el) {
+    return el.currentSrc || el.src;
+  }
+
+  var key = '__test__';
+  var storage;
+
+  // workaround for Safari's private browsing mode and accessing sessionStorage in Blink
+  try {
+    storage = window.sessionStorage || {};
+    storage[key] = 1;
+    delete storage[key];
+  } catch (e) {
+    storage = {};
+  }
+
+  var Media = {
+
+    props: {
+      media: Boolean
+    },
+
+    data: {
+      media: false
+    },
+
+    computed: {
+
+      matchMedia: function() {
+        var media = toMedia(this.media);
+        return !media || window.matchMedia(media).matches;
+      }
+
+    }
+
+  };
+
+  function toMedia(value) {
+
+    if (isString(value)) {
+      if (value[0] === '@') {
+        var name = "breakpoint-" + (value.substr(1));
+        value = toFloat(getCssVar(name));
+      } else if (isNaN(value)) {
+        return value;
+      }
+    }
+
+    return value && !isNaN(value) ? ("(min-width: " + value + "px)") : false;
+  }
+
+  var Leader = {
+
+    mixins: [Class, Media],
+
+    props: {
+      fill: String
+    },
+
+    data: {
+      fill: '',
+      clsWrapper: 'uk-leader-fill',
+      clsHide: 'uk-leader-hide',
+      attrFill: 'data-fill'
+    },
+
+    computed: {
+
+      fill: function(ref) {
+        var fill = ref.fill;
+
+        return fill || getCssVar('leader-fill-content');
+      }
+
+    },
+
+    connected: function() {
+      var assign$$1;
+
+      (assign$$1 = wrapInner(this.$el, ("<span class=\"" + (this.clsWrapper) + "\">")), this.wrapper = assign$$1[0]);
+    },
+
+    disconnected: function() {
+      unwrap(this.wrapper.childNodes);
+    },
+
+    update: {
+
+      read: function(ref) {
+        var changed = ref.changed;
+        var width$$1 = ref.width;
+
+
+        var prev = width$$1;
+
+        width$$1 = Math.floor(this.$el.offsetWidth / 2);
+
+        return {
+          width: width$$1,
+          changed: changed || prev !== width$$1,
+          hide: !this.matchMedia
+        };
+      },
+
+      write: function(data$$1) {
+
+        toggleClass(this.wrapper, this.clsHide, data$$1.hide);
+
+        if (data$$1.changed) {
+          data$$1.changed = false;
+          attr(this.wrapper, this.attrFill, new Array(data$$1.width).join(this.fill));
+        }
+
+      },
+
+      events: ['load', 'resize']
+
+    }
+
+  };
+
+  var Container = {
+
+    props: {
+      container: Boolean
+    },
+
+    data: {
+      container: true
+    },
+
+    computed: {
+
+      container: function(ref) {
+        var container = ref.container;
+
+        return container === true && this.$container || container && $(container);
+      }
+
+    }
+
+  };
+
+  var active$1;
+
+  var Modal = {
+
+    mixins: [Class, Container, Togglable],
+
     props: {
       selPanel: String,
       selClose: String,
       escClose: Boolean,
       bgClose: Boolean,
-      stack: Boolean,
-      role: String
+      stack: Boolean
     },
+
     data: {
-      cls: "uk-open",
-      escClose: !0,
-      bgClose: !0,
-      overlay: !0,
-      stack: !1,
-      role: "dialog"
+      cls: 'uk-open',
+      escClose: true,
+      bgClose: true,
+      overlay: true,
+      stack: false
     },
+
     computed: {
-      panel: ({
-                selPanel: t
-              }, e) => x(t, e),
-      transitionElement() {
-        return this.panel
+
+      panel: function(ref, $el) {
+        var selPanel = ref.selPanel;
+
+        return $(selPanel, $el);
+      },
+
+      transitionElement: function() {
+        return this.panel;
+      },
+
+      bgClose: function(ref) {
+        var bgClose = ref.bgClose;
+
+        return bgClose && this.panel;
+      }
+
+    },
+
+    beforeDisconnect: function() {
+      if (this.isToggled()) {
+        this.toggleNow(this.$el, false);
       }
     },
-    connected() {
-      p(this.panel || this.$el, "role", this.role), this.overlay && p(this.panel || this.$el, "aria-modal", !0)
-    },
-    beforeDisconnect() {
-      b(nt, this) && this.toggleElement(this.$el, !1, !1)
-    },
-    events: [{
-      name: "click",
-      delegate: ({
-                   selClose: t
-                 }) => `${t},a[href*="#"]`,
-      handler(t) {
-        const {
-          current: e,
-          defaultPrevented: i
-        } = t, {
-          hash: s
-        } = e;
-        !i && s && fe(e) && !this.$el.contains(x(s)) ? this.hide() : C(e, this.selClose) && (Et(t), this.hide())
-      }
-    }, {
-      name: "toggle",
-      self: !0,
-      handler(t) {
-        t.defaultPrevented || (t.preventDefault(), this.isToggled() === b(nt, this) && this.toggle())
-      }
-    }, {
-      name: "beforeshow",
-      self: !0,
-      handler(t) {
-        if (b(nt, this)) return !1;
-        !this.stack && nt.length ? (Promise.all(nt.map(e => e.hide())).then(this.show), t.preventDefault()) : nt.push(this)
-      }
-    }, {
-      name: "show",
-      self: !0,
-      handler() {
-        this.stack && h(this.$el, "zIndex", S(h(this.$el, "zIndex")) + nt.length);
-        const t = [this.overlay && ba(this), this.overlay && Wn(this.$el), this.bgClose && wa(this), this.escClose && xa(this)];
-        z(this.$el, "hidden", () => t.forEach(e => e && e()), {
-          self: !0
-        }), I(document.documentElement, this.clsPage)
-      }
-    }, {
-      name: "shown",
-      self: !0,
-      handler() {
-        ci(this.$el) || p(this.$el, "tabindex", "-1"), C(this.$el, ":focus-within") || this.$el.focus()
-      }
-    }, {
-      name: "hidden",
-      self: !0,
-      handler() {
-        b(nt, this) && nt.splice(nt.indexOf(this), 1), h(this.$el, "zIndex", ""), nt.some(t => t.clsPage === this.clsPage) || _(document.documentElement, this.clsPage)
-      }
-    }],
-    methods: {
-      toggle() {
-        return this.isToggled() ? this.hide() : this.show()
-      },
-      show() {
-        return this.container && O(this.$el) !== this.container ? (W(this.container, this.$el), new Promise(t => requestAnimationFrame(() => this.show().then(t)))) : this.toggleElement(this.$el, !0, Rn)
-      },
-      hide() {
-        return this.toggleElement(this.$el, !1, Rn)
-      }
-    }
-  };
 
-  function Rn(t, e, {
-    transitionElement: i,
-    _toggle: s
-  }) {
-    return new Promise((n, o) => z(t, "show hide", () => {
-      var r;
-      (r = t._reject) == null || r.call(t), t._reject = o, s(t, e);
-      const a = z(i, "transitionstart", () => {
-          z(i, "transitionend transitioncancel", n, {
-            self: !0
-          }), clearTimeout(l)
-        }, {
-          self: !0
-        }),
-        l = setTimeout(() => {
-          a(), n()
-        }, va(h(i, "transitionDuration")))
-    })).then(() => delete t._reject)
-  }
+    events: [
 
-  function va(t) {
-    return t ? se(t, "ms") ? S(t) : S(t) * 1e3 : 0
-  }
+      {
 
-  function ba(t) {
-    return y(document, "focusin", e => {
-      Lt(nt) === t && !t.$el.contains(e.target) && t.$el.focus()
-    })
-  }
+        name: 'click',
 
-  function wa(t) {
-    return y(document, ut, ({
-                              target: e
-                            }) => {
-      Lt(nt) !== t || t.overlay && !t.$el.contains(e) || !t.panel || t.panel.contains(e) || z(document, `${_t} ${li} scroll`, ({
-                                                                                                                                 defaultPrevented: i,
-                                                                                                                                 type: s,
-                                                                                                                                 target: n
-                                                                                                                               }) => {
-        !i && s === _t && e === n && t.hide()
-      }, !0)
-    })
-  }
-
-  function xa(t) {
-    return y(document, "keydown", e => {
-      e.keyCode === 27 && Lt(nt) === t && t.hide()
-    })
-  }
-  var _s = {
-    slide: {
-      show(t) {
-        return [{
-          transform: j(t * -100)
-        }, {
-          transform: j()
-        }]
-      },
-      percent(t) {
-        return Ge(t)
-      },
-      translate(t, e) {
-        return [{
-          transform: j(e * -100 * t)
-        }, {
-          transform: j(e * 100 * (1 - t))
-        }]
-      }
-    }
-  };
-
-  function Ge(t) {
-    return Math.abs(new DOMMatrix(h(t, "transform")).m41 / t.offsetWidth)
-  }
-
-  function j(t = 0, e = "%") {
-    return t ? `translate3d(${t+e}, 0, 0)` : ""
-  }
-
-  function $a(t, e, i, {
-    animation: s,
-    easing: n
-  }) {
-    const {
-      percent: o,
-      translate: r,
-      show: a = A
-    } = s, l = a(i), {
-      promise: c,
-      resolve: u
-    } = qn();
-    return {
-      dir: i,
-      show(d, f = 0, g) {
-        const w = g ? "linear" : n;
-        return d -= Math.round(d * K(f, -1, 1)), this.translate(f), Jt(e, "itemin", {
-          percent: f,
-          duration: d,
-          timing: w,
-          dir: i
-        }), Jt(t, "itemout", {
-          percent: 1 - f,
-          duration: d,
-          timing: w,
-          dir: i
-        }), Promise.all([M.start(e, l[1], d, w), M.start(t, l[0], d, w)]).then(() => {
-          this.reset(), u()
-        }, A), c
-      },
-      cancel() {
-        return M.cancel([e, t])
-      },
-      reset() {
-        St([e, t], l[0])
-      },
-      async forward(d, f = this.percent()) {
-        return await this.cancel(), this.show(d, f, !0)
-      },
-      translate(d) {
-        this.reset();
-        const f = r(d, i);
-        h(e, f[1]), h(t, f[0]), Jt(e, "itemtranslatein", {
-          percent: d,
-          dir: i
-        }), Jt(t, "itemtranslateout", {
-          percent: 1 - d,
-          dir: i
-        })
-      },
-      percent() {
-        return o(t || e, e, i)
-      },
-      getDistance() {
-        return t == null ? void 0 : t.offsetWidth
-      }
-    }
-  }
-
-  function Jt(t, e, i) {
-    v(t, pe(e, !1, !1, i))
-  }
-
-  function qn() {
-    let t;
-    return {
-      promise: new Promise(e => t = e),
-      resolve: t
-    }
-  }
-  var Ii = {
-      props: {
-        i18n: Object
-      },
-      data: {
-        i18n: null
-      },
-      methods: {
-        t(t, ...e) {
-          var i, s, n;
-          let o = 0;
-          return ((n = ((i = this.i18n) == null ? void 0 : i[t]) || ((s = this.$options.i18n) == null ? void 0 : s[t])) == null ? void 0 : n.replace(/%s/g, () => e[o++] || "")) || ""
-        }
-      }
-    },
-    ya = {
-      props: {
-        autoplay: Boolean,
-        autoplayInterval: Number,
-        pauseOnHover: Boolean
-      },
-      data: {
-        autoplay: !1,
-        autoplayInterval: 7e3,
-        pauseOnHover: !0
-      },
-      connected() {
-        p(this.list, "aria-live", this.autoplay ? "off" : "polite"), this.autoplay && this.startAutoplay()
-      },
-      disconnected() {
-        this.stopAutoplay()
-      },
-      update() {
-        p(this.slides, "tabindex", "-1")
-      },
-      events: [{
-        name: "visibilitychange",
-        el: () => document,
-        filter: ({
-                   autoplay: t
-                 }) => t,
-        handler() {
-          document.hidden ? this.stopAutoplay() : this.startAutoplay()
-        }
-      }],
-      methods: {
-        startAutoplay() {
-          this.stopAutoplay(), this.interval = setInterval(() => {
-            this.stack.length || this.draggable && C(this.$el, ":focus-within") && !C(this.$el, ":focus") || this.pauseOnHover && C(this.$el, ":hover") || this.show("next")
-          }, this.autoplayInterval)
+        delegate: function() {
+          return this.selClose;
         },
-        stopAutoplay() {
-          clearInterval(this.interval)
+
+        handler: function(e) {
+          e.preventDefault();
+          this.hide();
+        }
+
+      },
+
+      {
+
+        name: 'toggle',
+
+        self: true,
+
+        handler: function(e) {
+
+          if (e.defaultPrevented) {
+            return;
+          }
+
+          e.preventDefault();
+          this.toggle();
+        }
+
+      },
+
+      {
+        name: 'beforeshow',
+
+        self: true,
+
+        handler: function(e) {
+
+          var prev = active$1 && active$1 !== this && active$1;
+
+          active$1 = this;
+
+          if (prev) {
+            if (this.stack) {
+              this.prev = prev;
+            } else {
+
+              active$1 = prev;
+
+              if (prev.isToggled()) {
+                prev.hide().then(this.show);
+              } else {
+                once(prev.$el, 'beforeshow hidden', this.show, false, function (ref) {
+                  var target = ref.target;
+                  var type = ref.type;
+
+                  return type === 'hidden' && target === prev.$el;
+                });
+              }
+              e.preventDefault();
+
+            }
+
+            return;
+          }
+
+          registerEvents();
+
+        }
+
+      },
+
+      {
+
+        name: 'show',
+
+        self: true,
+
+        handler: function() {
+
+          if (!hasClass(document.documentElement, this.clsPage)) {
+            this.scrollbarWidth = width(window) - width(document);
+            css(document.body, 'overflowY', this.scrollbarWidth && this.overlay ? 'scroll' : '');
+          }
+
+          addClass(document.documentElement, this.clsPage);
+
+        }
+
+      },
+
+      {
+
+        name: 'hide',
+
+        self: true,
+
+        handler: function() {
+          if (!active$1 || active$1 === this && !this.prev) {
+            deregisterEvents();
+          }
+        }
+
+      },
+
+      {
+
+        name: 'hidden',
+
+        self: true,
+
+        handler: function() {
+
+          var found;
+          var ref = this;
+          var prev = ref.prev;
+
+          active$1 = active$1 && active$1 !== this && active$1 || prev;
+
+          if (!active$1) {
+
+            css(document.body, 'overflowY', '');
+
+          } else {
+            while (prev) {
+
+              if (prev.clsPage === this.clsPage) {
+                found = true;
+                break;
+              }
+
+              prev = prev.prev;
+
+            }
+
+          }
+
+          if (!found) {
+            removeClass(document.documentElement, this.clsPage);
+          }
+
+        }
+
+      }
+
+    ],
+
+    methods: {
+
+      toggle: function() {
+        return this.isToggled() ? this.hide() : this.show();
+      },
+
+      show: function() {
+        var this$1 = this;
+
+
+        if (this.isToggled()) {
+          return Promise.resolve();
+        }
+
+        if (this.container && this.$el.parentNode !== this.container) {
+          append(this.container, this.$el);
+          return new Promise(function (resolve) { return requestAnimationFrame(function () { return this$1.show().then(resolve); }
+            ); }
+          );
+        }
+
+        return this.toggleElement(this.$el, true, animate$1(this));
+      },
+
+      hide: function() {
+        return this.isToggled()
+          ? this.toggleElement(this.$el, false, animate$1(this))
+          : Promise.resolve();
+      },
+
+      getActive: function() {
+        return active$1;
+      }
+
+    }
+
+  };
+
+  var events;
+
+  function registerEvents() {
+
+    if (events) {
+      return;
+    }
+
+    events = [
+      on(document, pointerUp, function (ref) {
+        var target = ref.target;
+        var defaultPrevented = ref.defaultPrevented;
+
+        if (active$1 && active$1.bgClose && !defaultPrevented && (!active$1.overlay || within(target, active$1.$el)) && !within(target, active$1.panel)) {
+          active$1.hide();
+        }
+      }),
+      on(document, 'keydown', function (e) {
+        if (e.keyCode === 27 && active$1 && active$1.escClose) {
+          e.preventDefault();
+          active$1.hide();
+        }
+      })
+    ];
+  }
+
+  function deregisterEvents() {
+    events && events.forEach(function (unbind) { return unbind(); });
+    events = null;
+  }
+
+  function animate$1(ref) {
+    var transitionElement = ref.transitionElement;
+    var _toggle = ref._toggle;
+
+    return function (el, show) { return new Promise(function (resolve, reject) { return once(el, 'show hide', function () {
+        el._reject && el._reject();
+        el._reject = reject;
+
+        _toggle(el, show);
+
+        if (toMs(css(transitionElement, 'transitionDuration'))) {
+          once(transitionElement, 'transitionend', resolve, false, function (e) { return e.target === transitionElement; });
+        } else {
+          resolve();
+        }
+      }); }
+    ); };
+  }
+
+  var Modal$1 = {
+
+    install: install$1,
+
+    mixins: [Modal],
+
+    data: {
+      clsPage: 'uk-modal-page',
+      selPanel: '.uk-modal-dialog',
+      selClose: '.uk-modal-close, .uk-modal-close-default, .uk-modal-close-outside, .uk-modal-close-full'
+    },
+
+    events: [
+
+      {
+        name: 'show',
+
+        self: true,
+
+        handler: function() {
+
+          if (hasClass(this.panel, 'uk-margin-auto-vertical')) {
+            addClass(this.$el, 'uk-flex');
+          } else {
+            css(this.$el, 'display', 'block');
+          }
+
+          height(this.$el); // force reflow
+        }
+      },
+
+      {
+        name: 'hidden',
+
+        self: true,
+
+        handler: function() {
+
+          css(this.$el, 'display', '');
+          removeClass(this.$el, 'uk-flex');
+
         }
       }
+
+    ]
+
+  };
+
+  function install$1 (UIkit) {
+
+    UIkit.modal.dialog = function (content, options) {
+
+      var dialog = UIkit.modal((" <div class=\"uk-modal\"> <div class=\"uk-modal-dialog\">" + content + "</div> </div> "), options);
+
+      dialog.show();
+
+      on(dialog.$el, 'hidden', function (ref) {
+        var target = ref.target;
+        var currentTarget = ref.currentTarget;
+
+        if (target === currentTarget) {
+          Promise.resolve(function () { return dialog.$destroy(true); });
+        }
+      });
+
+      return dialog;
     };
-  const Ei = {
-      passive: !1,
-      capture: !0
+
+    UIkit.modal.alert = function (message, options) {
+
+      options = assign({bgClose: false, escClose: false, labels: UIkit.modal.labels}, options);
+
+      return new Promise(
+        function (resolve) { return on(UIkit.modal.dialog((" <div class=\"uk-modal-body\">" + (isString(message) ? message : html(message)) + "</div> <div class=\"uk-modal-footer uk-text-right\"> <button class=\"uk-button uk-button-primary uk-modal-close\" autofocus>" + (options.labels.ok) + "</button> </div> "), options).$el, 'hide', resolve); }
+      );
+    };
+
+    UIkit.modal.confirm = function (message, options) {
+
+      options = assign({bgClose: false, escClose: true, labels: UIkit.modal.labels}, options);
+
+      return new Promise(function (resolve, reject) {
+
+        var confirm = UIkit.modal.dialog((" <form> <div class=\"uk-modal-body\">" + (isString(message) ? message : html(message)) + "</div> <div class=\"uk-modal-footer uk-text-right\"> <button class=\"uk-button uk-button-default uk-modal-close\" type=\"button\">" + (options.labels.cancel) + "</button> <button class=\"uk-button uk-button-primary\" autofocus>" + (options.labels.ok) + "</button> </div> </form> "), options);
+
+        var resolved = false;
+
+        on(confirm.$el, 'submit', 'form', function (e) {
+          e.preventDefault();
+          resolve();
+          resolved = true;
+          confirm.hide();
+        });
+        on(confirm.$el, 'hide', function () {
+          if (!resolved) {
+            reject();
+          }
+        });
+
+      });
+    };
+
+    UIkit.modal.prompt = function (message, value, options) {
+
+      options = assign({bgClose: false, escClose: true, labels: UIkit.modal.labels}, options);
+
+      return new Promise(function (resolve) {
+
+        var prompt = UIkit.modal.dialog((" <form class=\"uk-form-stacked\"> <div class=\"uk-modal-body\"> <label>" + (isString(message) ? message : html(message)) + "</label> <input class=\"uk-input\" autofocus> </div> <div class=\"uk-modal-footer uk-text-right\"> <button class=\"uk-button uk-button-default uk-modal-close\" type=\"button\">" + (options.labels.cancel) + "</button> <button class=\"uk-button uk-button-primary\">" + (options.labels.ok) + "</button> </div> </form> "), options),
+          input = $('input', prompt.$el);
+
+        input.value = value;
+
+        var resolved = false;
+
+        on(prompt.$el, 'submit', 'form', function (e) {
+          e.preventDefault();
+          resolve(input.value);
+          resolved = true;
+          prompt.hide();
+        });
+        on(prompt.$el, 'hide', function () {
+          if (!resolved) {
+            resolve(null);
+          }
+        });
+
+      });
+    };
+
+    UIkit.modal.labels = {
+      ok: 'Ok',
+      cancel: 'Cancel'
+    };
+
+  }
+
+  var Nav = {
+
+    extends: Accordion,
+
+    data: {
+      targets: '> .uk-parent',
+      toggle: '> a',
+      content: '> ul'
+    }
+
+  };
+
+  var Navbar = {
+
+    mixins: [Class, FlexBug],
+
+    props: {
+      dropdown: String,
+      mode: 'list',
+      align: String,
+      offset: Number,
+      boundary: Boolean,
+      boundaryAlign: Boolean,
+      clsDrop: String,
+      delayShow: Number,
+      delayHide: Number,
+      dropbar: Boolean,
+      dropbarMode: String,
+      dropbarAnchor: Boolean,
+      duration: Number
     },
-    Un = {
-      passive: !0,
-      capture: !0
+
+    data: {
+      dropdown: '.uk-navbar-nav > li',
+      align: !isRtl ? 'left' : 'right',
+      clsDrop: 'uk-navbar-dropdown',
+      mode: undefined,
+      offset: undefined,
+      delayShow: undefined,
+      delayHide: undefined,
+      boundaryAlign: undefined,
+      flip: 'x',
+      boundary: true,
+      dropbar: false,
+      dropbarMode: 'slide',
+      dropbarAnchor: false,
+      duration: 200,
+      forceHeight: true,
+      selMinHeight: '.uk-navbar-nav > li > a, .uk-navbar-item, .uk-navbar-toggle'
     },
-    ka = "touchstart mousedown",
-    As = "touchmove mousemove",
-    Vn = "touchend touchcancel mouseup click input scroll";
-  var Sa = {
+
+    computed: {
+
+      boundary: function(ref, $el) {
+        var boundary = ref.boundary;
+        var boundaryAlign = ref.boundaryAlign;
+
+        return (boundary === true || boundaryAlign) ? $el : boundary;
+      },
+
+      dropbarAnchor: function(ref, $el) {
+        var dropbarAnchor = ref.dropbarAnchor;
+
+        return query(dropbarAnchor, $el);
+      },
+
+      pos: function(ref) {
+        var align = ref.align;
+
+        return ("bottom-" + align);
+      },
+
+      dropdowns: function(ref, $el) {
+        var dropdown = ref.dropdown;
+        var clsDrop = ref.clsDrop;
+
+        return $$((dropdown + " ." + clsDrop), $el);
+      }
+
+    },
+
+    beforeConnect: function() {
+
+      var ref = this.$props;
+      var dropbar = ref.dropbar;
+
+      this.dropbar = dropbar && (query(dropbar, this.$el) || $('+ .uk-navbar-dropbar', this.$el) || $('<div></div>'));
+
+      if (this.dropbar) {
+
+        addClass(this.dropbar, 'uk-navbar-dropbar');
+
+        if (this.dropbarMode === 'slide') {
+          addClass(this.dropbar, 'uk-navbar-dropbar-slide');
+        }
+      }
+
+    },
+
+    disconnected: function() {
+      this.dropbar && remove(this.dropbar);
+    },
+
+    update: function() {
+      var this$1 = this;
+
+
+      this.$create(
+        'drop',
+        this.dropdowns.filter(function (el) { return !this$1.getDropdown(el); }),
+        assign({}, this.$props, {boundary: this.boundary, pos: this.pos, offset: this.dropbar || this.offset})
+      );
+
+    },
+
+    events: [
+
+      {
+        name: 'mouseover',
+
+        delegate: function() {
+          return this.dropdown;
+        },
+
+        handler: function(ref) {
+          var current = ref.current;
+
+          var active = this.getActive();
+          if (active && active.toggle && !within(active.toggle.$el, current) && !active.tracker.movesTo(active.$el)) {
+            active.hide(false);
+          }
+        }
+
+      },
+
+      {
+        name: 'mouseleave',
+
+        el: function() {
+          return this.dropbar;
+        },
+
+        handler: function() {
+          var active = this.getActive();
+
+          if (active && !matches(this.dropbar, ':hover')) {
+            active.hide();
+          }
+        }
+      },
+
+      {
+        name: 'beforeshow',
+
+        capture: true,
+
+        filter: function() {
+          return this.dropbar;
+        },
+
+        handler: function() {
+
+          if (!this.dropbar.parentNode) {
+            after(this.dropbarAnchor || this.$el, this.dropbar);
+          }
+
+        }
+      },
+
+      {
+        name: 'show',
+
+        capture: true,
+
+        filter: function() {
+          return this.dropbar;
+        },
+
+        handler: function(_, drop) {
+
+          var $el = drop.$el;
+          var dir = drop.dir;
+
+          this.clsDrop && addClass($el, ((this.clsDrop) + "-dropbar"));
+
+          if (dir === 'bottom') {
+            this.transitionTo($el.offsetHeight + toFloat(css($el, 'marginTop')) + toFloat(css($el, 'marginBottom')), $el);
+          }
+        }
+      },
+
+      {
+        name: 'beforehide',
+
+        filter: function() {
+          return this.dropbar;
+        },
+
+        handler: function(e, ref) {
+          var $el = ref.$el;
+
+
+          var active = this.getActive();
+
+          if (matches(this.dropbar, ':hover') && active && active.$el === $el) {
+            e.preventDefault();
+          }
+        }
+      },
+
+      {
+        name: 'hide',
+
+        filter: function() {
+          return this.dropbar;
+        },
+
+        handler: function(_, ref) {
+          var $el = ref.$el;
+
+
+          var active = this.getActive();
+
+          if (!active || active && active.$el === $el) {
+            this.transitionTo(0);
+          }
+        }
+      }
+
+    ],
+
+    methods: {
+
+      getActive: function() {
+        var ref = this.dropdowns.map(this.getDropdown).filter(function (drop) { return drop && drop.isActive(); });
+        var active = ref[0];
+        return active && includes(active.mode, 'hover') && within(active.toggle.$el, this.$el) && active;
+      },
+
+      transitionTo: function(newHeight, el) {
+        var this$1 = this;
+
+
+        var ref = this;
+        var dropbar = ref.dropbar;
+        var oldHeight = isVisible(dropbar) ? height(dropbar) : 0;
+
+        el = oldHeight < newHeight && el;
+
+        css(el, 'clip', ("rect(0," + (el.offsetWidth) + "px," + oldHeight + "px,0)"));
+
+        height(dropbar, oldHeight);
+
+        Transition.cancel([el, dropbar]);
+        return Promise.all([
+          Transition.start(dropbar, {height: newHeight}, this.duration),
+          Transition.start(el, {clip: ("rect(0," + (el.offsetWidth) + "px," + newHeight + "px,0)")}, this.duration)
+        ])
+          .catch(noop)
+          .then(function () {
+            css(el, {clip: ''});
+            this$1.$update(dropbar);
+          });
+      },
+
+      getDropdown: function(el) {
+        return this.$getComponent(el, 'drop') || this.$getComponent(el, 'dropdown');
+      }
+
+    }
+
+  };
+
+  var Offcanvas = {
+
+    mixins: [Modal],
+
+    args: 'mode',
+
+    props: {
+      mode: String,
+      flip: Boolean,
+      overlay: Boolean
+    },
+
+    data: {
+      mode: 'slide',
+      flip: false,
+      overlay: false,
+      clsPage: 'uk-offcanvas-page',
+      clsContainer: 'uk-offcanvas-container',
+      selPanel: '.uk-offcanvas-bar',
+      clsFlip: 'uk-offcanvas-flip',
+      clsContainerAnimation: 'uk-offcanvas-container-animation',
+      clsSidebarAnimation: 'uk-offcanvas-bar-animation',
+      clsMode: 'uk-offcanvas',
+      clsOverlay: 'uk-offcanvas-overlay',
+      selClose: '.uk-offcanvas-close'
+    },
+
+    computed: {
+
+      clsFlip: function(ref) {
+        var flip = ref.flip;
+        var clsFlip = ref.clsFlip;
+
+        return flip ? clsFlip : '';
+      },
+
+      clsOverlay: function(ref) {
+        var overlay = ref.overlay;
+        var clsOverlay = ref.clsOverlay;
+
+        return overlay ? clsOverlay : '';
+      },
+
+      clsMode: function(ref) {
+        var mode = ref.mode;
+        var clsMode = ref.clsMode;
+
+        return (clsMode + "-" + mode);
+      },
+
+      clsSidebarAnimation: function(ref) {
+        var mode = ref.mode;
+        var clsSidebarAnimation = ref.clsSidebarAnimation;
+
+        return mode === 'none' || mode === 'reveal' ? '' : clsSidebarAnimation;
+      },
+
+      clsContainerAnimation: function(ref) {
+        var mode = ref.mode;
+        var clsContainerAnimation = ref.clsContainerAnimation;
+
+        return mode !== 'push' && mode !== 'reveal' ? '' : clsContainerAnimation;
+      },
+
+      transitionElement: function(ref) {
+        var mode = ref.mode;
+
+        return mode === 'reveal' ? this.panel.parentNode : this.panel;
+      }
+
+    },
+
+    events: [
+
+      {
+
+        name: 'click',
+
+        delegate: function() {
+          return 'a[href^="#"]';
+        },
+
+        handler: function(ref) {
+          var current = ref.current;
+
+          if (current.hash && $(current.hash, document.body)) {
+            this.hide();
+          }
+        }
+
+      },
+
+      {
+        name: 'touchstart',
+
+        el: function() {
+          return this.panel;
+        },
+
+        handler: function(ref) {
+          var targetTouches = ref.targetTouches;
+
+
+          if (targetTouches.length === 1) {
+            this.clientY = targetTouches[0].clientY;
+          }
+
+        }
+
+      },
+
+      {
+        name: 'touchmove',
+
+        self: true,
+        passive: false,
+
+        filter: function() {
+          return this.overlay;
+        },
+
+        handler: function(e) {
+          e.preventDefault();
+        }
+
+      },
+
+      {
+        name: 'touchmove',
+
+        passive: false,
+
+        el: function() {
+          return this.panel;
+        },
+
+        handler: function(e) {
+
+          if (e.targetTouches.length !== 1) {
+            return;
+          }
+
+          var clientY = event.targetTouches[0].clientY - this.clientY;
+          var ref = this.panel;
+          var scrollTop$$1 = ref.scrollTop;
+          var scrollHeight = ref.scrollHeight;
+          var clientHeight = ref.clientHeight;
+
+          if (clientHeight >= scrollHeight
+            || scrollTop$$1 === 0 && clientY > 0
+            || scrollHeight - scrollTop$$1 <= clientHeight && clientY < 0
+          ) {
+            e.preventDefault();
+          }
+
+        }
+
+      },
+
+      {
+        name: 'show',
+
+        self: true,
+
+        handler: function() {
+
+          if (this.mode === 'reveal' && !hasClass(this.panel.parentNode, this.clsMode)) {
+            wrapAll(this.panel, '<div>');
+            addClass(this.panel.parentNode, this.clsMode);
+          }
+
+          css(document.documentElement, 'overflowY', this.overlay ? 'hidden' : '');
+          addClass(document.body, this.clsContainer, this.clsFlip);
+          css(this.$el, 'display', 'block');
+
+          height(document.body); // force reflow
+
+          addClass(document.body, this.clsContainerAnimation);
+          addClass(this.$el, this.clsOverlay);
+          addClass(this.panel, this.clsSidebarAnimation, this.mode !== 'reveal' ? this.clsMode : '');
+
+          this.clsContainerAnimation && suppressUserScale();
+
+        }
+      },
+
+      {
+        name: 'hide',
+
+        self: true,
+
+        handler: function() {
+          removeClass(document.body, this.clsContainerAnimation);
+
+          var active = this.getActive();
+          if (this.mode === 'none' || active && active !== this && active !== this.prev) {
+            trigger(this.panel, 'transitionend');
+          }
+        }
+      },
+
+      {
+        name: 'hidden',
+
+        self: true,
+
+        handler: function() {
+
+          this.clsContainerAnimation && resumeUserScale();
+
+          if (this.mode === 'reveal') {
+            unwrap(this.panel);
+          }
+
+          removeClass(this.panel, this.clsSidebarAnimation, this.clsMode);
+          removeClass(this.$el, this.clsOverlay);
+          css(this.$el, 'display', '');
+          removeClass(document.body, this.clsContainer, this.clsFlip);
+
+          css(document.documentElement, 'overflowY', '');
+
+        }
+      },
+
+      {
+        name: 'swipeLeft swipeRight',
+
+        handler: function(e) {
+
+          if (this.isToggled() && isTouch(e) && e.type === 'swipeLeft' ^ this.flip) {
+            this.hide();
+          }
+
+        }
+      }
+
+    ]
+
+  };
+
+  // Chrome in responsive mode zooms page upon opening offcanvas
+  function suppressUserScale() {
+    getViewport().content += ',user-scalable=0';
+  }
+
+  function resumeUserScale() {
+    var viewport = getViewport();
+    viewport.content = viewport.content.replace(/,user-scalable=0$/, '');
+  }
+
+  function getViewport() {
+    return $('meta[name="viewport"]', document.head) || append(document.head, '<meta name="viewport">');
+  }
+
+  var OverflowAuto = {
+
+    mixins: [Class],
+
+    props: {
+      selContainer: String,
+      selContent: String,
+    },
+
+    data: {
+      selContainer: '.uk-modal',
+      selContent: '.uk-modal-dialog',
+    },
+
+    computed: {
+
+      container: function(ref, $el) {
+        var selContainer = ref.selContainer;
+
+        return closest($el, selContainer);
+      },
+
+      content: function(ref, $el) {
+        var selContent = ref.selContent;
+
+        return closest($el, selContent);
+      }
+
+    },
+
+    connected: function() {
+      css(this.$el, 'minHeight', 150);
+    },
+
+    update: {
+
+      read: function() {
+
+        if (!this.content || !this.container) {
+          return false;
+        }
+
+        return {
+          current: toFloat(css(this.$el, 'maxHeight')),
+          max: Math.max(150, height(this.container) - (offset(this.content).height - height(this.$el)))
+        };
+      },
+
+      write: function(ref) {
+        var current = ref.current;
+        var max = ref.max;
+
+        css(this.$el, 'maxHeight', max);
+        if (Math.round(current) !== Math.round(max)) {
+          trigger(this.$el, 'resize');
+        }
+      },
+
+      events: ['load', 'resize']
+
+    }
+
+  };
+
+  var Responsive = {
+
+    props: ['width', 'height'],
+
+    connected: function() {
+      addClass(this.$el, 'uk-responsive-width');
+    },
+
+    update: {
+
+      read: function() {
+        return isVisible(this.$el) && this.width && this.height
+          ? {width: width(this.$el.parentNode), height: this.height}
+          : false;
+      },
+
+      write: function(dim) {
+        height(this.$el, Dimensions.contain({
+          height: this.height,
+          width: this.width
+        }, dim).height);
+      },
+
+      events: ['load', 'resize']
+
+    }
+
+  };
+
+  var Scroll = {
+
+    props: {
+      duration: Number,
+      offset: Number
+    },
+
+    data: {
+      duration: 1000,
+      offset: 0
+    },
+
+    methods: {
+
+      scrollTo: function(el) {
+        var this$1 = this;
+
+
+        el = el && $(el) || document.body;
+
+        var docHeight = height(document);
+        var winHeight = height(window);
+
+        var target = offset(el).top - this.offset;
+        if (target + winHeight > docHeight) {
+          target = docHeight - winHeight;
+        }
+
+        if (!trigger(this.$el, 'beforescroll', [this, el])) {
+          return;
+        }
+
+        var start = Date.now();
+        var startY = window.pageYOffset;
+        var step = function () {
+
+          var currentY = startY + (target - startY) * ease(clamp((Date.now() - start) / this$1.duration));
+
+          scrollTop(window, currentY);
+
+          // scroll more if we have not reached our destination
+          if (currentY !== target) {
+            requestAnimationFrame(step);
+          } else {
+            trigger(this$1.$el, 'scrolled', [this$1, el]);
+          }
+
+        };
+
+        step();
+
+      }
+
+    },
+
+    events: {
+
+      click: function(e) {
+
+        if (e.defaultPrevented) {
+          return;
+        }
+
+        e.preventDefault();
+        this.scrollTo(escape(decodeURIComponent(this.$el.hash)).substr(1));
+      }
+
+    }
+
+  };
+
+  function ease(k) {
+    return 0.5 * (1 - Math.cos(Math.PI * k));
+  }
+
+  var Scrollspy = {
+
+    args: 'cls',
+
+    props: {
+      cls: 'list',
+      target: String,
+      hidden: Boolean,
+      offsetTop: Number,
+      offsetLeft: Number,
+      repeat: Boolean,
+      delay: Number
+    },
+
+    data: function () { return ({
+      cls: [],
+      target: false,
+      hidden: true,
+      offsetTop: 0,
+      offsetLeft: 0,
+      repeat: false,
+      delay: 0,
+      inViewClass: 'uk-scrollspy-inview'
+    }); },
+
+    computed: {
+
+      elements: function(ref, $el) {
+        var target = ref.target;
+
+        return target ? $$(target, $el) : [$el];
+      }
+
+    },
+
+    update: [
+
+      {
+
+        write: function() {
+          if (this.hidden) {
+            css(filter(this.elements, (":not(." + (this.inViewClass) + ")")), 'visibility', 'hidden');
+          }
+        }
+
+      },
+
+      {
+
+        read: function(els) {
+          var this$1 = this;
+
+
+          if (!els.update) {
+            return;
+          }
+
+          this.elements.forEach(function (el, i) {
+
+            var elData = els[i];
+
+            if (!elData || elData.el !== el) {
+              var cls = data(el, 'uk-scrollspy-class');
+              elData = {el: el, toggles: cls && cls.split(',') || this$1.cls};
+            }
+
+            elData.show = isInView(el, this$1.offsetTop, this$1.offsetLeft);
+            els[i] = elData;
+
+          });
+
+        },
+
+        write: function(els) {
+          var this$1 = this;
+
+
+          // Let child components be applied at least once first
+          if (!els.update) {
+            this.$emit();
+            return els.update = true;
+          }
+
+          this.elements.forEach(function (el, i) {
+
+            var elData = els[i];
+            var cls = elData.toggles[i] || elData.toggles[0];
+
+            if (elData.show && !elData.inview && !elData.queued) {
+
+              var show = function () {
+
+                css(el, 'visibility', '');
+                addClass(el, this$1.inViewClass);
+                toggleClass(el, cls);
+
+                trigger(el, 'inview');
+
+                this$1.$update(el);
+
+                elData.inview = true;
+                elData.abort && elData.abort();
+              };
+
+              if (this$1.delay) {
+
+                elData.queued = true;
+                els.promise = (els.promise || Promise.resolve()).then(function () {
+                  return !elData.inview && new Promise(function (resolve) {
+
+                    var timer = setTimeout(function () {
+
+                      show();
+                      resolve();
+
+                    }, els.promise || this$1.elements.length === 1 ? this$1.delay : 0);
+
+                    elData.abort = function () {
+                      clearTimeout(timer);
+                      resolve();
+                      elData.queued = false;
+                    };
+
+                  });
+
+                });
+
+              } else {
+                show();
+              }
+
+            } else if (!elData.show && (elData.inview || elData.queued) && this$1.repeat) {
+
+              elData.abort && elData.abort();
+
+              if (!elData.inview) {
+                return;
+              }
+
+              css(el, 'visibility', this$1.hidden ? 'hidden' : '');
+              removeClass(el, this$1.inViewClass);
+              toggleClass(el, cls);
+
+              trigger(el, 'outview');
+
+              this$1.$update(el);
+
+              elData.inview = false;
+
+            }
+
+
+          });
+
+        },
+
+        events: ['scroll', 'load', 'resize']
+
+      }
+
+    ]
+
+  };
+
+  var ScrollspyNav = {
+
+    props: {
+      cls: String,
+      closest: String,
+      scroll: Boolean,
+      overflow: Boolean,
+      offset: Number
+    },
+
+    data: {
+      cls: 'uk-active',
+      closest: false,
+      scroll: false,
+      overflow: true,
+      offset: 0
+    },
+
+    computed: {
+
+      links: function(_, $el) {
+        return $$('a[href^="#"]', $el).filter(function (el) { return el.hash; });
+      },
+
+      elements: function() {
+        return this.closest ? closest(this.links, this.closest) : this.links;
+      },
+
+      targets: function() {
+        return $$(this.links.map(function (el) { return el.hash; }).join(','));
+      }
+
+    },
+
+    update: [
+
+      {
+
+        read: function() {
+          if (this.scroll) {
+            this.$create('scroll', this.links, {offset: this.offset || 0});
+          }
+        }
+
+      },
+
+      {
+
+        read: function(data$$1) {
+          var this$1 = this;
+
+
+          var scroll = window.pageYOffset + this.offset + 1;
+          var max = height(document) - height(window) + this.offset;
+
+          data$$1.active = false;
+
+          this.targets.every(function (el, i) {
+
+            var ref = offset(el);
+            var top = ref.top;
+            var last = i + 1 === this$1.targets.length;
+
+            if (!this$1.overflow && (i === 0 && top > scroll || last && top + el.offsetTop < scroll)) {
+              return false;
+            }
+
+            if (!last && offset(this$1.targets[i + 1]).top <= scroll) {
+              return true;
+            }
+
+            if (scroll >= max) {
+              for (var j = this$1.targets.length - 1; j > i; j--) {
+                if (isInView(this$1.targets[j])) {
+                  el = this$1.targets[j];
+                  break;
+                }
+              }
+            }
+
+            return !(data$$1.active = $(filter(this$1.links, ("[href=\"#" + (el.id) + "\"]"))));
+
+          });
+
+        },
+
+        write: function(ref) {
+          var active = ref.active;
+
+
+          this.links.forEach(function (el) { return el.blur(); });
+          removeClass(this.elements, this.cls);
+
+          if (active) {
+            trigger(this.$el, 'active', [active, addClass(this.closest ? closest(active, this.closest) : active, this.cls)]);
+          }
+
+        },
+
+        events: ['scroll', 'load', 'resize']
+
+      }
+
+    ]
+
+  };
+
+  var Sticky = {
+
+    mixins: [Class, Media],
+
+    props: {
+      top: null,
+      bottom: Boolean,
+      offset: Number,
+      animation: String,
+      clsActive: String,
+      clsInactive: String,
+      clsFixed: String,
+      clsBelow: String,
+      selTarget: String,
+      widthElement: Boolean,
+      showOnUp: Boolean,
+      targetOffset: Number
+    },
+
+    data: {
+      top: 0,
+      bottom: false,
+      offset: 0,
+      animation: '',
+      clsActive: 'uk-active',
+      clsInactive: '',
+      clsFixed: 'uk-sticky-fixed',
+      clsBelow: 'uk-sticky-below',
+      selTarget: '',
+      widthElement: false,
+      showOnUp: false,
+      targetOffset: false
+    },
+
+    computed: {
+
+      selTarget: function(ref, $el) {
+        var selTarget = ref.selTarget;
+
+        return selTarget && $(selTarget, $el) || $el;
+      },
+
+      widthElement: function(ref, $el) {
+        var widthElement = ref.widthElement;
+
+        return query(widthElement, $el) || this.placeholder;
+      },
+
+      isActive: {
+
+        get: function() {
+          return hasClass(this.selTarget, this.clsActive);
+        },
+
+        set: function(value) {
+          if (value && !this.isActive) {
+            replaceClass(this.selTarget, this.clsInactive, this.clsActive);
+            trigger(this.$el, 'active');
+          } else if (!value && !hasClass(this.selTarget, this.clsInactive)) {
+            replaceClass(this.selTarget, this.clsActive, this.clsInactive);
+            trigger(this.$el, 'inactive');
+          }
+        }
+
+      },
+
+    },
+
+    connected: function() {
+      this.placeholder = $('+ .uk-sticky-placeholder', this.$el) || $('<div class="uk-sticky-placeholder"></div>');
+      this.isFixed = false;
+      this.isActive = false;
+    },
+
+    disconnected: function() {
+
+      if (this.isFixed) {
+        this.hide();
+        removeClass(this.selTarget, this.clsInactive);
+      }
+
+      remove(this.placeholder);
+      this.placeholder = null;
+      this.widthElement = null;
+    },
+
+    events: [
+
+      {
+
+        name: 'load hashchange popstate',
+
+        el: window,
+
+        handler: function() {
+          var this$1 = this;
+
+
+          if (!(this.targetOffset !== false && location.hash && window.pageYOffset > 0)) {
+            return;
+          }
+
+          var target = $(location.hash);
+
+          if (target) {
+            fastdom.read(function () {
+
+              var ref = offset(target);
+              var top = ref.top;
+              var elTop = offset(this$1.$el).top;
+              var elHeight = this$1.$el.offsetHeight;
+
+              if (this$1.isFixed && elTop + elHeight >= top && elTop <= top + target.offsetHeight) {
+                scrollTop(window, top - elHeight - (isNumeric(this$1.targetOffset) ? this$1.targetOffset : 0) - this$1.offset);
+              }
+
+            });
+          }
+
+        }
+
+      }
+
+    ],
+
+    update: [
+
+      {
+
+        read: function(ref, ref$1) {
+          var height$$1 = ref.height;
+          var type = ref$1.type;
+
+
+          if (this.isActive && type !== 'update') {
+
+            this.hide();
+            height$$1 = this.$el.offsetHeight;
+            this.show();
+
+          }
+
+          height$$1 = !this.isActive ? this.$el.offsetHeight : height$$1;
+
+          this.topOffset = offset(this.isFixed ? this.placeholder : this.$el).top;
+          this.bottomOffset = this.topOffset + height$$1;
+
+          var bottom = parseProp('bottom', this);
+
+          this.top = Math.max(toFloat(parseProp('top', this)), this.topOffset) - this.offset;
+          this.bottom = bottom && bottom - height$$1;
+          this.inactive = !this.matchMedia;
+
+          return {
+            lastScroll: false,
+            height: height$$1,
+            margins: css(this.$el, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'])
+          };
+        },
+
+        write: function(ref) {
+          var height$$1 = ref.height;
+          var margins = ref.margins;
+
+
+          var ref$1 = this;
+          var placeholder = ref$1.placeholder;
+
+          css(placeholder, assign({height: height$$1}, margins));
+
+          if (!within(placeholder, document)) {
+            after(this.$el, placeholder);
+            attr(placeholder, 'hidden', '');
+          }
+
+          // ensure active/inactive classes are applied
+          this.isActive = this.isActive;
+
+        },
+
+        events: ['load', 'resize']
+
+      },
+
+      {
+
+        read: function(_, ref) {
+          var scrollY = ref.scrollY; if ( scrollY === void 0 ) scrollY = window.pageYOffset;
+
+
+          this.width = (isVisible(this.widthElement) ? this.widthElement : this.$el).offsetWidth;
+
+          return {
+            scroll: this.scroll = scrollY,
+            visible: isVisible(this.$el),
+            top: offsetPosition(this.placeholder)[0]
+          };
+        },
+
+        write: function(data$$1, ref) {
+          var this$1 = this;
+          if ( ref === void 0 ) ref = {};
+          var dir = ref.dir;
+
+
+          var initTimestamp = data$$1.initTimestamp; if ( initTimestamp === void 0 ) initTimestamp = 0;
+          var lastDir = data$$1.lastDir;
+          var lastScroll = data$$1.lastScroll;
+          var scroll = data$$1.scroll;
+          var top = data$$1.top;
+          var visible = data$$1.visible;
+          var now = performance.now();
+
+          data$$1.lastScroll = scroll;
+
+          if (scroll < 0 || scroll === lastScroll || !visible || this.disabled || this.showOnUp && !dir) {
+            return;
+          }
+
+          if (now - initTimestamp > 300 || dir !== lastDir) {
+            data$$1.initScroll = scroll;
+            data$$1.initTimestamp = now;
+          }
+
+          data$$1.lastDir = dir;
+
+          if (this.showOnUp && Math.abs(data$$1.initScroll - scroll) <= 30 && Math.abs(lastScroll - scroll) <= 10) {
+            return;
+          }
+
+          if (this.inactive
+            || scroll < this.top
+            || this.showOnUp && (scroll <= this.top || dir === 'down' || dir === 'up' && !this.isFixed && scroll <= this.bottomOffset)
+          ) {
+
+            if (!this.isFixed) {
+
+              if (Animation.inProgress(this.$el) && top > scroll) {
+                Animation.cancel(this.$el);
+                this.hide();
+              }
+
+              return;
+            }
+
+            this.isFixed = false;
+
+            if (this.animation && scroll > this.topOffset) {
+              Animation.cancel(this.$el);
+              Animation.out(this.$el, this.animation).then(function () { return this$1.hide(); }, noop);
+            } else {
+              this.hide();
+            }
+
+          } else if (this.isFixed) {
+
+            this.update();
+
+          } else if (this.animation) {
+
+            Animation.cancel(this.$el);
+            this.show();
+            Animation.in(this.$el, this.animation).catch(noop);
+
+          } else {
+            this.show();
+          }
+
+        },
+
+        events: ['load', 'resize', 'scroll']
+
+      } ],
+
+    methods: {
+
+      show: function() {
+
+        this.isFixed = true;
+        this.update();
+        attr(this.placeholder, 'hidden', null);
+
+      },
+
+      hide: function() {
+
+        this.isActive = false;
+        removeClass(this.$el, this.clsFixed, this.clsBelow);
+        css(this.$el, {position: '', top: '', width: ''});
+        attr(this.placeholder, 'hidden', '');
+
+      },
+
+      update: function() {
+
+        var active = this.top !== 0 || this.scroll > this.top;
+        var top = Math.max(0, this.offset);
+
+        if (this.bottom && this.scroll > this.bottom - this.offset) {
+          top = this.bottom - this.scroll;
+        }
+
+        css(this.$el, {
+          position: 'fixed',
+          top: (top + "px"),
+          width: this.width
+        });
+
+        this.isActive = active;
+        toggleClass(this.$el, this.clsBelow, this.scroll > this.bottomOffset);
+        addClass(this.$el, this.clsFixed);
+
+      }
+
+    }
+
+  };
+
+  function parseProp(prop, ref) {
+    var $props = ref.$props;
+    var $el = ref.$el;
+    var propOffset = ref[(prop + "Offset")];
+
+
+    var value = $props[prop];
+
+    if (!value) {
+      return;
+    }
+
+    if (isNumeric(value)) {
+
+      return propOffset + toFloat(value);
+
+    } else if (isString(value) && value.match(/^-?\d+vh$/)) {
+
+      return height(window) * toFloat(value) / 100;
+
+    } else {
+
+      var el = value === true ? $el.parentNode : query(value, $el);
+
+      if (el) {
+        return offset(el).top + el.offsetHeight;
+      }
+
+    }
+  }
+
+  var Switcher = {
+
+    mixins: [Togglable],
+
+    args: 'connect',
+
+    props: {
+      connect: String,
+      toggle: String,
+      active: Number,
+      swiping: Boolean
+    },
+
+    data: {
+      connect: '~.uk-switcher',
+      toggle: '> * > :first-child',
+      active: 0,
+      swiping: true,
+      cls: 'uk-active',
+      clsContainer: 'uk-switcher',
+      attrItem: 'uk-switcher-item',
+      queued: true
+    },
+
+    computed: {
+
+      connects: function(ref, $el) {
+        var connect = ref.connect;
+
+        return queryAll(connect, $el);
+      },
+
+      toggles: function(ref, $el) {
+        var toggle = ref.toggle;
+
+        return $$(toggle, $el);
+      }
+
+    },
+
+    events: [
+
+      {
+
+        name: 'click',
+
+        delegate: function() {
+          return ((this.toggle) + ":not(.uk-disabled)");
+        },
+
+        handler: function(e) {
+          e.preventDefault();
+          this.show(e.current);
+        }
+
+      },
+
+      {
+        name: 'click',
+
+        el: function() {
+          return this.connects;
+        },
+
+        delegate: function() {
+          return ("[" + (this.attrItem) + "],[data-" + (this.attrItem) + "]");
+        },
+
+        handler: function(e) {
+          e.preventDefault();
+          this.show(data(e.current, this.attrItem));
+        }
+      },
+
+      {
+        name: 'swipeRight swipeLeft',
+
+        filter: function() {
+          return this.swiping;
+        },
+
+        el: function() {
+          return this.connects;
+        },
+
+        handler: function(e) {
+          if (!isTouch(e)) {
+            return;
+          }
+
+          e.preventDefault();
+          if (!window.getSelection().toString()) {
+            this.show(e.type === 'swipeLeft' ? 'next' : 'previous');
+          }
+        }
+      }
+
+    ],
+
+    update: function() {
+      var this$1 = this;
+
+
+      this.connects.forEach(function (list) { return this$1.updateAria(list.children); });
+      this.show(filter(this.toggles, ("." + (this.cls)))[0] || this.toggles[this.active] || this.toggles[0]);
+
+    },
+
+    methods: {
+
+      index: function() {
+        return !!this.connects.length && index(filter(this.connects[0].children, ("." + (this.cls)))[0]);
+      },
+
+      show: function(item) {
+        var this$1 = this;
+
+
+        var ref = this.toggles;
+        var length = ref.length;
+        var prev = this.index();
+        var hasPrev = prev >= 0;
+        var dir = item === 'previous' ? -1 : 1;
+
+        var toggle, next = getIndex(item, this.toggles, prev);
+
+        for (var i = 0; i < length; i++, next = (next + dir + length) % length) {
+          if (!matches(this.toggles[next], '.uk-disabled, [disabled]')) {
+            toggle = this.toggles[next];
+            break;
+          }
+        }
+
+        if (!toggle || prev >= 0 && hasClass(toggle, this.cls) || prev === next) {
+          return;
+        }
+
+        removeClass(this.toggles, this.cls);
+        attr(this.toggles, 'aria-expanded', false);
+        addClass(toggle, this.cls);
+        attr(toggle, 'aria-expanded', true);
+
+        this.connects.forEach(function (list) {
+          if (!hasPrev) {
+            this$1.toggleNow(list.children[next]);
+          } else {
+            this$1.toggleElement([list.children[prev], list.children[next]]);
+          }
+        });
+
+      }
+
+    }
+
+  };
+
+  var Tab = {
+
+    mixins: [Class],
+
+    extends: Switcher,
+
+    props: {
+      media: Boolean
+    },
+
+    data: {
+      media: 960,
+      attrItem: 'uk-tab-item'
+    },
+
+    connected: function() {
+
+      var cls = hasClass(this.$el, 'uk-tab-left')
+        ? 'uk-tab-left'
+        : hasClass(this.$el, 'uk-tab-right')
+          ? 'uk-tab-right'
+          : false;
+
+      if (cls) {
+        this.$create('toggle', this.$el, {cls: cls, mode: 'media', media: this.media});
+      }
+    }
+
+  };
+
+  var Toggle = {
+
+    mixins: [Media, Togglable],
+
+    args: 'target',
+
+    props: {
+      href: String,
+      target: null,
+      mode: 'list',
+    },
+
+    data: {
+      href: false,
+      target: false,
+      mode: 'click',
+      queued: true,
+    },
+
+    computed: {
+
+      target: function(ref, $el) {
+        var href = ref.href;
+        var target = ref.target;
+
+        target = queryAll(target || href, $el);
+        return target.length && target || [$el];
+      }
+
+    },
+
+    connected: function() {
+      trigger(this.target, 'updatearia', [this]);
+    },
+
+    events: [
+
+      {
+
+        name: (pointerEnter + " " + pointerLeave),
+
+        filter: function() {
+          return includes(this.mode, 'hover');
+        },
+
+        handler: function(e) {
+          if (!isTouch(e)) {
+            this.toggle(("toggle" + (e.type === pointerEnter ? 'show' : 'hide')));
+          }
+        }
+
+      },
+
+      {
+
+        name: 'click',
+
+        filter: function() {
+          return includes(this.mode, 'click') || hasTouch && includes(this.mode, 'hover');
+        },
+
+        handler: function(e) {
+
+          if (!isTouch(e) && !includes(this.mode, 'click')) {
+            return;
+          }
+
+          // TODO better isToggled handling
+          var link;
+          if (closest(e.target, 'a[href="#"], a[href=""], button')
+            || (link = closest(e.target, 'a[href]')) && (
+              this.cls
+              || !isVisible(this.target)
+              || link.hash && matches(this.target, link.hash)
+            )
+          ) {
+            e.preventDefault();
+          }
+
+          this.toggle();
+        }
+
+      }
+
+    ],
+
+    update: {
+
+      write: function() {
+
+        if (!includes(this.mode, 'media') || !this.media) {
+          return;
+        }
+
+        var toggled = this.isToggled(this.target);
+        if (this.matchMedia ? !toggled : toggled) {
+          this.toggle();
+        }
+
+      },
+
+      events: ['load', 'resize']
+
+    },
+
+    methods: {
+
+      toggle: function(type) {
+        if (trigger(this.target, type || 'toggle', [this])) {
+          this.toggleElement(this.target);
+        }
+      }
+
+    }
+
+  };
+
+  function core (UIkit) {
+
+    // core components
+    UIkit.component('accordion', Accordion);
+    UIkit.component('alert', Alert);
+    UIkit.component('cover', Cover);
+    UIkit.component('drop', Drop);
+    UIkit.component('dropdown', Dropdown);
+    UIkit.component('formCustom', FormCustom);
+    UIkit.component('gif', Gif);
+    UIkit.component('grid', Grid);
+    UIkit.component('heightMatch', HeightMatch);
+    UIkit.component('heightViewport', HeightViewport);
+    UIkit.component('icon', Icon);
+    UIkit.component('img', Img);
+    UIkit.component('leader', Leader);
+    UIkit.component('margin', Margin);
+    UIkit.component('modal', Modal$1);
+    UIkit.component('nav', Nav);
+    UIkit.component('navbar', Navbar);
+    UIkit.component('offcanvas', Offcanvas);
+    UIkit.component('overflowAuto', OverflowAuto);
+    UIkit.component('responsive', Responsive);
+    UIkit.component('scroll', Scroll);
+    UIkit.component('scrollspy', Scrollspy);
+    UIkit.component('scrollspyNav', ScrollspyNav);
+    UIkit.component('sticky', Sticky);
+    UIkit.component('svg', SVG);
+    UIkit.component('switcher', Switcher);
+    UIkit.component('tab', Tab);
+    UIkit.component('toggle', Toggle);
+    UIkit.component('video', Video);
+
+    // Icon components
+    UIkit.component('close', Close);
+    UIkit.component('marker', IconComponent);
+    UIkit.component('navbarToggleIcon', IconComponent);
+    UIkit.component('overlayIcon', IconComponent);
+    UIkit.component('paginationNext', IconComponent);
+    UIkit.component('paginationPrevious', IconComponent);
+    UIkit.component('searchIcon', Search);
+    UIkit.component('slidenavNext', Slidenav);
+    UIkit.component('slidenavPrevious', Slidenav);
+    UIkit.component('spinner', Spinner);
+    UIkit.component('totop', IconComponent);
+
+    // core functionality
+    UIkit.use(Core);
+
+  }
+
+  UIkit.version = '3.0.0';
+
+  core(UIkit);
+
+  var Countdown = {
+
+    mixins: [Class],
+
+    props: {
+      date: String,
+      clsWrapper: String
+    },
+
+    data: {
+      date: '',
+      clsWrapper: '.uk-countdown-%unit%'
+    },
+
+    computed: {
+
+      date: function(ref) {
+        var date = ref.date;
+
+        return Date.parse(date);
+      },
+
+      days: function(ref, $el) {
+        var clsWrapper = ref.clsWrapper;
+
+        return $(clsWrapper.replace('%unit%', 'days'), $el);
+      },
+
+      hours: function(ref, $el) {
+        var clsWrapper = ref.clsWrapper;
+
+        return $(clsWrapper.replace('%unit%', 'hours'), $el);
+      },
+
+      minutes: function(ref, $el) {
+        var clsWrapper = ref.clsWrapper;
+
+        return $(clsWrapper.replace('%unit%', 'minutes'), $el);
+      },
+
+      seconds: function(ref, $el) {
+        var clsWrapper = ref.clsWrapper;
+
+        return $(clsWrapper.replace('%unit%', 'seconds'), $el);
+      },
+
+      units: function() {
+        var this$1 = this;
+
+        return ['days', 'hours', 'minutes', 'seconds'].filter(function (unit) { return this$1[unit]; });
+      }
+
+    },
+
+    connected: function() {
+      this.start();
+    },
+
+    disconnected: function() {
+      var this$1 = this;
+
+      this.stop();
+      this.units.forEach(function (unit) { return empty(this$1[unit]); });
+    },
+
+    events: [
+
+      {
+
+        name: 'visibilitychange',
+
+        el: document,
+
+        handler: function() {
+          if (document.hidden) {
+            this.stop();
+          } else {
+            this.start();
+          }
+        }
+
+      }
+
+    ],
+
+    update: {
+
+      write: function() {
+        var this$1 = this;
+
+
+        var timespan = getTimeSpan(this.date);
+
+        if (timespan.total <= 0) {
+
+          this.stop();
+
+          timespan.days
+            = timespan.hours
+            = timespan.minutes
+            = timespan.seconds
+            = 0;
+        }
+
+        this.units.forEach(function (unit) {
+
+          var digits = String(Math.floor(timespan[unit]));
+
+          digits = digits.length < 2 ? ("0" + digits) : digits;
+
+          var el = this$1[unit];
+          if (el.textContent !== digits) {
+            digits = digits.split('');
+
+            if (digits.length !== el.children.length) {
+              html(el, digits.map(function () { return '<span></span>'; }).join(''));
+            }
+
+            digits.forEach(function (digit, i) { return el.children[i].textContent = digit; });
+          }
+
+        });
+
+      }
+
+    },
+
+    methods: {
+
+      start: function() {
+        var this$1 = this;
+
+
+        this.stop();
+
+        if (this.date && this.units.length) {
+          this.$emit();
+          this.timer = setInterval(function () { return this$1.$emit(); }, 1000);
+        }
+
+      },
+
+      stop: function() {
+
+        if (this.timer) {
+          clearInterval(this.timer);
+          this.timer = null;
+        }
+
+      }
+
+    }
+
+  };
+
+  function getTimeSpan(date) {
+
+    var total = date - Date.now();
+
+    return {
+      total: total,
+      seconds: total / 1000 % 60,
+      minutes: total / 1000 / 60 % 60,
+      hours: total / 1000 / 60 / 60 % 24,
+      days: total / 1000 / 60 / 60 / 24
+    };
+  }
+
+  var targetClass = 'uk-animation-target';
+
+  var Animate = {
+
+    props: {
+      animation: Number
+    },
+
+    data: {
+      animation: 150
+    },
+
+    computed: {
+
+      target: function() {
+        return this.$el;
+      }
+
+    },
+
+    methods: {
+
+      animate: function(action) {
+        var this$1 = this;
+
+
+        addStyle();
+
+        var children = toNodes(this.target.children);
+        var propsFrom = children.map(function (el) { return getProps(el, true); });
+
+        var oldHeight = height(this.target);
+        var oldScrollY = window.pageYOffset;
+
+        action();
+
+        Transition.cancel(this.target);
+        children.forEach(Transition.cancel);
+
+        reset(this.target);
+        this.$update(this.target);
+        fastdom.flush();
+
+        var newHeight = height(this.target);
+
+        children = children.concat(toNodes(this.target.children).filter(function (el) { return !includes(children, el); }));
+
+        var propsTo = children.map(function (el, i) { return el.parentNode && i in propsFrom
+          ? propsFrom[i]
+            ? isVisible(el)
+              ? getPositionWithMargin(el)
+              : {opacity: 0}
+            : {opacity: isVisible(el) ? 1 : 0}
+          : false; }
+        );
+
+        propsFrom = propsTo.map(function (props, i) {
+          var from = children[i].parentNode === this$1.target
+            ? propsFrom[i] || getProps(children[i])
+            : false;
+
+          if (from) {
+            if (!props) {
+              delete from.opacity;
+            } else if (!('opacity' in props)) {
+              var opacity = from.opacity;
+
+              if (opacity % 1) {
+                props.opacity = 1;
+              } else {
+                delete from.opacity;
+              }
+            }
+          }
+
+          return from;
+        });
+
+        addClass(this.target, targetClass);
+        children.forEach(function (el, i) { return propsFrom[i] && css(el, propsFrom[i]); });
+        css(this.target, 'height', oldHeight);
+        scrollTop(window, oldScrollY);
+
+        return Promise.all(children.map(function (el, i) { return propsFrom[i] && propsTo[i]
+          ? Transition.start(el, propsTo[i], this$1.animation, 'ease')
+          : Promise.resolve(); }
+        ).concat(Transition.start(this.target, {height: newHeight}, this.animation, 'ease'))).then(function () {
+          children.forEach(function (el, i) { return css(el, {display: propsTo[i].opacity === 0 ? 'none' : '', zIndex: ''}); });
+          reset(this$1.target);
+          this$1.$update(this$1.target);
+          fastdom.flush(); // needed for IE11
+        }, noop);
+
+      }
+    }
+  };
+
+  function getProps(el, opacity) {
+
+    var zIndex = css(el, 'zIndex');
+
+    return isVisible(el)
+      ? assign({
+        display: '',
+        opacity: opacity ? css(el, 'opacity') : '0',
+        pointerEvents: 'none',
+        position: 'absolute',
+        zIndex: zIndex === 'auto' ? index(el) : zIndex
+      }, getPositionWithMargin(el))
+      : false;
+  }
+
+  function reset(el) {
+    css(el.children, {
+      height: '',
+      left: '',
+      opacity: '',
+      pointerEvents: '',
+      position: '',
+      top: '',
+      width: ''
+    });
+    removeClass(el, targetClass);
+    css(el, 'height', '');
+  }
+
+  function getPositionWithMargin(el) {
+    var ref = el.getBoundingClientRect();
+    var height$$1 = ref.height;
+    var width$$1 = ref.width;
+    var ref$1 = position(el);
+    var top = ref$1.top;
+    var left = ref$1.left;
+    top += toFloat(css(el, 'marginTop'));
+
+    return {top: top, left: left, height: height$$1, width: width$$1};
+  }
+
+  var style$1;
+
+  function addStyle() {
+    if (!style$1) {
+      style$1 = append(document.head, '<style>').sheet;
+      style$1.insertRule(
+        ("." + targetClass + " > * {\n                    margin-top: 0 !important;\n                    transform: none !important;\n                }"), 0
+      );
+    }
+  }
+
+  var Filter = {
+
+    mixins: [Animate],
+
+    args: 'target',
+
+    props: {
+      target: Boolean,
+      selActive: Boolean
+    },
+
+    data: {
+      target: null,
+      selActive: false,
+      attrItem: 'uk-filter-control',
+      cls: 'uk-active',
+      animation: 250
+    },
+
+    computed: {
+
+      toggles: function(ref, $el) {
+        var attrItem = ref.attrItem;
+
+        return $$(("[" + (this.attrItem) + "],[data-" + (this.attrItem) + "]"), $el);
+      },
+
+      target: function(ref, $el) {
+        var target = ref.target;
+
+        return $(target, $el);
+      }
+
+    },
+
+    events: [
+
+      {
+
+        name: 'click',
+
+        delegate: function() {
+          return ("[" + (this.attrItem) + "],[data-" + (this.attrItem) + "]");
+        },
+
+        handler: function(e) {
+
+          e.preventDefault();
+          this.apply(e.current);
+
+        }
+
+      }
+
+    ],
+
+    connected: function() {
+      var this$1 = this;
+
+
+      if (this.selActive === false) {
+        return;
+      }
+
+      var actives = $$(this.selActive, this.$el);
+      this.toggles.forEach(function (el) { return toggleClass(el, this$1.cls, includes(actives, el)); });
+    },
+
+    update: function(data$$1) {
+
+      var toggles = data$$1.toggles;
+      var children = data$$1.children;
+      if (isEqualList(toggles, this.toggles, false) && isEqualList(children, this.target.children, false)) {
+        return;
+      }
+
+      data$$1.toggles = this.toggles;
+      data$$1.children = this.target.children;
+
+      this.setState(this.getState(), false);
+
+    },
+
+    methods: {
+
+      apply: function(el) {
+        this.setState(mergeState(el, this.attrItem, this.getState()));
+      },
+
+      getState: function() {
+        var this$1 = this;
+
+        return this.toggles
+          .filter(function (item) { return hasClass(item, this$1.cls); })
+          .reduce(function (state, el) { return mergeState(el, this$1.attrItem, state); }, {filter: {'': ''}, sort: []});
+      },
+
+      setState: function(state, animate$$1) {
+        var this$1 = this;
+        if ( animate$$1 === void 0 ) animate$$1 = true;
+
+
+        state = assign({filter: {'': ''}, sort: []}, state);
+
+        trigger(this.$el, 'beforeFilter', [this, state]);
+
+        var children = toNodes(this.target.children);
+
+        this.toggles.forEach(function (el) { return toggleClass(el, this$1.cls, matchFilter(el, this$1.attrItem, state)); });
+
+        var apply$$1 = function () {
+
+          var selector = getSelector(state);
+
+          children.forEach(function (el) { return css(el, 'display', selector && !matches(el, selector) ? 'none' : ''); });
+
+          var ref = state.sort;
+          var sort = ref[0];
+          var order = ref[1];
+
+          if (sort) {
+            var sorted = sortItems(children, sort, order);
+            if (!isEqualList(sorted, children)) {
+              sorted.forEach(function (el) { return append(this$1.target, el); });
+            }
+          }
+
+        };
+
+        if (animate$$1) {
+          this.animate(apply$$1).then(function () { return trigger(this$1.$el, 'afterFilter', [this$1]); });
+        } else {
+          apply$$1();
+          trigger(this.$el, 'afterFilter', [this]);
+        }
+
+      }
+
+    }
+
+  };
+
+  function getFilter(el, attr$$1) {
+    return parseOptions(data(el, attr$$1), ['filter']);
+  }
+
+  function mergeState(el, attr$$1, state) {
+
+    toNodes(el).forEach(function (el) {
+      var filterBy = getFilter(el, attr$$1);
+      var filter$$1 = filterBy.filter;
+      var group = filterBy.group;
+      var sort = filterBy.sort;
+      var order = filterBy.order; if ( order === void 0 ) order = 'asc';
+
+      if (filter$$1 || isUndefined(sort)) {
+
+        if (group) {
+          delete state.filter[''];
+          state.filter[group] = filter$$1;
+        } else {
+          state.filter = {'': filter$$1 || ''};
+        }
+
+      }
+
+      if (!isUndefined(sort)) {
+        state.sort = [sort, order];
+      }
+    });
+
+    return state;
+  }
+
+  function matchFilter(el, attr$$1, ref) {
+    var stateFilter = ref.filter; if ( stateFilter === void 0 ) stateFilter = {'': ''};
+    var ref_sort = ref.sort;
+    var stateSort = ref_sort[0];
+    var stateOrder = ref_sort[1];
+
+
+    var ref$1 = getFilter(el, attr$$1);
+    var filter$$1 = ref$1.filter;
+    var group = ref$1.group; if ( group === void 0 ) group = '';
+    var sort = ref$1.sort;
+    var order = ref$1.order; if ( order === void 0 ) order = 'asc';
+
+    filter$$1 = isUndefined(sort) ? filter$$1 || '' : filter$$1;
+    sort = isUndefined(filter$$1) ? sort || '' : sort;
+
+    return (isUndefined(filter$$1) || group in stateFilter && filter$$1 === stateFilter[group])
+      && (isUndefined(sort) || stateSort === sort && stateOrder === order);
+  }
+
+  function isEqualList(listA, listB, strict) {
+    if ( strict === void 0 ) strict = true;
+
+
+    listA = toNodes(listA);
+    listB = toNodes(listB);
+
+    return listA.length === listB.length
+      && listA.every(function (el, i) { return strict ? el === listB[i] : ~listB.indexOf(el); });
+  }
+
+  function getSelector(ref) {
+    var filter$$1 = ref.filter;
+
+    var selector = '';
+    each(filter$$1, function (value) { return selector += value || ''; });
+    return selector;
+  }
+
+  function sortItems(nodes, sort, order) {
+    return toNodes(nodes).sort(function (a, b) { return data(a, sort).localeCompare(data(b, sort), undefined, {numeric: true}) * (order === 'asc' || -1); });
+  }
+
+  var Animations = {
+
+    slide: {
+
+      show: function(dir) {
+        return [
+          {transform: translate(dir * -100)},
+          {transform: translate()}
+        ];
+      },
+
+      percent: function(current) {
+        return translated(current);
+      },
+
+      translate: function(percent, dir) {
+        return [
+          {transform: translate(dir * -100 * percent)},
+          {transform: translate(dir * 100 * (1 - percent))}
+        ];
+      }
+
+    }
+
+  };
+
+  function translated(el) {
+    return Math.abs(css(el, 'transform').split(',')[4] / el.offsetWidth) || 0;
+  }
+
+  function translate(value, unit) {
+    if ( value === void 0 ) value = 0;
+    if ( unit === void 0 ) unit = '%';
+
+    return ("translateX(" + value + (value ? unit : '') + ")"); // currently not translate3d to support IE, translate3d within translate3d does not work while transitioning
+  }
+
+  function scale3d(value) {
+    return ("scale3d(" + value + ", " + value + ", 1)");
+  }
+
+  var Animations$1 = assign({}, Animations, {
+
+    fade: {
+
+      show: function() {
+        return [
+          {opacity: 0},
+          {opacity: 1}
+        ];
+      },
+
+      percent: function(current) {
+        return 1 - css(current, 'opacity');
+      },
+
+      translate: function(percent) {
+        return [
+          {opacity: 1 - percent},
+          {opacity: percent}
+        ];
+      }
+
+    },
+
+    scale: {
+
+      show: function() {
+        return [
+          {opacity: 0, transform: scale3d(1 - .2)},
+          {opacity: 1, transform: scale3d(1)}
+        ];
+      },
+
+      percent: function(current) {
+        return 1 - css(current, 'opacity');
+      },
+
+      translate: function(percent) {
+        return [
+          {opacity: 1 - percent, transform: scale3d(1 - .2 * percent)},
+          {opacity: percent, transform: scale3d(1 - .2 + .2 * percent)}
+        ];
+      }
+
+    }
+
+  });
+
+  function Transitioner(prev, next, dir, ref) {
+    var animation = ref.animation;
+    var easing = ref.easing;
+
+
+    var percent = animation.percent;
+    var translate = animation.translate;
+    var show = animation.show; if ( show === void 0 ) show = noop;
+    var props = show(dir);
+    var deferred = new Deferred();
+
+    return {
+
+      dir: dir,
+
+      show: function(duration, percent, linear) {
+        var this$1 = this;
+        if ( percent === void 0 ) percent = 0;
+
+
+        var timing = linear ? 'linear' : easing;
+        duration -= Math.round(duration * clamp(percent, -1, 1));
+
+        this.translate(percent);
+
+        triggerUpdate(next, 'itemin', {percent: percent, duration: duration, timing: timing, dir: dir});
+        triggerUpdate(prev, 'itemout', {percent: 1 - percent, duration: duration, timing: timing, dir: dir});
+
+        Promise.all([
+          Transition.start(next, props[1], duration, timing),
+          Transition.start(prev, props[0], duration, timing)
+        ]).then(function () {
+          this$1.reset();
+          deferred.resolve();
+        }, noop);
+
+        return deferred.promise;
+      },
+
+      stop: function() {
+        return Transition.stop([next, prev]);
+      },
+
+      cancel: function() {
+        Transition.cancel([next, prev]);
+      },
+
+      reset: function() {
+        for (var prop in props[0]) {
+          css([next, prev], prop, '');
+        }
+      },
+
+      forward: function(duration, percent) {
+        if ( percent === void 0 ) percent = this.percent();
+
+        Transition.cancel([next, prev]);
+        return this.show(duration, percent, true);
+
+      },
+
+      translate: function(percent) {
+
+        this.reset();
+
+        var props = translate(percent, dir);
+        css(next, props[1]);
+        css(prev, props[0]);
+        triggerUpdate(next, 'itemtranslatein', {percent: percent, dir: dir});
+        triggerUpdate(prev, 'itemtranslateout', {percent: 1 - percent, dir: dir});
+
+      },
+
+      percent: function() {
+        return percent(prev || next, next, dir);
+      },
+
+      getDistance: function() {
+        return prev && prev.offsetWidth;
+      }
+
+    };
+
+  }
+
+  function triggerUpdate(el, type, data$$1) {
+    trigger(el, createEvent(type, false, false, data$$1));
+  }
+
+  var SliderAutoplay = {
+
+    props: {
+      autoplay: Boolean,
+      autoplayInterval: Number,
+      pauseOnHover: Boolean
+    },
+
+    data: {
+      autoplay: false,
+      autoplayInterval: 7000,
+      pauseOnHover: true
+    },
+
+    connected: function() {
+      this.startAutoplay();
+      this.userInteracted = false;
+    },
+
+    disconnected: function() {
+      this.stopAutoplay();
+    },
+
+    events: [
+
+      {
+
+        name: 'visibilitychange',
+
+        el: document,
+
+        handler: function() {
+          if (document.hidden) {
+            this.stopAutoplay();
+          } else {
+            !this.userInteracted && this.startAutoplay();
+          }
+        }
+
+      },
+
+      {
+
+        name: pointerDown,
+        handler: function() {
+          this.userInteracted = true;
+          this.stopAutoplay();
+        }
+
+      },
+
+      {
+
+        name: 'mouseenter',
+
+        filter: function() {
+          return this.autoplay;
+        },
+
+        handler: function() {
+          this.isHovering = true;
+        }
+
+      },
+
+      {
+
+        name: 'mouseleave',
+
+        filter: function() {
+          return this.autoplay;
+        },
+
+        handler: function() {
+          this.isHovering = false;
+        }
+
+      }
+
+    ],
+
+    methods: {
+
+      startAutoplay: function() {
+        var this$1 = this;
+
+
+        this.stopAutoplay();
+
+        if (this.autoplay) {
+          this.interval = setInterval(
+            function () { return !(this$1.isHovering && this$1.pauseOnHover) && !this$1.stack.length && this$1.show('next'); },
+            this.autoplayInterval
+          );
+        }
+
+      },
+
+      stopAutoplay: function() {
+        if (this.interval) {
+          clearInterval(this.interval);
+        }
+      }
+
+    }
+
+  };
+
+  var SliderDrag = {
+
     props: {
       draggable: Boolean
     },
+
     data: {
-      draggable: !0,
+      draggable: true,
       threshold: 10
     },
-    created() {
-      for (const t of ["start", "move", "end"]) {
-        const e = this[t];
-        this[t] = i => {
-          const s = kt(i).x * (U ? -1 : 1);
-          this.prevPos = s === this.pos ? this.prevPos : this.pos, this.pos = s, e(i)
-        }
-      }
-    },
-    events: [{
-      name: ka,
-      passive: !0,
-      delegate: ({
-                   selList: t
-                 }) => `${t} > *`,
-      handler(t) {
-        !this.draggable || this.parallax || !pt(t) && Ia(t.target) || t.target.closest(Me) || t.button > 0 || this.length < 2 || this.start(t)
-      }
-    }, {
-      name: "dragstart",
-      handler(t) {
-        t.preventDefault()
-      }
-    }, {
-      name: As,
-      el: ({
-             list: t
-           }) => t,
-      handler: A,
-      ...Ei
-    }],
-    methods: {
-      start() {
-        this.drag = this.pos, this._transitioner ? (this.percent = this._transitioner.percent(), this.drag += this._transitioner.getDistance() * this.percent * this.dir, this._transitioner.cancel(), this._transitioner.translate(this.percent), this.dragging = !0, this.stack = []) : this.prevIndex = this.index, y(document, As, this.move, Ei), y(document, Vn, this.end, Un), h(this.list, "userSelect", "none")
-      },
-      move(t) {
-        const e = this.pos - this.drag;
-        if (e === 0 || this.prevPos === this.pos || !this.dragging && Math.abs(e) < this.threshold) return;
-        t.cancelable && t.preventDefault(), this.dragging = !0, this.dir = e < 0 ? 1 : -1;
-        let {
-          slides: i,
-          prevIndex: s
-        } = this, n = Math.abs(e), o = this.getIndex(s + this.dir), r = Yn.call(this, s, o);
-        for (; o !== s && n > r;) this.drag -= r * this.dir, s = o, n -= r, o = this.getIndex(s + this.dir), r = Yn.call(this, s, o);
-        this.percent = n / r;
-        const a = i[s],
-          l = i[o],
-          c = this.index !== o,
-          u = s === o;
-        let d;
-        for (const f of [this.index, this.prevIndex]) b([o, s], f) || (v(i[f], "itemhidden", [this]), u && (d = !0, this.prevIndex = s));
-        (this.index === s && this.prevIndex !== s || d) && v(i[this.index], "itemshown", [this]), c && (this.prevIndex = s, this.index = o, u || (v(a, "beforeitemhide", [this]), v(a, "itemhide", [this])), v(l, "beforeitemshow", [this]), v(l, "itemshow", [this])), this._transitioner = this._translate(Math.abs(this.percent), a, !u && l)
-      },
-      end() {
-        if (Ut(document, As, this.move, Ei), Ut(document, Vn, this.end, Un), this.dragging)
-          if (setTimeout(y(this.list, "click", t => t.preventDefault(), Ei)), this.dragging = null, this.index === this.prevIndex) this.percent = 1 - this.percent, this.dir *= -1, this._show(!1, this.index, !0), this._transitioner = null;
-          else {
-            const t = (U ? this.dir * (U ? 1 : -1) : this.dir) < 0 == this.prevPos > this.pos;
-            this.index = t ? this.index : this.prevIndex, t && (v(this.slides[this.prevIndex], "itemhidden", [this]), v(this.slides[this.index], "itemshown", [this]), this.percent = 1 - this.percent), this.show(this.dir > 0 && !t || this.dir < 0 && t ? "next" : "previous", !0)
-          } h(this.list, {
-          userSelect: ""
-        }), this.drag = this.percent = null
-      }
-    }
-  };
 
-  function Yn(t, e) {
-    return this._getTransitioner(t, t !== e && e).getDistance() || this.slides[t].offsetWidth
-  }
+    created: function() {
+      var this$1 = this;
 
-  function Ia(t) {
-    return h(t, "userSelect") !== "none" && ne(t.childNodes).some(e => e.nodeType === 3 && e.textContent.trim())
-  }
 
-  function Ea(t) {
-    t._watches = [];
-    for (const e of t.$options.watch || [])
-      for (const [i, s] of Object.entries(e)) Gn(t, s, i);
-    t._initial = !0
-  }
+      ['start', 'move', 'end'].forEach(function (key) {
 
-  function Gn(t, e, i) {
-    t._watches.push({
-      name: i,
-      ...Te(e) ? e : {
-        handler: e
-      }
-    })
-  }
+        var fn = this$1[key];
+        this$1[key] = function (e) {
 
-  function Ta(t, e) {
-    for (const {
-      name: i,
-      handler: s,
-      immediate: n = !0
-    } of t._watches)(t._initial && n || gt(e, i) && !Ae(e[i], t[i])) && s.call(t, t[i], e[i]);
-    t._initial = !1
-  }
+          var pos = getPos$1(e).x * (isRtl ? -1 : 1);
 
-  function Ca(t) {
-    const {
-      computed: e
-    } = t.$options;
-    if (t._computed = {}, e)
-      for (const i in e) Jn(t, i, e[i])
-  }
-  const Xn = {
-    subtree: !0,
-    childList: !0
-  };
+          this$1.prevPos = pos !== this$1.pos ? this$1.pos : this$1.prevPos;
+          this$1.pos = pos;
 
-  function Jn(t, e, i) {
-    t._hasComputed = !0, Object.defineProperty(t, e, {
-      enumerable: !0,
-      get() {
-        const {
-          _computed: s,
-          $props: n,
-          $el: o
-        } = t;
-        if (!gt(s, e) && (s[e] = (i.get || i).call(t, n, o), i.observe && t._computedObserver)) {
-          const r = i.observe.call(t, n);
-          t._computedObserver.observe(["~", "+", "-"].includes(r[0]) ? o.parentElement : o.getRootNode(), Xn)
-        }
-        return s[e]
-      },
-      set(s) {
-        const {
-          _computed: n
-        } = t;
-        n[e] = i.set ? i.set.call(t, s) : s, X(n[e]) && delete n[e]
-      }
-    })
-  }
-
-  function Pa(t) {
-    t._hasComputed && (Zr(t, {
-      read: () => Ta(t, Kn(t)),
-      events: ["resize", "computed"]
-    }), t._computedObserver = rs(t.$el, () => qe(t, "computed"), Xn), t._disconnect.push(() => {
-      t._computedObserver.disconnect(), t._computedObserver = null, Kn(t)
-    }))
-  }
-
-  function Kn(t) {
-    const e = {
-      ...t._computed
-    };
-    return t._computed = {}, e
-  }
-
-  function _a(t) {
-    for (const e of t.$options.events || [])
-      if (gt(e, "handler")) Zn(t, e);
-      else
-        for (const i in e) Zn(t, {
-          name: i,
-          handler: e[i]
-        })
-  }
-
-  function Zn(t, {
-    name: e,
-    el: i,
-    handler: s,
-    capture: n,
-    passive: o,
-    delegate: r,
-    filter: a,
-    self: l
-  }) {
-    a && !a.call(t, t) || t._disconnect.push(y(i ? i.call(t, t) : t.$el, e, r == null ? void 0 : r.call(t, t), s.bind(t), {
-      passive: o,
-      capture: n,
-      self: l
-    }))
-  }
-
-  function Aa(t) {
-    for (const e of t.$options.observe || []) Oa(t, e)
-  }
-
-  function Oa(t, e) {
-    let {
-      observe: i,
-      target: s = t.$el,
-      handler: n,
-      options: o,
-      filter: r,
-      args: a
-    } = e;
-    if (r && !r.call(t, t)) return;
-    const l = `_observe${t._disconnect.length}`;
-    ot(s) && !gt(t, l) && Jn(t, l, () => {
-      const d = s.call(t, t);
-      return J(d) ? E(d) : d
-    }), n = H(n) ? t[n] : n.bind(t), ot(o) && (o = o.call(t, t));
-    const c = gt(t, l) ? t[l] : s,
-      u = i(c, n, o, a);
-    ot(s) && J(t[l]) && Gn(t, {
-      handler: Ma(u, o),
-      immediate: !1
-    }, l), t._disconnect.push(() => u.disconnect())
-  }
-
-  function Ma(t, e) {
-    return (i, s) => {
-      for (const n of s) b(i, n) || (t.unobserve ? t.unobserve(n) : t.observe && t.disconnect());
-      for (const n of i)(!b(s, n) || !t.unobserve) && t.observe(n, e)
-    }
-  }
-
-  function Da(t) {
-    const {
-      $options: e,
-      $props: i
-    } = t, s = Qn(e);
-    ft(i, s);
-    const {
-      computed: n,
-      methods: o
-    } = e;
-    for (let r in i) r in s && (!n || !gt(n, r)) && (!o || !gt(o, r)) && (t[r] = i[r])
-  }
-
-  function Qn(t) {
-    const e = {},
-      {
-        args: i = [],
-        props: s = {},
-        el: n,
-        id: o
-      } = t;
-    if (!s) return e;
-    for (const a in s) {
-      const l = zt(a);
-      let c = Z(n, l);
-      X(c) || (c = s[a] === Boolean && c === "" ? !0 : vs(s[a], c), !(l === "target" && mt(c, "_")) && (e[a] = c))
-    }
-    const r = ve(Z(n, o), i);
-    for (const a in r) {
-      const l = Ee(a);
-      X(s[l]) || (e[l] = vs(s[l], r[a]))
-    }
-    return e
-  }
-  const Ba = ct((t, e) => {
-    const i = Object.keys(e),
-      s = i.concat(t).map(n => [zt(n), `data-${zt(n)}`]).flat();
-    return {
-      attributes: i,
-      filter: s
-    }
-  });
-
-  function Na(t) {
-    const {
-      $options: e,
-      $props: i
-    } = t, {
-      id: s,
-      props: n,
-      el: o
-    } = e;
-    if (!n) return;
-    const {
-      attributes: r,
-      filter: a
-    } = Ba(s, n), l = new MutationObserver(c => {
-      const u = Qn(e);
-      c.some(({
-                attributeName: d
-              }) => {
-        const f = d.replace("data-", "");
-        return (f === s ? r : [Ee(f), Ee(d)]).some(g => !X(u[g]) && u[g] !== i[g])
-      }) && t.$reset()
-    });
-    l.observe(o, {
-      attributes: !0,
-      attributeFilter: a
-    }), t._disconnect.push(() => l.disconnect())
-  }
-
-  function we(t, e) {
-    var i;
-    (i = t.$options[e]) == null || i.forEach(s => s.call(t))
-  }
-
-  function Os(t) {
-    t._connected || (Da(t), we(t, "beforeConnect"), t._connected = !0, t._disconnect = [], _a(t), Kr(t), Ea(t), Aa(t), Na(t), Pa(t), we(t, "connected"), qe(t))
-  }
-
-  function Ms(t) {
-    t._connected && (we(t, "beforeDisconnect"), t._disconnect.forEach(e => e()), t._disconnect = null, we(t, "disconnected"), t._connected = !1)
-  }
-  let za = 0;
-
-  function to(t, e = {}) {
-    e.data = La(e, t.constructor.options), t.$options = Re(t.constructor.options, e, t), t.$props = {}, t._uid = za++, Fa(t), Ha(t), Ca(t), we(t, "created"), e.el && t.$mount(e.el)
-  }
-
-  function Fa(t) {
-    const {
-      data: e = {}
-    } = t.$options;
-    for (const i in e) t.$props[i] = t[i] = e[i]
-  }
-
-  function Ha(t) {
-    const {
-      methods: e
-    } = t.$options;
-    if (e)
-      for (const i in e) t[i] = e[i].bind(t)
-  }
-
-  function La({
-                data: t = {}
-              }, {
-                args: e = [],
-                props: i = {}
-              }) {
-    J(t) && (t = t.slice(0, e.length).reduce((s, n, o) => (Te(n) ? ft(s, n) : s[e[o]] = n, s), {}));
-    for (const s in t) X(t[s]) ? delete t[s] : i[s] && (t[s] = vs(i[s], t[s]));
-    return t
-  }
-  const ht = function (t) {
-    to(this, t)
-  };
-  ht.util = qr, ht.options = {}, ht.version = "3.23.6";
-  const Wa = "uk-",
-    Kt = "__uikit__",
-    xe = {};
-
-  function eo(t, e) {
-    var i, s;
-    const n = Wa + zt(t);
-    if (!e) return xe[n].options || (xe[n] = ht.extend(xe[n])), xe[n];
-    t = Ee(t), ht[t] = (r, a) => Xe(t, r, a);
-    const o = (i = e.options) != null ? i : {
-      ...e
-    };
-    return o.id = n, o.name = t, (s = o.install) == null || s.call(o, ht, o, t), ht._initialized && !o.functional && requestAnimationFrame(() => Xe(t, `[${n}],[data-${n}]`)), xe[n] = o
-  }
-
-  function Xe(t, e, i, ...s) {
-    const n = eo(t);
-    return n.options.functional ? new n({
-      data: Te(e) ? e : [e, i, ...s]
-    }) : e ? D(e).map(o)[0] : o();
-
-    function o(r) {
-      const a = Ti(r, t);
-      if (a)
-        if (i) a.$destroy();
-        else return a;
-      return new n({
-        el: r,
-        data: i
-      })
-    }
-  }
-
-  function Je(t) {
-    return (t == null ? void 0 : t[Kt]) || {}
-  }
-
-  function Ti(t, e) {
-    return Je(t)[e]
-  }
-
-  function ja(t, e) {
-    t[Kt] || (t[Kt] = {}), t[Kt][e.$options.name] = e
-  }
-
-  function Ra(t, e) {
-    var i;
-    (i = t[Kt]) == null || delete i[e.$options.name], ii(t[Kt]) && delete t[Kt]
-  }
-
-  function qa(t) {
-    t.component = eo, t.getComponents = Je, t.getComponent = Ti, t.update = io, t.use = function (i) {
-      if (!i.installed) return i.call(null, this), i.installed = !0, this
-    }, t.mixin = function (i, s) {
-      s = (H(s) ? this.component(s) : s) || this, s.options = Re(s.options, i)
-    }, t.extend = function (i) {
-      i || (i = {});
-      const s = this,
-        n = function (r) {
-          to(this, r)
+          fn(e);
         };
-      return n.prototype = Object.create(s.prototype), n.prototype.constructor = n, n.options = Re(s.options, i), n.super = s, n.extend = s.extend, n
-    };
-    let e;
-    Object.defineProperty(t, "container", {
-      get() {
-        return e || document.body
-      },
-      set(i) {
-        e = x(i)
-      }
-    })
-  }
 
-  function io(t, e) {
-    t = t ? R(t) : document.body;
-    for (const i of de(t).reverse()) so(i, e);
-    Ot(t, i => so(i, e))
-  }
+      });
 
-  function so(t, e) {
-    const i = Je(t);
-    for (const s in i) qe(i[s], e)
-  }
+    },
 
-  function Ua(t) {
-    t.prototype.$mount = function (e) {
-      const i = this;
-      ja(e, i), i.$options.el = e, e.isConnected && Os(i)
-    }, t.prototype.$destroy = function (e = !1) {
-      const i = this,
-        {
-          el: s
-        } = i.$options;
-      s && Ms(i), we(i, "destroy"), Ra(s, i), e && Q(i.$el)
-    }, t.prototype.$create = Xe, t.prototype.$emit = function (e) {
-      qe(this, e)
-    }, t.prototype.$update = function (e = this.$el, i) {
-      io(e, i)
-    }, t.prototype.$reset = function () {
-      Ms(this), Os(this)
-    }, t.prototype.$getComponent = Ti, Object.defineProperties(t.prototype, {
-      $el: {
-        get() {
-          return this.$options.el
+    events: [
+
+      {
+
+        name: pointerDown,
+
+        delegate: function() {
+          return this.selSlides;
+        },
+
+        handler: function(e) {
+
+          if (!this.draggable
+            || !isTouch(e) && hasTextNodesOnly(e.target)
+            || e.button > 0
+            || this.length < 2
+          ) {
+            return;
+          }
+
+          this.start(e);
         }
-      },
-      $container: Object.getOwnPropertyDescriptor(t, "container")
-    })
-  }
-  let Va = 1;
 
-  function Zt(t, e = null) {
-    return (e == null ? void 0 : e.id) || `${t.$options.id}-${Va++}`
-  }
-  var Ya = {
-    i18n: {
-      next: "Next slide",
-      previous: "Previous slide",
-      slideX: "Slide %s",
-      slideLabel: "%s of %s",
-      role: "String"
-    },
-    data: {
-      selNav: !1,
-      role: "region"
-    },
-    computed: {
-      nav: ({
-              selNav: t
-            }, e) => x(t, e),
-      navChildren() {
-        return N(this.nav)
       },
-      selNavItem: ({
-                     attrItem: t
-                   }) => `[${t}],[data-${t}]`,
-      navItems(t, e) {
-        return D(this.selNavItem, e)
-      }
-    },
-    watch: {
-      nav(t, e) {
-        p(t, "role", "tablist"), this.padNavitems(), e && this.$emit()
-      },
-      list(t) {
-        F(t, "ul") && p(t, "role", "presentation")
-      },
-      navChildren(t) {
-        p(t, "role", "presentation"), this.padNavitems(), this.updateNav()
-      },
-      navItems(t) {
-        for (const e of t) {
-          const i = Z(e, this.attrItem),
-            s = x("a,button", e) || e;
-          let n, o = null;
-          if (vt(i)) {
-            const r = $t(i),
-              a = this.slides[r];
-            a && (a.id || (a.id = Zt(this, a)), o = a.id), n = this.t("slideX", S(i) + 1), p(s, "role", "tab")
-          } else this.list && (this.list.id || (this.list.id = Zt(this, this.list)), o = this.list.id), n = this.t(i);
-          p(s, {
-            "aria-controls": o,
-            "aria-label": p(s, "aria-label") || n
-          })
+
+      {
+
+        // Workaround for iOS 11 bug: https://bugs.webkit.org/show_bug.cgi?id=184250
+
+        name: 'touchmove',
+        passive: false,
+        handler: 'move',
+        delegate: function() {
+          return this.selSlides;
         }
+
       },
-      slides(t) {
-        t.forEach((e, i) => p(e, {
-          role: this.nav ? "tabpanel" : "group",
-          "aria-label": this.t("slideLabel", i + 1, this.length),
-          "aria-roledescription": this.nav ? null : "slide"
-        })), this.padNavitems()
+
+      {
+        name: 'dragstart',
+
+        handler: function(e) {
+          e.preventDefault();
+        }
       }
-    },
-    connected() {
-      p(this.$el, {
-        role: this.role,
-        "aria-roledescription": "carousel"
-      })
-    },
-    update: [{
-      write() {
-        this.navItems.concat(this.nav).forEach(t => t && (t.hidden = !this.maxIndex)), this.updateNav()
-      },
-      events: ["resize"]
-    }],
-    events: [{
-      name: "click keydown",
-      delegate: ({
-                   selNavItem: t
-                 }) => t,
-      filter: ({
-                 parallax: t
-               }) => !t,
-      handler(t) {
-        t.target.closest("a,button") && (t.type === "click" || t.keyCode === B.SPACE) && (Et(t), this.show(Z(t.current, this.attrItem)))
-      }
-    }, {
-      name: "itemshow",
-      handler() {
-        this.updateNav()
-      }
-    }, {
-      name: "keydown",
-      delegate: ({
-                   selNavItem: t
-                 }) => t,
-      filter: ({
-                 parallax: t
-               }) => !t,
-      handler(t) {
-        const {
-          current: e,
-          keyCode: i
-        } = t, s = Z(e, this.attrItem);
-        if (!vt(s)) return;
-        let n = i === B.HOME ? 0 : i === B.END ? "last" : i === B.LEFT ? "previous" : i === B.RIGHT ? "next" : -1;
-        ~n && (t.preventDefault(), this.show(n))
-      }
-    }],
+
+    ],
+
     methods: {
-      updateNav() {
-        const t = this.getValidIndex();
-        for (const e of this.navItems) {
-          const i = Z(e, this.attrItem),
-            s = x("a,button", e) || e;
-          if (vt(i)) {
-            const o = $t(i) === t;
-            L(e, this.clsActive, o), L(s, "uk-disabled", !!this.parallax), p(s, {
-              "aria-selected": o,
-              tabindex: o && !this.parallax ? null : -1
-            }), o && s && C(O(e), ":focus-within") && s.focus()
-          } else L(e, "uk-invisible", this.finite && (i === "previous" && t === 0 || i === "next" && t >= this.maxIndex))
+
+      start: function() {
+        var this$1 = this;
+
+
+        this.drag = this.pos;
+
+        if (this._transitioner) {
+
+          this.percent = this._transitioner.percent();
+          this.drag += this._transitioner.getDistance() * this.percent * this.dir;
+
+          this._transitioner.cancel();
+          this._transitioner.translate(this.percent);
+
+          this.dragging = true;
+
+          this.stack = [];
+
+        } else {
+          this.prevIndex = this.index;
         }
+
+        // See above workaround notice
+        var off$$1 = pointerMove !== 'touchmove'
+          ? on(document, pointerMove, this.move, {passive: false})
+          : noop;
+        this.unbindMove = function () {
+          off$$1();
+          this$1.unbindMove = null;
+        };
+        on(window, 'scroll', this.unbindMove);
+        on(document, pointerUp, this.end, true);
+
       },
-      padNavitems() {
-        if (!this.nav) return;
-        const t = [];
-        for (let e = 0; e < this.length; e++) {
-          const i = `${this.attrItem}="${e}"`;
-          t[e] = this.navChildren.findLast(s => s.matches(`[${i}]`)) || x(`<li ${i}><a href></a></li>`)
+
+      move: function(e) {
+        var this$1 = this;
+
+
+        // See above workaround notice
+        if (!this.unbindMove) {
+          return;
         }
-        Ae(t, this.navChildren) || bt(this.nav, t)
+
+        var distance = this.pos - this.drag;
+
+        if (distance === 0 || this.prevPos === this.pos || !this.dragging && Math.abs(distance) < this.threshold) {
+          return;
+        }
+
+        e.cancelable && e.preventDefault();
+
+        this.dragging = true;
+        this.dir = (distance < 0 ? 1 : -1);
+
+        var ref = this;
+        var slides = ref.slides;
+        var ref$1 = this;
+        var prevIndex = ref$1.prevIndex;
+        var dis = Math.abs(distance);
+        var nextIndex = this.getIndex(prevIndex + this.dir, prevIndex);
+        var width$$1 = this._getDistance(prevIndex, nextIndex) || slides[prevIndex].offsetWidth;
+
+        while (nextIndex !== prevIndex && dis > width$$1) {
+
+          this.drag -= width$$1 * this.dir;
+
+          prevIndex = nextIndex;
+          dis -= width$$1;
+          nextIndex = this.getIndex(prevIndex + this.dir, prevIndex);
+          width$$1 = this._getDistance(prevIndex, nextIndex) || slides[prevIndex].offsetWidth;
+
+        }
+
+        this.percent = dis / width$$1;
+
+        var prev = slides[prevIndex];
+        var next = slides[nextIndex];
+        var changed = this.index !== nextIndex;
+        var edge = prevIndex === nextIndex;
+
+        var itemShown;
+
+        [this.index, this.prevIndex].filter(function (i) { return !includes([nextIndex, prevIndex], i); }).forEach(function (i) {
+          trigger(slides[i], 'itemhidden', [this$1]);
+
+          if (edge) {
+            itemShown = true;
+            this$1.prevIndex = prevIndex;
+          }
+
+        });
+
+        if (this.index === prevIndex && this.prevIndex !== prevIndex || itemShown) {
+          trigger(slides[this.index], 'itemshown', [this]);
+        }
+
+        if (changed) {
+          this.prevIndex = prevIndex;
+          this.index = nextIndex;
+
+          !edge && trigger(prev, 'beforeitemhide', [this]);
+          trigger(next, 'beforeitemshow', [this]);
+        }
+
+        this._transitioner = this._translate(Math.abs(this.percent), prev, !edge && next);
+
+        if (changed) {
+          !edge && trigger(prev, 'itemhide', [this]);
+          trigger(next, 'itemshow', [this]);
+        }
+
+      },
+
+      end: function() {
+
+        off(window, 'scroll', this.unbindMove);
+        this.unbindMove && this.unbindMove();
+        off(document, pointerUp, this.end, true);
+
+        if (this.dragging) {
+
+          this.dragging = null;
+
+          if (this.index === this.prevIndex) {
+            this.percent = 1 - this.percent;
+            this.dir *= -1;
+            this._show(false, this.index, true);
+            this._transitioner = null;
+          } else {
+
+            var dirChange = (isRtl ? this.dir * (isRtl ? 1 : -1) : this.dir) < 0 === this.prevPos > this.pos;
+            this.index = dirChange ? this.index : this.prevIndex;
+
+            if (dirChange) {
+              this.percent = 1 - this.percent;
+            }
+
+            this.show(this.dir > 0 && !dirChange || this.dir < 0 && dirChange ? 'next' : 'previous', true);
+          }
+
+          preventClick();
+
+        }
+
+        this.drag
+          = this.percent
+          = null;
+
       }
+
     }
+
   };
-  const Ga = "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-    Xa = "cubic-bezier(0.165, 0.84, 0.44, 1)";
-  var no = {
-    mixins: [ya, Sa, Ya, Ii],
+
+  function hasTextNodesOnly(el) {
+    return !el.children.length && el.childNodes.length;
+  }
+
+  var SliderNav = {
+
+    data: {
+      selNav: false
+    },
+
+    computed: {
+
+      nav: function(ref, $el) {
+        var selNav = ref.selNav;
+
+        return $(selNav, $el);
+      },
+
+      selNavItem: function(ref) {
+        var attrItem = ref.attrItem;
+
+        return ("[" + attrItem + "],[data-" + attrItem + "]");
+      },
+
+      navItems: function(_, $el) {
+        return $$(this.selNavItem, $el);
+      }
+
+    },
+
+    update: {
+
+      write: function() {
+        var this$1 = this;
+
+
+        if (this.nav && this.length !== this.nav.children.length) {
+          html(this.nav, this.slides.map(function (_, i) { return ("<li " + (this$1.attrItem) + "=\"" + i + "\"><a href=\"#\"></a></li>"); }).join(''));
+        }
+
+        toggleClass($$(this.selNavItem, this.$el).concat(this.nav), 'uk-hidden', !this.maxIndex);
+
+        this.updateNav();
+
+      },
+
+      events: ['load', 'resize']
+
+    },
+
+    events: [
+
+      {
+
+        name: 'click',
+
+        delegate: function() {
+          return this.selNavItem;
+        },
+
+        handler: function(e) {
+          e.preventDefault();
+          this.show(data(e.current, this.attrItem));
+        }
+
+      },
+
+      {
+
+        name: 'itemshow',
+        handler: 'updateNav'
+
+      }
+
+    ],
+
+    methods: {
+
+      updateNav: function() {
+        var this$1 = this;
+
+
+        var i = this.getValidIndex();
+        this.navItems.forEach(function (el) {
+
+          var cmd = data(el, this$1.attrItem);
+
+          toggleClass(el, this$1.clsActive, toNumber(cmd) === i);
+          toggleClass(el, 'uk-invisible', this$1.finite && (cmd === 'previous' && i === 0 || cmd === 'next' && i >= this$1.maxIndex));
+        });
+
+      }
+
+    }
+
+  };
+
+  var Slider = {
+
+    mixins: [SliderAutoplay, SliderDrag, SliderNav],
+
     props: {
-      clsActivated: String,
+      clsActivated: Boolean,
       easing: String,
       index: Number,
       finite: Boolean,
       velocity: Number
     },
-    data: () => ({
-      easing: "ease",
-      finite: !1,
+
+    data: function () { return ({
+      easing: 'ease',
+      finite: false,
       velocity: 1,
       index: 0,
-      prevIndex: -1,
       stack: [],
       percent: 0,
-      clsActive: "uk-active",
-      clsActivated: "",
-      clsEnter: "uk-slide-enter",
-      clsLeave: "uk-slide-leave",
-      clsSlideActive: "uk-slide-active",
-      Transitioner: !1,
+      clsActive: 'uk-active',
+      clsActivated: false,
+      Transitioner: false,
       transitionOptions: {}
-    }),
-    connected() {
-      this.prevIndex = -1, this.index = this.getValidIndex(this.$props.index), this.stack = []
-    },
-    disconnected() {
-      _(this.slides, this.clsActive)
-    },
+    }); },
+
     computed: {
-      duration: ({
-                   velocity: t
-                 }, e) => oo(e.offsetWidth / t),
-      list: ({
-               selList: t
-             }, e) => x(t, e),
-      maxIndex() {
-        return this.length - 1
+
+      duration: function(ref, $el) {
+        var velocity = ref.velocity;
+
+        return speedUp($el.offsetWidth / velocity);
       },
-      slides() {
-        return N(this.list)
+
+      length: function() {
+        return this.slides.length;
       },
-      length() {
-        return this.slides.length
+
+      list: function(ref, $el) {
+        var selList = ref.selList;
+
+        return $(selList, $el);
+      },
+
+      maxIndex: function() {
+        return this.length - 1;
+      },
+
+      selSlides: function(ref) {
+        var selList = ref.selList;
+
+        return (selList + " > *");
+      },
+
+      slides: function() {
+        return toNodes(this.list.children);
       }
+
     },
-    watch: {
-      slides(t, e) {
-        e && this.$emit()
-      }
-    },
+
     events: {
-      itemshow({
-                 target: t
-               }) {
-        I(t, this.clsEnter, this.clsSlideActive)
-      },
-      itemshown({
-                  target: t
-                }) {
-        _(t, this.clsEnter)
-      },
-      itemhide({
-                 target: t
-               }) {
-        I(t, this.clsLeave)
-      },
-      itemhidden({
-                   target: t
-                 }) {
-        _(t, this.clsLeave, this.clsSlideActive)
+
+      itemshown: function() {
+        this.$update(this.list);
       }
+
     },
+
     methods: {
-      async show(t, e = !1) {
-        var i;
-        if (this.dragging || !this.length || this.parallax) return;
-        const {
-          stack: s
-        } = this, n = e ? 0 : s.length, o = () => {
-          s.splice(n, 1), s.length && this.show(s.shift(), !0)
+
+      show: function(index$$1, force) {
+        var this$1 = this;
+        if ( force === void 0 ) force = false;
+
+
+        if (this.dragging || !this.length) {
+          return;
+        }
+
+        var ref = this;
+        var stack = ref.stack;
+        var queueIndex = force ? 0 : stack.length;
+        var reset = function () {
+          stack.splice(queueIndex, 1);
+
+          if (stack.length) {
+            this$1.show(stack.shift(), true);
+          }
         };
-        if (s[e ? "unshift" : "push"](t), !e && s.length > 1) {
-          s.length === 2 && ((i = this._transitioner) == null || i.forward(Math.min(this.duration, 200)));
-          return
+
+        stack[force ? 'unshift' : 'push'](index$$1);
+
+        if (!force && stack.length > 1) {
+
+          if (stack.length === 2) {
+            this._transitioner.forward(Math.min(this.duration, 200));
+          }
+
+          return;
         }
-        const r = this.getIndex(this.index),
-          a = $(this.slides, this.clsActive) && this.slides[r],
-          l = this.getIndex(t, this.index),
-          c = this.slides[l];
-        if (a === c) {
-          o();
-          return
+
+        var prevIndex = this.index;
+        var prev = hasClass(this.slides, this.clsActive) && this.slides[prevIndex];
+        var nextIndex = this.getIndex(index$$1, this.index);
+        var next = this.slides[nextIndex];
+
+        if (prev === next) {
+          reset();
+          return;
         }
-        if (this.dir = Ja(t, r), this.prevIndex = r, this.index = l, a && !v(a, "beforeitemhide", [this]) || !v(c, "beforeitemshow", [this, a])) {
-          this.index = this.prevIndex, o();
-          return
+
+        this.dir = getDirection(index$$1, prevIndex);
+        this.prevIndex = prevIndex;
+        this.index = nextIndex;
+
+        prev && trigger(prev, 'beforeitemhide', [this]);
+        if (!trigger(next, 'beforeitemshow', [this, prev])) {
+          this.index = this.prevIndex;
+          reset();
+          return;
         }
-        a && v(a, "itemhide", [this]), v(c, "itemshow", [this]), await this._show(a, c, e), a && v(a, "itemhidden", [this]), v(c, "itemshown", [this]), s.shift(), this._transitioner = null, s.length && requestAnimationFrame(() => s.length && this.show(s.shift(), !0))
+
+        var promise = this._show(prev, next, force).then(function () {
+
+          prev && trigger(prev, 'itemhidden', [this$1]);
+          trigger(next, 'itemshown', [this$1]);
+
+          return new Promise(function (resolve) {
+            fastdom.write(function () {
+              stack.shift();
+              if (stack.length) {
+                this$1.show(stack.shift(), true);
+              } else {
+                this$1._transitioner = null;
+              }
+              resolve();
+            });
+          });
+
+        });
+
+        prev && trigger(prev, 'itemhide', [this]);
+        trigger(next, 'itemshow', [this]);
+
+        return promise;
+
       },
-      getIndex(t = this.index, e = this.index) {
-        return K(rt(t, this.slides, e, this.finite), 0, Math.max(0, this.maxIndex))
+
+      getIndex: function(index$$1, prev) {
+        if ( index$$1 === void 0 ) index$$1 = this.index;
+        if ( prev === void 0 ) prev = this.index;
+
+        return clamp(getIndex(index$$1, this.slides, prev, this.finite), 0, this.maxIndex);
       },
-      getValidIndex(t = this.index, e = this.prevIndex) {
-        return this.getIndex(t, e)
+
+      getValidIndex: function(index$$1, prevIndex) {
+        if ( index$$1 === void 0 ) index$$1 = this.index;
+        if ( prevIndex === void 0 ) prevIndex = this.prevIndex;
+
+        return this.getIndex(index$$1, prevIndex);
       },
-      async _show(t, e, i) {
-        if (this._transitioner = this._getTransitioner(t, e, this.dir, {
-          easing: i ? e.offsetWidth < 600 ? Ga : Xa : this.easing,
-          ...this.transitionOptions
-        }), !i && !t) {
-          this._translate(1);
-          return
+
+      _show: function(prev, next, force) {
+
+        this._transitioner = this._getTransitioner(
+          prev,
+          next,
+          this.dir,
+          assign({
+            easing: force
+              ? next.offsetWidth < 600
+                ? 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' /* easeOutQuad */
+                : 'cubic-bezier(0.165, 0.84, 0.44, 1)' /* easeOutQuart */
+              : this.easing
+          }, this.transitionOptions)
+        );
+
+        if (!force && !prev) {
+          this._transitioner.translate(1);
+          return Promise.resolve();
         }
-        const {
-          length: s
-        } = this.stack;
-        return this._transitioner[s > 1 ? "forward" : "show"](s > 1 ? Math.min(this.duration, 75 + 75 / (s - 1)) : this.duration, this.percent)
+
+        var ref = this.stack;
+        var length = ref.length;
+        return this._transitioner[length > 1 ? 'forward' : 'show'](length > 1 ? Math.min(this.duration, 75 + 75 / (length - 1)) : this.duration, this.percent);
+
       },
-      _translate(t, e = this.prevIndex, i = this.index) {
-        const s = this._getTransitioner(e === i ? !1 : e, i);
-        return s.translate(t), s
+
+      _getDistance: function(prev, next) {
+        return new this._getTransitioner(prev, prev !== next && next).getDistance();
       },
-      _getTransitioner(t = this.prevIndex, e = this.index, i = this.dir || 1, s = this.transitionOptions) {
-        return new this.Transitioner(_e(t) ? this.slides[t] : t, _e(e) ? this.slides[e] : e, i * (U ? -1 : 1), s)
+
+      _translate: function(percent, prev, next) {
+        if ( prev === void 0 ) prev = this.prevIndex;
+        if ( next === void 0 ) next = this.index;
+
+        var transitioner = this._getTransitioner(prev !== next ? prev : false, next);
+        transitioner.translate(percent);
+        return transitioner;
+      },
+
+      _getTransitioner: function(prev, next, dir, options) {
+        if ( prev === void 0 ) prev = this.prevIndex;
+        if ( next === void 0 ) next = this.index;
+        if ( dir === void 0 ) dir = this.dir || 1;
+        if ( options === void 0 ) options = this.transitionOptions;
+
+        return new this.Transitioner(
+          isNumber(prev) ? this.slides[prev] : prev,
+          isNumber(next) ? this.slides[next] : next,
+          dir * (isRtl ? -1 : 1),
+          options
+        );
       }
+
     }
+
   };
 
-  function Ja(t, e) {
-    return t === "next" ? 1 : t === "previous" || t < e ? -1 : 1
+  function getDirection(index$$1, prevIndex) {
+    return index$$1 === 'next'
+      ? 1
+      : index$$1 === 'previous'
+        ? -1
+        : index$$1 < prevIndex
+          ? -1
+          : 1;
   }
 
-  function oo(t) {
-    return .5 * t + 300
-  }
-  var ro = {
-      mixins: [no],
-      props: {
-        animation: String
-      },
-      data: {
-        animation: "slide",
-        clsActivated: "uk-transition-active",
-        Animations: _s,
-        Transitioner: $a
-      },
-      computed: {
-        animation({
-                    animation: t,
-                    Animations: e
-                  }) {
-          return {
-            ...e[t] || e.slide,
-            name: t
-          }
-        },
-        transitionOptions() {
-          return {
-            animation: this.animation
-          }
-        }
-      },
-      observe: dt(),
-      events: {
-        itemshow({
-                   target: t
-                 }) {
-          I(t, this.clsActive)
-        },
-        itemshown({
-                    target: t
-                  }) {
-          I(t, this.clsActivated)
-        },
-        itemhidden({
-                     target: t
-                   }) {
-          _(t, this.clsActive, this.clsActivated)
-        }
-      }
-    },
-    Ka = {
-      ..._s,
-      fade: {
-        show() {
-          return [{
-            opacity: 0,
-            zIndex: 0
-          }, {
-            zIndex: -1
-          }]
-        },
-        percent(t) {
-          return 1 - h(t, "opacity")
-        },
-        translate(t) {
-          return [{
-            opacity: 1 - t,
-            zIndex: 0
-          }, {
-            zIndex: -1
-          }]
-        }
-      },
-      scale: {
-        show() {
-          return [{
-            opacity: 0,
-            transform: $e(1 + .5),
-            zIndex: 0
-          }, {
-            zIndex: -1
-          }]
-        },
-        percent(t) {
-          return 1 - h(t, "opacity")
-        },
-        translate(t) {
-          return [{
-            opacity: 1 - t,
-            transform: $e(1 + .5 * t),
-            zIndex: 0
-          }, {
-            zIndex: -1
-          }]
-        }
-      },
-      pull: {
-        show(t) {
-          return t < 0 ? [{
-            transform: j(30),
-            zIndex: -1
-          }, {
-            transform: j(),
-            zIndex: 0
-          }] : [{
-            transform: j(-100),
-            zIndex: 0
-          }, {
-            transform: j(),
-            zIndex: -1
-          }]
-        },
-        percent(t, e, i) {
-          return i < 0 ? 1 - Ge(e) : Ge(t)
-        },
-        translate(t, e) {
-          return e < 0 ? [{
-            transform: j(30 * t),
-            zIndex: -1
-          }, {
-            transform: j(-100 * (1 - t)),
-            zIndex: 0
-          }] : [{
-            transform: j(-t * 100),
-            zIndex: 0
-          }, {
-            transform: j(30 * (1 - t)),
-            zIndex: -1
-          }]
-        }
-      },
-      push: {
-        show(t) {
-          return t < 0 ? [{
-            transform: j(100),
-            zIndex: 0
-          }, {
-            transform: j(),
-            zIndex: -1
-          }] : [{
-            transform: j(-30),
-            zIndex: -1
-          }, {
-            transform: j(),
-            zIndex: 0
-          }]
-        },
-        percent(t, e, i) {
-          return i > 0 ? 1 - Ge(e) : Ge(t)
-        },
-        translate(t, e) {
-          return e < 0 ? [{
-            transform: j(t * 100),
-            zIndex: 0
-          }, {
-            transform: j(-30 * (1 - t)),
-            zIndex: -1
-          }] : [{
-            transform: j(-30 * t),
-            zIndex: -1
-          }, {
-            transform: j(100 * (1 - t)),
-            zIndex: 0
-          }]
-        }
-      }
-    };
-
-  function $e(t) {
-    return `scale3d(${t}, ${t}, 1)`
-  }
-  var ao = {
-      ..._s,
-      fade: {
-        show() {
-          return [{
-            opacity: 0
-          }, {
-            opacity: 1
-          }]
-        },
-        percent(t) {
-          return 1 - h(t, "opacity")
-        },
-        translate(t) {
-          return [{
-            opacity: 1 - t
-          }, {
-            opacity: t
-          }]
-        }
-      },
-      scale: {
-        show() {
-          return [{
-            opacity: 0,
-            transform: $e(1 - .2)
-          }, {
-            opacity: 1,
-            transform: $e(1)
-          }]
-        },
-        percent(t) {
-          return 1 - h(t, "opacity")
-        },
-        translate(t) {
-          return [{
-            opacity: 1 - t,
-            transform: $e(1 - .2 * t)
-          }, {
-            opacity: t,
-            transform: $e(1 - .2 + .2 * t)
-          }]
-        }
-      }
-    },
-    lo = {
-      i18n: {
-        counter: "%s / %s"
-      },
-      mixins: [Ps, ro],
-      functional: !0,
-      props: {
-        counter: Boolean,
-        preload: Number,
-        nav: Boolean,
-        slidenav: Boolean,
-        delayControls: Number,
-        videoAutoplay: Boolean,
-        template: String
-      },
-      data: () => ({
-        counter: !1,
-        preload: 1,
-        nav: !1,
-        slidenav: !0,
-        delayControls: 3e3,
-        videoAutoplay: !1,
-        items: [],
-        cls: "uk-open",
-        clsPage: "uk-lightbox-page",
-        clsFit: "uk-lightbox-items-fit",
-        clsZoom: "uk-lightbox-zoom",
-        attrItem: "uk-lightbox-item",
-        selList: ".uk-lightbox-items",
-        selClose: ".uk-close-large",
-        selNav: ".uk-lightbox-thumbnav, .uk-lightbox-dotnav",
-        selCaption: ".uk-lightbox-caption",
-        selCounter: ".uk-lightbox-counter",
-        pauseOnHover: !1,
-        velocity: 2,
-        Animations: ao,
-        template: '<div class="uk-lightbox uk-overflow-hidden"> <div class="uk-lightbox-items"></div> <div class="uk-position-top-right uk-position-small uk-transition-fade" uk-inverse> <button class="uk-lightbox-close uk-close-large" type="button" uk-close></button> </div> <div class="uk-lightbox-slidenav uk-position-center-left uk-position-medium uk-transition-fade" uk-inverse> <a href uk-slidenav-previous uk-lightbox-item="previous"></a> </div> <div class="uk-lightbox-slidenav uk-position-center-right uk-position-medium uk-transition-fade" uk-inverse> <a href uk-slidenav-next uk-lightbox-item="next"></a> </div> <div class="uk-position-center-right uk-position-medium uk-transition-fade" uk-inverse style="max-height: 90vh; overflow: auto;"> <ul class="uk-lightbox-thumbnav uk-lightbox-thumbnav-vertical uk-thumbnav uk-thumbnav-vertical"></ul> <ul class="uk-lightbox-dotnav uk-dotnav uk-dotnav-vertical"></ul> </div> <div class="uk-lightbox-counter uk-text-large uk-position-top-left uk-position-small uk-transition-fade" uk-inverse></div> <div class="uk-lightbox-caption uk-position-bottom uk-text-center uk-transition-slide-bottom uk-transition-opaque"></div> </div>'
-      }),
-      created() {
-        let t = x(this.template);
-        F(t, "template") && (t = It(bt(t)));
-        const e = x(this.selList, t),
-          i = this.$props.nav;
-        Q(D(this.selNav, t).filter(o => !C(o, `.uk-${i}`)));
-        for (const [o, r] of this.items.entries()) W(e, "<div>"), i === "thumbnav" && Fe(Za(r, this.videoAutoplay), W(x(this.selNav, t), `<li uk-lightbox-item="${o}"><a href></a></li>`));
-        this.slidenav || Q(D(".uk-lightbox-slidenav", t)), this.counter || Q(x(this.selCounter, t)), I(e, this.clsFit);
-        const s = x("[uk-close]", t),
-          n = this.t("close");
-        s && n && (s.dataset.i18n = JSON.stringify({
-          label: n
-        })), this.$mount(W(this.container, t))
-      },
-      events: [{
-        name: "click",
-        self: !0,
-        filter: ({
-                   bgClose: t
-                 }) => t,
-        delegate: ({
-                     selList: t
-                   }) => `${t} > *`,
-        handler(t) {
-          t.defaultPrevented || this.hide()
-        }
-      }, {
-        name: "click",
-        self: !0,
-        delegate: ({
-                     clsZoom: t
-                   }) => `.${t}`,
-        handler(t) {
-          t.defaultPrevented || L(this.list, this.clsFit)
-        }
-      }, {
-        name: `${ai} ${ut} keydown`,
-        filter: ({
-                   delayControls: t
-                 }) => t,
-        handler() {
-          this.showControls()
-        }
-      }, {
-        name: "shown",
-        self: !0,
-        handler() {
-          this.showControls()
-        }
-      }, {
-        name: "hide",
-        self: !0,
-        handler() {
-          this.hideControls(), _(this.slides, this.clsActive), M.stop(this.slides)
-        }
-      }, {
-        name: "hidden",
-        self: !0,
-        handler() {
-          this.$destroy(!0)
-        }
-      }, {
-        name: "keyup",
-        el: () => document,
-        handler({
-                  keyCode: t
-                }) {
-          if (!this.isToggled(this.$el) || !this.draggable) return;
-          let e = -1;
-          t === B.LEFT ? e = "previous" : t === B.RIGHT ? e = "next" : t === B.HOME ? e = 0 : t === B.END && (e = "last"), ~e && this.show(e)
-        }
-      }, {
-        name: "beforeitemshow",
-        handler(t) {
-          bt(x(this.selCaption, this.$el), this.getItem().caption || ""), bt(x(this.selCounter, this.$el), this.t("counter", this.index + 1, this.slides.length));
-          for (let e = -this.preload; e <= this.preload; e++) this.loadItem(this.index + e);
-          this.isToggled() || (this.draggable = !1, t.preventDefault(), this.toggleElement(this.$el, !0, !1), this.animation = ao.scale, _(t.target, this.clsActive), this.stack.splice(1, 0, this.index))
-        }
-      }, {
-        name: "itemshown",
-        handler() {
-          this.draggable = this.$props.draggable
-        }
-      }, {
-        name: "itemload",
-        async handler(t, e) {
-          const {
-            source: i,
-            type: s,
-            attrs: n = {}
-          } = e;
-          if (this.setItem(e, "<span uk-spinner uk-inverse></span>"), !i) return;
-          let o;
-          const r = {
-            allowfullscreen: "",
-            style: "max-width: 100%; box-sizing: border-box;",
-            "uk-responsive": "",
-            "uk-video": `${!!this.videoAutoplay}`
-          };
-          if (s === "image" || ho(i)) {
-            const a = Bt("img");
-            Ln(a, e.sources), p(a, {
-              src: i,
-              ...si(e, ["alt", "srcset", "sizes"]),
-              ...n
-            }), y(a, "load", () => this.setItem(e, O(a) || a)), y(a, "error", () => this.setError(e))
-          } else if (s === "video" || co(i)) {
-            const a = this.videoAutoplay === "inline",
-              l = Bt("video", {
-                src: i,
-                playsinline: "",
-                controls: a ? null : "",
-                loop: a ? "" : null,
-                poster: this.videoAutoplay ? null : e.poster,
-                "uk-video": a ? "automute: true" : !!this.videoAutoplay,
-                ...n
-              });
-            y(l, "loadedmetadata", () => this.setItem(e, l)), y(l, "error", () => this.setError(e))
-          } else if (s === "iframe" || i.match(/\.(html|php)($|\?)/i)) this.setItem(e, Bt("iframe", {
-            src: i,
-            allowfullscreen: "",
-            class: "uk-lightbox-iframe",
-            ...n
-          }));
-          else if (o = i.match(/\/\/(?:.*?youtube(-nocookie)?\..*?(?:[?&]v=|\/shorts\/)|youtu\.be\/)([\w-]{11})[&?]?(.*)?/)) this.setItem(e, Bt("iframe", {
-            src: `https://www.youtube${o[1]||""}.com/embed/${o[2]}${o[3]?`?${o[3]}`:""}`,
-            width: 1920,
-            height: 1080,
-            ...r,
-            ...n
-          }));
-          else if (o = i.match(/\/\/.*?vimeo\.[a-z]+\/(\d+)[&?]?(.*)?/)) try {
-            const {
-              height: a,
-              width: l
-            } = await (await fetch(`https://vimeo.com/api/oembed.json?maxwidth=1920&url=${encodeURI(i)}`, {
-              credentials: "omit"
-            })).json();
-            this.setItem(e, Bt("iframe", {
-              src: `https://player.vimeo.com/video/${o[1]}${o[2]?`?${o[2]}`:""}`,
-              width: l,
-              height: a,
-              ...r,
-              ...n
-            }))
-          } catch {
-            this.setError(e)
-          }
-        }
-      }, {
-        name: "itemloaded",
-        handler() {
-          this.$emit("resize")
-        }
-      }],
-      update: {
-        read() {
-          for (const t of D(`${this.selList} :not([controls]):is(img,video)`, this.$el)) L(t, this.clsZoom, (t.naturalHeight || t.videoHeight) - this.$el.offsetHeight > Math.max(0, (t.naturalWidth || t.videoWidth) - this.$el.offsetWidth))
-        },
-        events: ["resize"]
-      },
-      methods: {
-        loadItem(t = this.index) {
-          const e = this.getItem(t);
-          this.getSlide(e).childElementCount || v(this.$el, "itemload", [e])
-        },
-        getItem(t = this.index) {
-          return this.items[rt(t, this.slides)]
-        },
-        setItem(t, e) {
-          v(this.$el, "itemloaded", [this, bt(this.getSlide(t), e)])
-        },
-        getSlide(t) {
-          return this.slides[this.items.indexOf(t)]
-        },
-        setError(t) {
-          this.setItem(t, '<span uk-icon="icon: bolt; ratio: 2" uk-inverse></span>')
-        },
-        showControls() {
-          clearTimeout(this.controlsTimer), this.controlsTimer = this.delayControls && setTimeout(this.hideControls, this.delayControls), I(this.$el, "uk-active", "uk-transition-active")
-        },
-        hideControls() {
-          _(this.$el, "uk-active", "uk-transition-active")
-        }
-      }
-    };
-
-  function Bt(t, e) {
-    const i = It(`<${t}>`);
-    return p(i, e), i
+  function speedUp(x) {
+    return .5 * x + 300; // parabola through (400,500; 600,600; 1800,1200)
   }
 
-  function Za(t, e) {
-    const i = t.poster || t.thumb && (t.type === "image" || ho(t.thumb)) ? Bt("img", {
-      src: t.poster || t.thumb,
-      alt: ""
-    }) : t.thumb && (t.type === "video" || co(t.thumb)) ? Bt("video", {
-      src: t.thumb,
-      loop: "",
-      playsinline: "",
-      "uk-video": `autoplay: ${!!e}; automute: true`
-    }) : Bt("canvas");
-    return t.thumbRatio && (i.style.aspectRatio = t.thumbRatio), i
-  }
+  var Slideshow = {
 
-  function ho(t) {
-    return t == null ? void 0 : t.match(/\.(avif|jpe?g|jfif|a?png|gif|svg|webp)($|\?)/i)
-  }
+    mixins: [Slider],
 
-  function co(t) {
-    return t == null ? void 0 : t.match(/\.(mp4|webm|ogv)($|\?)/i)
-  }
-  const Qa = ".uk-disabled *, .uk-disabled, [disabled]";
-  var tl = {
-    install: el,
     props: {
-      toggle: String
+      animation: String
     },
+
     data: {
-      toggle: "a"
+      animation: 'slide',
+      clsActivated: 'uk-transition-active',
+      Animations: Animations,
+      Transitioner: Transitioner
     },
+
     computed: {
-      toggles: ({
-                  toggle: t
-                }, e) => D(t, e)
-    },
-    watch: {
-      toggles(t) {
-        this.hide();
-        for (const e of t) F(e, "a") && p(e, "role", "button")
-      }
-    },
-    disconnected() {
-      this.hide()
-    },
-    events: {
-      name: "click",
-      delegate: ({
-                   toggle: t
-                 }) => t,
-      handler(t) {
-        t.defaultPrevented || (t.preventDefault(), C(t.current, Qa) || this.show(t.current))
-      }
-    },
-    methods: {
-      show(t) {
-        let e = this.toggles.map(uo);
-        if (this.nav === "thumbnav" && il.call(this, this.toggles, e), e = Ys(e, "source"), oe(t)) {
-          const {
-            source: i
-          } = uo(t);
-          t = xt(e, ({
-                       source: s
-                     }) => i === s)
-        }
-        return this.panel = this.panel || this.$create("lightboxPanel", {
-          ...this.$props,
-          items: e
-        }), y(this.panel.$el, "hidden", () => this.panel = null), this.panel.show(t)
+
+      animation: function(ref) {
+        var animation = ref.animation;
+        var Animations$$1 = ref.Animations;
+
+        return assign(animation in Animations$$1 ? Animations$$1[animation] : Animations$$1.slide, {name: animation});
       },
-      hide() {
-        var t;
-        return (t = this.panel) == null ? void 0 : t.hide()
+
+      transitionOptions: function() {
+        return {animation: this.animation};
       }
+
+    },
+
+    events: {
+
+      'itemshow itemhide itemshown itemhidden': function(ref) {
+        var target = ref.target;
+
+        this.$update(target);
+      },
+
+      itemshow: function() {
+        isNumber(this.prevIndex) && fastdom.flush(); // iOS 10+ will honor the video.play only if called from a gesture handler
+      },
+
+      beforeitemshow: function(ref) {
+        var target = ref.target;
+
+        addClass(target, this.clsActive);
+      },
+
+      itemshown: function(ref) {
+        var target = ref.target;
+
+        addClass(target, this.clsActivated);
+      },
+
+      itemhidden: function(ref) {
+        var target = ref.target;
+
+        removeClass(target, this.clsActive, this.clsActivated);
+      }
+
     }
+
   };
 
-  function el(t, e) {
-    t.lightboxPanel || t.component("lightboxPanel", lo), ft(e.props, t.component("lightboxPanel").options.props)
-  }
+  var LightboxPanel = {
 
-  function il(t, e) {
-    for (const [i, s] of Object.entries(t)) {
-      if (e[i].thumb) continue;
-      const n = de(s).reverse().concat(s).find(r => this.$el.contains(r) && (r === s || D(this.toggle, r).length === 1));
-      if (!n) continue;
-      const o = x("img,video", n);
-      o && (e[i].thumb = o.currentSrc || o.poster || o.src, e[i].thumbRatio = (o.naturalWidth || o.videoWidth) / (o.naturalHeight || o.videoHeight))
-    }
-  }
+    mixins: [Container, Modal, Togglable, Slideshow],
 
-  function uo(t) {
-    const e = {};
-    for (const i of t.getAttributeNames()) {
-      const s = i.replace(/^data-/, "");
-      e[s === "href" ? "source" : s] = t.getAttribute(i)
-    }
-    return e.attrs = ve(e.attrs), e
-  }
-  var sl = {
-    mixins: [Ye],
-    functional: !0,
-    args: ["message", "status"],
-    data: {
-      message: "",
-      status: "",
-      timeout: 5e3,
-      group: "",
-      pos: "top-center",
-      clsContainer: "uk-notification",
-      clsClose: "uk-notification-close",
-      clsMsg: "uk-notification-message"
-    },
-    install: nl,
-    computed: {
-      marginProp: ({
-                     pos: t
-                   }) => `margin-${t.match(/[a-z]+(?=-)/)[0]}`,
-      startProps() {
-        return {
-          opacity: 0,
-          [this.marginProp]: -this.$el.offsetHeight
-        }
-      }
-    },
-    created() {
-      const t = `${this.clsContainer}-${this.pos}`,
-        e = `data-${this.clsContainer}-container`,
-        i = x(`.${t}[${e}]`, this.container) || W(this.container, `<div class="${this.clsContainer} ${t}" ${e}></div>`);
-      this.$mount(W(i, `<div class="${this.clsMsg}${this.status?` ${this.clsMsg}-${this.status}`:""}" role="alert"> <a href class="${this.clsClose}" data-uk-close></a> <div>${this.message}</div> </div>`))
-    },
-    async connected() {
-      const t = S(h(this.$el, this.marginProp));
-      await M.start(h(this.$el, this.startProps), {
-        opacity: 1,
-        [this.marginProp]: t
-      }), this.timeout && (this.timer = setTimeout(this.close, this.timeout))
-    },
-    events: {
-      click(t) {
-        Et(t), this.close()
-      },
-      [qt]() {
-        this.timer && clearTimeout(this.timer)
-      },
-      [ce]() {
-        this.timeout && (this.timer = setTimeout(this.close, this.timeout))
-      }
-    },
-    methods: {
-      async close(t) {
-        const e = i => {
-          const s = O(i);
-          v(i, "close", [this]), Q(i), s != null && s.hasChildNodes() || Q(s)
-        };
-        this.timer && clearTimeout(this.timer), t || await M.start(this.$el, this.startProps), e(this.$el)
-      }
-    }
-  };
+    functional: true,
 
-  function nl(t) {
-    t.notification.closeAll = function (e, i) {
-      Ot(document.body, s => {
-        const n = t.getComponent(s, "notification");
-        n && (!e || e === n.group) && n.close(i)
-      })
-    }
-  }
-  var Ci = {
     props: {
-      media: Boolean
+      delayControls: Number,
+      preload: Number,
+      videoAutoplay: Boolean,
+      template: String
     },
-    data: {
-      media: !1
+
+    data: function () { return ({
+      preload: 1,
+      videoAutoplay: false,
+      delayControls: 3000,
+      items: [],
+      cls: 'uk-open',
+      clsPage: 'uk-lightbox-page',
+      selList: '.uk-lightbox-items',
+      attrItem: 'uk-lightbox-item',
+      selClose: '.uk-close-large',
+      pauseOnHover: false,
+      velocity: 2,
+      Animations: Animations$1,
+      template: "<div class=\"uk-lightbox uk-overflow-hidden\"> <ul class=\"uk-lightbox-items\"></ul> <div class=\"uk-lightbox-toolbar uk-position-top uk-text-right uk-transition-slide-top uk-transition-opaque\"> <button class=\"uk-lightbox-toolbar-icon uk-close-large\" type=\"button\" uk-close></button> </div> <a class=\"uk-lightbox-button uk-position-center-left uk-position-medium uk-transition-fade\" href=\"#\" uk-slidenav-previous uk-lightbox-item=\"previous\"></a> <a class=\"uk-lightbox-button uk-position-center-right uk-position-medium uk-transition-fade\" href=\"#\" uk-slidenav-next uk-lightbox-item=\"next\"></a> <div class=\"uk-lightbox-toolbar uk-lightbox-caption uk-position-bottom uk-text-center uk-transition-slide-bottom uk-transition-opaque\"></div> </div>"
+    }); },
+
+    created: function() {
+      var this$1 = this;
+
+
+      this.$mount(append(this.container, this.template));
+
+      this.caption = $('.uk-lightbox-caption', this.$el);
+
+      this.items.forEach(function () { return append(this$1.list, '<li></li>'); });
+
     },
-    connected() {
-      const t = ol(this.media, this.$el);
-      if (this.matchMedia = !0, t) {
-        this.mediaObj = window.matchMedia(t);
-        const e = () => {
-          this.matchMedia = this.mediaObj.matches, v(this.$el, pe("mediachange", !1, !0, [this.mediaObj]))
-        };
-        this.offMediaObj = y(this.mediaObj, "change", () => {
-          e(), this.$emit("resize")
-        }), e()
-      }
-    },
-    disconnected() {
-      var t;
-      (t = this.offMediaObj) == null || t.call(this)
-    }
-  };
 
-  function ol(t, e) {
-    if (H(t)) {
-      if (mt(t, "@")) t = S(h(e, `--uk-breakpoint-${t.slice(1)}`));
-      else if (isNaN(t)) return t
-    }
-    return t && vt(t) ? `(min-width: ${t}px)` : ""
-  }
+    events: [
 
-  function fo(t) {
-    return q(t) ? Math.ceil(Math.max(0, ...D("[stroke]", t).map(e => {
-      var i;
-      return ((i = e.getTotalLength) == null ? void 0 : i.call(e)) || 0
-    }))) : 0
-  }
-  const Pi = {
-      x: _i,
-      y: _i,
-      rotate: _i,
-      scale: _i,
-      color: Ds,
-      backgroundColor: Ds,
-      borderColor: Ds,
-      blur: Qt,
-      hue: Qt,
-      fopacity: Qt,
-      grayscale: Qt,
-      invert: Qt,
-      saturate: Qt,
-      sepia: Qt,
-      opacity: al,
-      stroke: ll,
-      bgx: mo,
-      bgy: mo
-    },
-    {
-      keys: po
-    } = Object;
-  var go = {
-    mixins: [Ci],
-    props: $o(po(Pi), "list"),
-    data: $o(po(Pi), void 0),
-    computed: {
-      props(t, e) {
-        const i = {};
-        for (const n in t) n in Pi && !X(t[n]) && (i[n] = t[n].slice());
-        const s = {};
-        for (const n in i) s[n] = Pi[n](n, e, i[n], i);
-        return s
-      }
-    },
-    events: {
-      load() {
-        this.$emit()
-      }
-    },
-    methods: {
-      reset() {
-        St(this.$el, this.getCss(0))
-      },
-      getCss(t) {
-        const e = {};
-        for (const i in this.props) this.props[i](e, K(t));
-        return e.willChange = Object.keys(e).map(ui).join(","), e
-      }
-    }
-  };
-
-  function _i(t, e, i) {
-    let s = Oi(i) || {
-        x: "px",
-        y: "px",
-        rotate: "deg"
-      } [t] || "",
-      n;
-    return t === "x" || t === "y" ? (t = `translate${Ft(t)}`, n = o => S(S(o).toFixed(s === "px" ? 0 : 6))) : t === "scale" && (s = "", n = o => {
-      var r;
-      return Oi([o]) ? G(o, "width", e, !0) / e[`offset${(r=o.endsWith)!=null&&r.call(o,"vh")?"Height":"Width"}`] : S(o)
-    }), i.length === 1 && i.unshift(t === "scale" ? 1 : 0), i = ye(i, n), (o, r) => {
-      o.transform = `${o.transform||""} ${t}(${Ke(i,r)}${s})`
-    }
-  }
-
-  function Ds(t, e, i) {
-    return i.length === 1 && i.unshift(Ze(e, t, "")), i = ye(i, s => rl(e, s)), (s, n) => {
-      const [o, r, a] = xo(i, n), l = o.map((c, u) => (c += a * (r[u] - c), u === 3 ? S(c) : parseInt(c, 10))).join(",");
-      s[t] = `rgba(${l})`
-    }
-  }
-
-  function rl(t, e) {
-    return Ze(t, "color", e).split(/[(),]/g).slice(1, -1).concat(1).slice(0, 4).map(S)
-  }
-
-  function Qt(t, e, i) {
-    i.length === 1 && i.unshift(0);
-    const s = Oi(i) || {
-      blur: "px",
-      hue: "deg"
-    } [t] || "%";
-    return t = {
-      fopacity: "opacity",
-      hue: "hue-rotate"
-    } [t] || t, i = ye(i), (n, o) => {
-      const r = Ke(i, o);
-      n.filter = `${n.filter||""} ${t}(${r+s})`
-    }
-  }
-
-  function al(t, e, i) {
-    return i.length === 1 && i.unshift(Ze(e, t, "")), i = ye(i), (s, n) => {
-      s[t] = Ke(i, n)
-    }
-  }
-
-  function ll(t, e, i) {
-    i.length === 1 && i.unshift(0);
-    const s = Oi(i),
-      n = fo(e);
-    return i = ye(i.reverse(), o => (o = S(o), s === "%" ? o * n / 100 : o)), i.some(([o]) => o) ? (h(e, "strokeDasharray", n), (o, r) => {
-      o.strokeDashoffset = Ke(i, r)
-    }) : A
-  }
-
-  function mo(t, e, i, s) {
-    i.length === 1 && i.unshift(0);
-    const n = t === "bgy" ? "height" : "width";
-    s[t] = ye(i, a => G(a, n, e));
-    const o = ["bgx", "bgy"].filter(a => a in s);
-    if (o.length === 2 && t === "bgx") return A;
-    if (Ze(e, "backgroundSize", "") === "cover") return hl(t, e, i, s);
-    const r = {};
-    for (const a of o) r[a] = vo(e, a);
-    return bo(o, r, s)
-  }
-
-  function hl(t, e, i, s) {
-    const n = cl(e);
-    if (!n.width) return A;
-    const o = {
-        width: e.offsetWidth,
-        height: e.offsetHeight
-      },
-      r = ["bgx", "bgy"].filter(u => u in s),
-      a = {};
-    for (const u of r) {
-      const d = s[u].map(([P]) => P),
-        f = Math.min(...d),
-        g = Math.max(...d),
-        w = d.indexOf(f) < d.indexOf(g),
-        k = g - f;
-      a[u] = `${(w?-k:0)-(w?f:g)}px`, o[u === "bgy" ? "height" : "width"] += k
-    }
-    const l = qi.cover(n, o);
-    for (const u of r) {
-      const d = u === "bgy" ? "height" : "width",
-        f = l[d] - o[d];
-      a[u] = `max(${vo(e,u)},-${f}px) + ${a[u]}`
-    }
-    const c = bo(r, a, s);
-    return (u, d) => {
-      c(u, d), u.backgroundSize = `${l.width}px ${l.height}px`, u.backgroundRepeat = "no-repeat"
-    }
-  }
-
-  function vo(t, e) {
-    return Ze(t, `background-position-${e.slice(-1)}`, "")
-  }
-
-  function bo(t, e, i) {
-    return function (s, n) {
-      for (const o of t) {
-        const r = Ke(i[o], n);
-        s[`background-position-${o.slice(-1)}`] = `calc(${e[o]} + ${r}px)`
-      }
-    }
-  }
-  const wo = {},
-    Ai = {};
-
-  function cl(t) {
-    const e = h(t, "backgroundImage").replace(/^none|url\(["']?(.+?)["']?\)$/, "$1");
-    if (Ai[e]) return Ai[e];
-    const i = new Image;
-    return e && (i.src = e, !i.naturalWidth && !wo[e]) ? (z(i, "error load", () => {
-      Ai[e] = Bs(i), v(t, pe("load", !1))
-    }), wo[e] = !0, Bs(i)) : Ai[e] = Bs(i)
-  }
-
-  function Bs(t) {
-    return {
-      width: t.naturalWidth,
-      height: t.naturalHeight
-    }
-  }
-
-  function ye(t, e = S) {
-    const i = [],
       {
-        length: s
-      } = t;
-    let n = 0;
-    for (let o = 0; o < s; o++) {
-      let [r, a] = H(t[o]) ? t[o].trim().split(/ (?![^(]*\))/) : [t[o]];
-      if (r = e(r), a = a ? S(a) / 100 : null, o === 0 ? a === null ? a = 0 : a && i.push([r, 0]) : o === s - 1 && (a === null ? a = 1 : a !== 1 && (i.push([r, a]), a = 1)), i.push([r, a]), a === null) n++;
-      else if (n) {
-        const l = i[o - n - 1][1],
-          c = (a - l) / (n + 1);
-        for (let u = n; u > 0; u--) i[o - u][1] = l + c * (n - u + 1);
-        n = 0
+
+        name: (pointerMove + " " + pointerDown + " keydown"),
+
+        handler: 'showControls'
+
+      },
+
+      {
+
+        name: pointerUp,
+
+        self: true,
+
+        delegate: function() {
+          return this.selSlides;
+        },
+
+        handler: function(e) {
+          e.preventDefault();
+          this.hide();
+        }
+
+      },
+
+      {
+
+        name: 'shown',
+
+        self: true,
+
+        handler: function() {
+          this.startAutoplay();
+          this.showControls();
+        }
+
+      },
+
+      {
+
+        name: 'hide',
+
+        self: true,
+
+        handler: function() {
+
+          this.stopAutoplay();
+          this.hideControls();
+
+          removeClass(this.slides, this.clsActive);
+          Transition.stop(this.slides);
+
+        }
+      },
+
+      {
+
+        name: 'hidden',
+
+        self: true,
+
+        handler: function() {
+          this.$destroy(true);
+        }
+
+      },
+
+      {
+
+        name: 'keyup',
+
+        el: document,
+
+        handler: function(e) {
+
+          if (!this.isToggled(this.$el)) {
+            return;
+          }
+
+          switch (e.keyCode) {
+            case 37:
+              this.show('previous');
+              break;
+            case 39:
+              this.show('next');
+              break;
+          }
+        }
+      },
+
+      {
+
+        name: 'beforeitemshow',
+
+        handler: function(e) {
+
+          if (this.isToggled()) {
+            return;
+          }
+
+          this.draggable = false;
+
+          e.preventDefault();
+
+          this.toggleNow(this.$el, true);
+
+          this.animation = Animations$1['scale'];
+          removeClass(e.target, this.clsActive);
+          this.stack.splice(1, 0, this.index);
+
+        }
+
+      },
+
+      {
+
+        name: 'itemshow',
+
+        handler: function(ref) {
+          var target = ref.target;
+
+
+          var i = index(target);
+          var ref$1 = this.getItem(i);
+          var caption = ref$1.caption;
+
+          css(this.caption, 'display', caption ? '' : 'none');
+          html(this.caption, caption);
+
+          for (var j = 0; j <= this.preload; j++) {
+            this.loadItem(this.getIndex(i + j));
+            this.loadItem(this.getIndex(i - j));
+          }
+
+        }
+
+      },
+
+      {
+
+        name: 'itemshown',
+
+        handler: function() {
+          this.draggable = this.$props.draggable;
+        }
+
+      },
+
+      {
+
+        name: 'itemload',
+
+        handler: function(_, item) {
+          var this$1 = this;
+
+
+          var source = item.source;
+          var type = item.type;
+          var alt = item.alt;
+
+          this.setItem(item, '<span uk-spinner></span>');
+
+          if (!source) {
+            return;
+          }
+
+          var matches$$1;
+
+          // Image
+          if (type === 'image' || source.match(/\.(jp(e)?g|png|gif|svg)($|\?)/i)) {
+
+            getImage(source).then(
+              function (img) { return this$1.setItem(item, ("<img width=\"" + (img.width) + "\" height=\"" + (img.height) + "\" src=\"" + source + "\" alt=\"" + (alt ? alt : '') + "\">")); },
+              function () { return this$1.setError(item); }
+            );
+
+            // Video
+          } else if (type === 'video' || source.match(/\.(mp4|webm|ogv)($|\?)/i)) {
+
+            var video = $(("<video controls playsinline" + (item.poster ? (" poster=\"" + (item.poster) + "\"") : '') + " uk-video=\"" + (this.videoAutoplay) + "\"></video>"));
+            attr(video, 'src', source);
+
+            once(video, 'error loadedmetadata', function (type) {
+              if (type === 'error') {
+                this$1.setError(item);
+              } else {
+                attr(video, {width: video.videoWidth, height: video.videoHeight});
+                this$1.setItem(item, video);
+              }
+            });
+
+            // Iframe
+          } else if (type === 'iframe' || source.match(/\.(html|php)($|\?)/i)) {
+
+            this.setItem(item, ("<iframe class=\"uk-lightbox-iframe\" src=\"" + source + "\" frameborder=\"0\" allowfullscreen></iframe>"));
+
+            // YouTube
+          } else if ((matches$$1 = source.match(/\/\/.*?youtube(-nocookie)?\.[a-z]+\/watch\?v=([^&\s]+)/) || source.match(/()youtu\.be\/(.*)/))) {
+
+            var id = matches$$1[2];
+            var setIframe = function (width$$1, height$$1) {
+              if ( width$$1 === void 0 ) width$$1 = 640;
+              if ( height$$1 === void 0 ) height$$1 = 450;
+
+              return this$1.setItem(item, getIframe(("https://www.youtube" + (matches$$1[1] || '') + ".com/embed/" + id), width$$1, height$$1, this$1.videoAutoplay));
+            };
+
+            getImage(("https://img.youtube.com/vi/" + id + "/maxresdefault.jpg")).then(
+              function (ref) {
+                var width$$1 = ref.width;
+                var height$$1 = ref.height;
+
+                // YouTube default 404 thumb, fall back to low resolution
+                if (width$$1 === 120 && height$$1 === 90) {
+                  getImage(("https://img.youtube.com/vi/" + id + "/0.jpg")).then(
+                    function (ref) {
+                      var width$$1 = ref.width;
+                      var height$$1 = ref.height;
+
+                      return setIframe(width$$1, height$$1);
+                    },
+                    setIframe
+                  );
+                } else {
+                  setIframe(width$$1, height$$1);
+                }
+              },
+              setIframe
+            );
+
+            // Vimeo
+          } else if ((matches$$1 = source.match(/(\/\/.*?)vimeo\.[a-z]+\/([0-9]+).*?/))) {
+
+            ajax(("https://vimeo.com/api/oembed.json?maxwidth=1920&url=" + (encodeURI(source))), {responseType: 'json', withCredentials: false})
+              .then(
+                function (ref) {
+                  var ref_response = ref.response;
+                  var height$$1 = ref_response.height;
+                  var width$$1 = ref_response.width;
+
+                  return this$1.setItem(item, getIframe(("https://player.vimeo.com/video/" + (matches$$1[2])), width$$1, height$$1, this$1.videoAutoplay));
+                },
+                function () { return this$1.setError(item); }
+              );
+
+          }
+
+        }
+
       }
+
+    ],
+
+    methods: {
+
+      loadItem: function(index$$1) {
+        if ( index$$1 === void 0 ) index$$1 = this.index;
+
+
+        var item = this.getItem(index$$1);
+
+        if (item.content) {
+          return;
+        }
+
+        trigger(this.$el, 'itemload', [item]);
+      },
+
+      getItem: function(index$$1) {
+        if ( index$$1 === void 0 ) index$$1 = this.index;
+
+        return this.items[index$$1] || {};
+      },
+
+      setItem: function(item, content) {
+        assign(item, {content: content});
+        var el = html(this.slides[this.items.indexOf(item)], content);
+        trigger(this.$el, 'itemloaded', [this, el]);
+        this.$update(el);
+      },
+
+      setError: function(item) {
+        this.setItem(item, '<span uk-icon="icon: bolt; ratio: 2"></span>');
+      },
+
+      showControls: function() {
+
+        clearTimeout(this.controlsTimer);
+        this.controlsTimer = setTimeout(this.hideControls, this.delayControls);
+
+        addClass(this.$el, 'uk-active', 'uk-transition-active');
+
+      },
+
+      hideControls: function() {
+        removeClass(this.$el, 'uk-active', 'uk-transition-active');
+      }
+
     }
-    return i
+
+  };
+
+  function getIframe(src, width$$1, height$$1, autoplay) {
+    return ("<iframe src=\"" + src + "\" width=\"" + width$$1 + "\" height=\"" + height$$1 + "\" style=\"max-width: 100%; box-sizing: border-box;\" frameborder=\"0\" allowfullscreen uk-video=\"autoplay: " + autoplay + "\" uk-responsive></iframe>");
   }
 
-  function xo(t, e) {
-    const i = xt(t.slice(1), ([, s]) => e <= s) + 1;
-    return [t[i - 1][0], t[i][0], (e - t[i - 1][1]) / (t[i][1] - t[i - 1][1])]
-  }
+  var Lightbox = {
 
-  function Ke(t, e) {
-    const [i, s, n] = xo(t, e);
-    return i + Math.abs(i - s) * n * (i < s ? 1 : -1)
-  }
-  const ul = /^-?\d+(?:\.\d+)?(\S+)?/;
+    install: install$2,
 
-  function Oi(t, e) {
-    var i;
-    for (const s of t) {
-      const n = (i = s.match) == null ? void 0 : i.call(s, ul);
-      if (n) return n[1]
+    props: {toggle: String},
+
+    data: {toggle: 'a'},
+
+    computed: {
+
+      toggles: function(ref, $el) {
+        var toggle = ref.toggle;
+
+        return $$(toggle, $el);
+      }
+
+    },
+
+    disconnected: function() {
+      this.hide();
+    },
+
+    events: [
+
+      {
+
+        name: 'click',
+
+        delegate: function() {
+          return ((this.toggle) + ":not(.uk-disabled)");
+        },
+
+        handler: function(e) {
+          e.preventDefault();
+          this.show(index(this.toggles, e.current));
+        }
+
+      }
+
+    ],
+
+    update: function(data$$1) {
+
+      data$$1.toggles = this.panel && data$$1.toggles || this.toggles;
+
+      if (!this.panel || isEqualList$1(data$$1.toggles, this.toggles)) {
+        return;
+      }
+
+      data$$1.toggles = this.toggles;
+      this.panel.hide();
+
+    },
+
+    methods: {
+
+      show: function(index$$1) {
+        var this$1 = this;
+
+
+        this.panel = this.panel || this.$create('lightboxPanel', assign({}, this.$props, {
+          items: this.toggles.reduce(function (items, el) {
+            items.push(['href', 'caption', 'type', 'poster', 'alt'].reduce(function (obj, attr$$1) {
+              obj[attr$$1 === 'href' ? 'source' : attr$$1] = data(el, attr$$1);
+              return obj;
+            }, {}));
+            return items;
+          }, [])
+        }));
+
+        on(this.panel.$el, 'hidden', function () { return this$1.panel = false; });
+        return this.panel.show(index$$1);
+      },
+
+      hide: function() {
+
+        return this.panel && this.panel.hide();
+
+      }
+
     }
-    return e
+
+  };
+
+  function isEqualList$1(listA, listB) {
+    return listA.length === listB.length
+      && listA.every(function (el, i) { return el === listB[i]; });
   }
 
-  function Ze(t, e, i) {
-    const s = t.style[e],
-      n = h(h(t, e, i), e);
-    return t.style[e] = s, n
+  function install$2(UIkit, Lightbox) {
+
+    if (!UIkit.lightboxPanel) {
+      UIkit.component('lightboxPanel', LightboxPanel);
+    }
+
+    assign(
+      Lightbox.props,
+      UIkit.component('lightboxPanel').options.props
+    );
+
   }
 
-  function $o(t, e) {
-    return t.reduce((i, s) => (i[s] = e, i), {})
+  var obj;
+
+  var containers = {};
+
+  var Notification = {
+
+    functional: true,
+
+    args: ['message', 'status'],
+
+    data: {
+      message: '',
+      status: '',
+      timeout: 5000,
+      group: null,
+      pos: 'top-center',
+      clsClose: 'uk-notification-close',
+      clsMsg: 'uk-notification-message'
+    },
+
+    install: install$3,
+
+    computed: {
+
+      marginProp: function(ref) {
+        var pos = ref.pos;
+
+        return ("margin" + (startsWith(pos, 'top') ? 'Top' : 'Bottom'));
+      },
+
+      startProps: function() {
+        var obj;
+
+        return ( obj = {opacity: 0}, obj[this.marginProp] = -this.$el.offsetHeight, obj );
+      }
+
+    },
+
+    created: function() {
+
+      if (!containers[this.pos]) {
+        containers[this.pos] = append(this.$container, ("<div class=\"uk-notification uk-notification-" + (this.pos) + "\"></div>"));
+      }
+
+      var container = css(containers[this.pos], 'display', 'block');
+
+      this.$mount(append(container,
+        ("<div class=\"" + (this.clsMsg) + (this.status ? (" " + (this.clsMsg) + "-" + (this.status)) : '') + "\"> <a href=\"#\" class=\"" + (this.clsClose) + "\" data-uk-close></a> <div>" + (this.message) + "</div> </div>")
+      ));
+
+    },
+
+    connected: function() {
+      var this$1 = this;
+      var obj;
+
+
+      var margin = toFloat(css(this.$el, this.marginProp));
+      Transition.start(
+        css(this.$el, this.startProps),
+        ( obj = {opacity: 1}, obj[this.marginProp] = margin, obj )
+      ).then(function () {
+        if (this$1.timeout) {
+          this$1.timer = setTimeout(this$1.close, this$1.timeout);
+        }
+      });
+
+    },
+
+    events: ( obj = {
+
+      click: function(e) {
+        if (closest(e.target, 'a[href="#"],a[href=""]')) {
+          e.preventDefault();
+        }
+        this.close();
+      }
+
+    }, obj[pointerEnter] = function () {
+      if (this.timer) {
+        clearTimeout(this.timer);
+      }
+    }, obj[pointerLeave] = function () {
+      if (this.timeout) {
+        this.timer = setTimeout(this.close, this.timeout);
+      }
+    }, obj ),
+
+    methods: {
+
+      close: function(immediate) {
+        var this$1 = this;
+
+
+        var removeFn = function () {
+
+          trigger(this$1.$el, 'close', [this$1]);
+          remove(this$1.$el);
+
+          if (!containers[this$1.pos].children.length) {
+            css(containers[this$1.pos], 'display', 'none');
+          }
+
+        };
+
+        if (this.timer) {
+          clearTimeout(this.timer);
+        }
+
+        if (immediate) {
+          removeFn();
+        } else {
+          Transition.start(this.$el, this.startProps).then(removeFn);
+        }
+      }
+
+    }
+
+  };
+
+  function install$3(UIkit) {
+    UIkit.notification.closeAll = function (group, immediate) {
+      apply(document.body, function (el) {
+        var notification = UIkit.getComponent(el, 'notification');
+        if (notification && (!group || group === notification.group)) {
+          notification.close(immediate);
+        }
+      });
+    };
   }
 
-  function yo(t, e) {
-    return e >= 0 ? Math.pow(t, e + 1) : 1 - Math.pow(1 - t, 1 - e)
+  var props = ['x', 'y', 'bgx', 'bgy', 'rotate', 'scale', 'color', 'backgroundColor', 'borderColor', 'opacity', 'blur', 'hue', 'grayscale', 'invert', 'saturate', 'sepia', 'fopacity'];
+
+  var Parallax = {
+
+    mixins: [Media],
+
+    props: props.reduce(function (props, prop) {
+      props[prop] = 'list';
+      return props;
+    }, {}),
+
+    data: props.reduce(function (data$$1, prop) {
+      data$$1[prop] = undefined;
+      return data$$1;
+    }, {}),
+
+    computed: {
+
+      props: function(properties, $el) {
+        var this$1 = this;
+
+
+        return props.reduce(function (props, prop) {
+
+          if (isUndefined(properties[prop])) {
+            return props;
+          }
+
+          var isColor = prop.match(/color/i);
+          var isCssProp = isColor || prop === 'opacity';
+
+          var pos, bgPos, diff;
+          var steps = properties[prop].slice(0);
+
+          if (isCssProp) {
+            css($el, prop, '');
+          }
+
+          if (steps.length < 2) {
+            steps.unshift((prop === 'scale'
+              ? 1
+              : isCssProp
+                ? css($el, prop)
+                : 0) || 0);
+          }
+
+          var unit = includes(steps.join(''), '%') ? '%' : 'px';
+
+          if (isColor) {
+
+            var ref = $el.style;
+            var color = ref.color;
+            steps = steps.map(function (step) { return parseColor($el, step); });
+            $el.style.color = color;
+
+          } else {
+
+            steps = steps.map(toFloat);
+
+          }
+
+          if (prop.match(/^bg/)) {
+
+            css($el, ("background-position-" + (prop[2])), '');
+            bgPos = css($el, 'backgroundPosition').split(' ')[prop[2] === 'x' ? 0 : 1]; // IE 11 can't read background-position-[x|y]
+
+            if (this$1.covers) {
+
+              var min = Math.min.apply(Math, steps);
+              var max = Math.max.apply(Math, steps);
+              var down = steps.indexOf(min) < steps.indexOf(max);
+
+              diff = max - min;
+
+              steps = steps.map(function (step) { return step - (down ? min : max); });
+              pos = (down ? -diff : 0) + "px";
+
+            } else {
+
+              pos = bgPos;
+
+            }
+          }
+
+          props[prop] = {steps: steps, unit: unit, pos: pos, bgPos: bgPos, diff: diff};
+
+          return props;
+
+        }, {});
+
+      },
+
+      bgProps: function() {
+        var this$1 = this;
+
+        return ['bgx', 'bgy'].filter(function (bg) { return bg in this$1.props; });
+      },
+
+      covers: function(_, $el) {
+        return covers($el);
+      }
+
+    },
+
+    disconnected: function() {
+      delete this._image;
+    },
+
+    update: {
+
+      read: function(data$$1) {
+        var this$1 = this;
+
+
+        data$$1.active = this.matchMedia;
+
+        if (!data$$1.active) {
+          return;
+        }
+
+        if (!data$$1.image && this.covers && this.bgProps.length) {
+          var src = css(this.$el, 'backgroundImage').replace(/^none|url\(["']?(.+?)["']?\)$/, '$1');
+
+          if (src) {
+            var img = new Image();
+            img.src = src;
+            data$$1.image = img;
+
+            if (!img.naturalWidth) {
+              img.onload = function () { return this$1.$emit(); };
+            }
+          }
+
+        }
+
+        var image = data$$1.image;
+
+        if (!image || !image.naturalWidth) {
+          return;
+        }
+
+        var dimEl = {
+          width: this.$el.offsetWidth,
+          height: this.$el.offsetHeight
+        };
+        var dimImage = {
+          width: image.naturalWidth,
+          height: image.naturalHeight
+        };
+
+        var dim = Dimensions.cover(dimImage, dimEl);
+
+        this.bgProps.forEach(function (prop) {
+
+          var ref = this$1.props[prop];
+          var diff = ref.diff;
+          var bgPos = ref.bgPos;
+          var steps = ref.steps;
+          var attr$$1 = prop === 'bgy' ? 'height' : 'width';
+          var span = dim[attr$$1] - dimEl[attr$$1];
+
+          if (!bgPos.match(/%$|0px/)) {
+            return;
+          }
+
+          if (span < diff) {
+            dimEl[attr$$1] = dim[attr$$1] + diff - span;
+          } else if (span > diff) {
+
+            var bgPosFloat = parseFloat(bgPos);
+
+            if (bgPosFloat) {
+              this$1.props[prop].steps = steps.map(function (step) { return step - (span - diff) / (100 / bgPosFloat); });
+            }
+          }
+
+          dim = Dimensions.cover(dimImage, dimEl);
+        });
+
+        data$$1.dim = dim;
+      },
+
+      write: function(ref) {
+        var dim = ref.dim;
+        var active = ref.active;
+
+
+        if (!active) {
+          css(this.$el, {backgroundSize: '', backgroundRepeat: ''});
+          return;
+        }
+
+        dim && css(this.$el, {
+          backgroundSize: ((dim.width) + "px " + (dim.height) + "px"),
+          backgroundRepeat: 'no-repeat'
+        });
+
+      },
+
+      events: ['load', 'resize']
+
+    },
+
+    methods: {
+
+      reset: function() {
+        var this$1 = this;
+
+        each(this.getCss(0), function (_, prop) { return css(this$1.$el, prop, ''); });
+      },
+
+      getCss: function(percent) {
+
+        var ref = this;
+        var props = ref.props;
+        var translated = false;
+
+        return Object.keys(props).reduce(function (css$$1, prop) {
+
+          var ref = props[prop];
+          var steps = ref.steps;
+          var unit = ref.unit;
+          var pos = ref.pos;
+          var value = getValue(steps, percent);
+
+          switch (prop) {
+
+            // transforms
+            case 'x':
+            case 'y':
+
+              if (translated) {
+                break;
+              }
+
+              var ref$1 = ['x', 'y'].map(function (dir) { return prop === dir
+                ? toFloat(value).toFixed(0) + unit
+                : props[dir]
+                  ? getValue(props[dir].steps, percent, 1) + props[dir].unit
+                  : 0; }
+              );
+              var x = ref$1[0];
+              var y = ref$1[1];
+
+              translated = css$$1.transform += " translate3d(" + x + ", " + y + ", 0)";
+              break;
+            case 'rotate':
+              css$$1.transform += " rotate(" + value + "deg)";
+              break;
+            case 'scale':
+              css$$1.transform += " scale(" + value + ")";
+              break;
+
+            // bg image
+            case 'bgy':
+            case 'bgx':
+              css$$1[("background-position-" + (prop[2]))] = "calc(" + pos + " + " + (value + unit) + ")";
+              break;
+
+            // color
+            case 'color':
+            case 'backgroundColor':
+            case 'borderColor':
+
+              var ref$2 = getStep(steps, percent);
+              var start = ref$2[0];
+              var end = ref$2[1];
+              var p = ref$2[2];
+
+              css$$1[prop] = "rgba(" + (start.map(function (value, i) {
+                value = value + p * (end[i] - value);
+                return i === 3 ? toFloat(value) : parseInt(value, 10);
+              }).join(',')) + ")";
+              break;
+
+            // CSS Filter
+            case 'blur':
+              css$$1.filter += " blur(" + value + "px)";
+              break;
+            case 'hue':
+              css$$1.filter += " hue-rotate(" + value + "deg)";
+              break;
+            case 'fopacity':
+              css$$1.filter += " opacity(" + value + "%)";
+              break;
+            case 'grayscale':
+            case 'invert':
+            case 'saturate':
+            case 'sepia':
+              css$$1.filter += " " + prop + "(" + value + "%)";
+              break;
+
+            default:
+              css$$1[prop] = value;
+          }
+
+          return css$$1;
+
+        }, {transform: '', filter: ''});
+
+      }
+
+    }
+
+  };
+
+  function parseColor(el, color) {
+    return css(css(el, 'color', color), 'color').split(/[(),]/g).slice(1, -1).concat(1).slice(0, 4).map(function (n) { return toFloat(n); });
   }
-  var dl = {
-    mixins: [go],
+
+  function getStep(steps, percent) {
+    var count = steps.length - 1;
+    var index$$1 = Math.min(Math.floor(count * percent), count - 1);
+    var step = steps.slice(index$$1, index$$1 + 2);
+
+    step.push(percent === 1 ? 1 : percent % (1 / count) * count);
+
+    return step;
+  }
+
+  function getValue(steps, percent, digits) {
+    if ( digits === void 0 ) digits = 2;
+
+    var ref = getStep(steps, percent);
+    var start = ref[0];
+    var end = ref[1];
+    var p = ref[2];
+    return (isNumber(start)
+        ? start + Math.abs(start - end) * p * (start < end ? 1 : -1)
+        : +end
+    ).toFixed(digits);
+  }
+
+  function covers(el) {
+    var ref = el.style;
+    var backgroundSize = ref.backgroundSize;
+    var covers = css(css(el, 'backgroundSize', ''), 'backgroundSize') === 'cover';
+    el.style.backgroundSize = backgroundSize;
+    return covers;
+  }
+
+  var Parallax$1 = {
+
+    mixins: [Parallax],
+
     props: {
       target: String,
       viewport: Number,
       easing: Number,
-      start: String,
-      end: String
     },
+
     data: {
-      target: !1,
+      target: false,
       viewport: 1,
       easing: 1,
-      start: 0,
-      end: 0
     },
-    computed: {
-      target: ({
-                 target: t
-               }, e) => ko(t && et(t, e) || e),
-      start({
-              start: t
-            }) {
-        return G(t, "height", this.target, !0)
-      },
-      end({
-            end: t,
-            viewport: e
-          }) {
-        return G(t || (e = (1 - e) * 100) && `${e}vh+${e}%`, "height", this.target, !0)
-      }
-    },
-    observe: [bs(), Ue({
-      target: ({
-                 target: t
-               }) => t
-    }), dt({
-      target: ({
-                 $el: t,
-                 target: e
-               }) => [t, e, Dt(e, !0)]
-    })],
-    update: {
-      read({
-             percent: t
-           }, e) {
-        if (e.has("scroll") || (t = !1), !q(this.$el)) return !1;
-        if (!this.matchMedia) return;
-        const i = t;
-        return t = yo($i(this.target, this.start, this.end), this.easing), {
-          percent: t,
-          style: i === t ? !1 : this.getCss(t)
-        }
-      },
-      write({
-              style: t
-            }) {
-        if (!this.matchMedia) {
-          this.reset();
-          return
-        }
-        t && h(this.$el, t)
-      },
-      events: ["scroll", "resize"]
-    }
-  };
 
-  function ko(t) {
-    return t ? "offsetTop" in t ? t : ko(O(t)) : document.documentElement
-  }
-  var So = {
-    props: {
-      parallax: Boolean,
-      parallaxTarget: Boolean,
-      parallaxStart: String,
-      parallaxEnd: String,
-      parallaxEasing: Number
-    },
-    data: {
-      parallax: !1,
-      parallaxTarget: !1,
-      parallaxStart: 0,
-      parallaxEnd: 0,
-      parallaxEasing: 0
-    },
-    observe: [dt({
-      target: ({
-                 $el: t,
-                 parallaxTarget: e
-               }) => [t, e],
-      filter: ({
-                 parallax: t
-               }) => t
-    }), Ue({
-      filter: ({
-                 parallax: t
-               }) => t
-    })],
     computed: {
-      parallaxTarget({
-                       parallaxTarget: t
-                     }, e) {
-        return t && et(t, e) || this.list
+
+      target: function(ref, $el) {
+        var target = ref.target;
+
+        return target && query(target, $el) || $el;
       }
+
     },
+
     update: {
-      read() {
-        if (!this.parallax) return !1;
-        const t = this.parallaxTarget;
-        if (!t) return !1;
-        const e = G(this.parallaxStart, "height", t, !0),
-          i = G(this.parallaxEnd, "height", t, !0),
-          s = yo($i(t, e, i), this.parallaxEasing);
+
+      read: function(ref, ref$1) {
+        var percent = ref.percent;
+        var active = ref.active;
+        var type = ref$1.type;
+
+
+        if (type !== 'scroll') {
+          percent = false;
+        }
+
+        if (!active) {
+          return;
+        }
+
+        var prev = percent;
+        percent = ease$1(scrolledOver(this.target) / (this.viewport || 1), this.easing);
+
         return {
-          parallax: this.getIndexAt(s)
+          percent: percent,
+          style: prev !== percent ? this.getCss(percent) : false
+        };
+      },
+
+      write: function(ref) {
+        var style = ref.style;
+        var active = ref.active;
+
+
+        if (!active) {
+          this.reset();
+          return;
         }
+
+        style && css(this.$el, style);
+
       },
-      write({
-              parallax: t
-            }) {
-        const [e, i] = t, s = this.getValidIndex(e + Math.ceil(i)), n = this.slides[e], o = this.slides[s], {
-          triggerShow: r,
-          triggerShown: a,
-          triggerHide: l,
-          triggerHidden: c
-        } = fl(this);
-        if (~this.prevIndex)
-          for (const d of new Set([this.index, this.prevIndex])) b([s, e], d) || (l(this.slides[d]), c(this.slides[d]));
-        const u = this.prevIndex !== e || this.index !== s;
-        this.dir = 1, this.prevIndex = e, this.index = s, n !== o && l(n), r(o), u && a(n), this._translate(n === o ? 1 : i, n, o)
-      },
-      events: ["scroll", "resize"]
-    },
-    methods: {
-      getIndexAt(t) {
-        const e = t * (this.length - 1);
-        return [Math.floor(e), e % 1]
-      }
+
+      events: ['scroll', 'load', 'resize']
     }
+
   };
 
-  function fl(t) {
-    const {
-      clsSlideActive: e,
-      clsEnter: i,
-      clsLeave: s
-    } = t;
+  function ease$1(percent, easing) {
+    return clamp(percent * (1 - (easing - easing * percent)));
+  }
+
+  var SliderReactive = {
+
+    update: {
+
+      write: function() {
+
+        if (this.stack.length || this.dragging) {
+          return;
+        }
+
+        var index$$1 = this.getValidIndex();
+        delete this.index;
+        removeClass(this.slides, this.clsActive, this.clsActivated);
+        this.show(index$$1);
+
+      },
+
+      events: ['load', 'resize']
+
+    }
+
+  };
+
+  function Transitioner$1 (prev, next, dir, ref) {
+    var center = ref.center;
+    var easing = ref.easing;
+    var list = ref.list;
+
+
+    var deferred = new Deferred();
+
+    var from = prev
+      ? getLeft(prev, list, center)
+      : getLeft(next, list, center) + bounds(next).width * dir;
+    var to = next
+      ? getLeft(next, list, center)
+      : from + bounds(prev).width * dir * (isRtl ? -1 : 1);
+
     return {
-      triggerShow: n,
-      triggerShown: o,
-      triggerHide: r,
-      triggerHidden: a
+
+      dir: dir,
+
+      show: function(duration, percent, linear) {
+        if ( percent === void 0 ) percent = 0;
+
+
+        var timing = linear ? 'linear' : easing;
+        duration -= Math.round(duration * clamp(percent, -1, 1));
+
+        this.translate(percent);
+
+        prev && this.updateTranslates();
+        percent = prev ? percent : clamp(percent, 0, 1);
+        triggerUpdate$1(this.getItemIn(), 'itemin', {percent: percent, duration: duration, timing: timing, dir: dir});
+        prev && triggerUpdate$1(this.getItemIn(true), 'itemout', {percent: 1 - percent, duration: duration, timing: timing, dir: dir});
+
+        Transition
+          .start(list, {transform: translate(-to * (isRtl ? -1 : 1), 'px')}, duration, timing)
+          .then(deferred.resolve, noop);
+
+        return deferred.promise;
+
+      },
+
+      stop: function() {
+        return Transition.stop(list);
+      },
+
+      cancel: function() {
+        Transition.cancel(list);
+      },
+
+      reset: function() {
+        css(list, 'transform', '');
+      },
+
+      forward: function(duration, percent) {
+        if ( percent === void 0 ) percent = this.percent();
+
+        Transition.cancel(list);
+        return this.show(duration, percent, true);
+      },
+
+      translate: function(percent) {
+
+        var distance = this.getDistance() * dir * (isRtl ? -1 : 1);
+
+        css(list, 'transform', translate(clamp(
+          -to + (distance - distance * percent),
+          -getWidth(list),
+          bounds(list).width
+        ) * (isRtl ? -1 : 1), 'px'));
+
+        this.updateTranslates();
+
+        if (prev) {
+          percent = clamp(percent, -1, 1);
+          triggerUpdate$1(this.getItemIn(), 'itemtranslatein', {percent: percent, dir: dir});
+          triggerUpdate$1(this.getItemIn(true), 'itemtranslateout', {percent: 1 - percent, dir: dir});
+        }
+
+      },
+
+      percent: function() {
+        return Math.abs((css(list, 'transform').split(',')[4] * (isRtl ? -1 : 1) + from) / (to - from));
+      },
+
+      getDistance: function() {
+        return Math.abs(to - from);
+      },
+
+      getItemIn: function(out) {
+        if ( out === void 0 ) out = false;
+
+
+        var actives = this.getActives();
+        var all = sortBy(slides(list), 'offsetLeft');
+        var i = index(all, actives[dir * (out ? -1 : 1) > 0 ? actives.length - 1 : 0]);
+
+        return ~i && all[i + (prev && !out ? dir : 0)];
+
+      },
+
+      getActives: function() {
+
+        var left = getLeft(prev || next, list, center);
+
+        return sortBy(slides(list).filter(function (slide) {
+          var slideLeft = getElLeft(slide, list);
+          return slideLeft >= left && slideLeft + bounds(slide).width <= bounds(list).width + left;
+        }), 'offsetLeft');
+
+      },
+
+      updateTranslates: function() {
+
+        var actives = this.getActives();
+
+        slides(list).forEach(function (slide) {
+          var isActive = includes(actives, slide);
+
+          triggerUpdate$1(slide, ("itemtranslate" + (isActive ? 'in' : 'out')), {
+            percent: isActive ? 1 : 0,
+            dir: slide.offsetLeft <= next.offsetLeft ? 1 : -1
+          });
+        });
+      }
+
     };
 
-    function n(l) {
-      $(l, s) && (r(l), a(l)), $(l, e) || (v(l, "beforeitemshow", [t]), v(l, "itemshow", [t]))
-    }
-
-    function o(l) {
-      $(l, i) && v(l, "itemshown", [t])
-    }
-
-    function r(l) {
-      $(l, e) || n(l), $(l, i) && o(l), $(l, s) || (v(l, "beforeitemhide", [t]), v(l, "itemhide", [t]))
-    }
-
-    function a(l) {
-      $(l, s) && v(l, "itemhidden", [t])
-    }
-  }
-  var Io = {
-      update: {
-        write() {
-          if (this.stack.length || this.dragging || this.parallax) return;
-          const t = this.getValidIndex();
-          !~this.prevIndex || this.index !== t ? this.show(t) : this._translate(1)
-        },
-        events: ["resize"]
-      }
-    },
-    Eo = {
-      observe: Si({
-        target: ({
-                   slides: t
-                 }) => t,
-        targets: t => t.getAdjacentSlides()
-      }),
-      methods: {
-        getAdjacentSlides() {
-          return [1, -1].map(t => this.slides[this.getIndex(this.index + t)])
-        }
-      }
-    };
-
-  function pl(t, e, i, {
-    center: s,
-    easing: n,
-    list: o
-  }) {
-    const r = t ? Qe(t, o, s) : Qe(e, o, s) + m(e).width * i,
-      a = e ? Qe(e, o, s) : r + m(t).width * i * (U ? -1 : 1),
-      {
-        promise: l,
-        resolve: c
-      } = qn();
-    return {
-      dir: i,
-      show(u, d = 0, f) {
-        const g = f ? "linear" : n;
-        return u -= Math.round(u * K(d, -1, 1)), h(o, "transitionProperty", "none"), this.translate(d), h(o, "transitionProperty", ""), d = t ? d : K(d, 0, 1), Jt(this.getItemIn(), "itemin", {
-          percent: d,
-          duration: u,
-          timing: g,
-          dir: i
-        }), t && Jt(this.getItemIn(!0), "itemout", {
-          percent: 1 - d,
-          duration: u,
-          timing: g,
-          dir: i
-        }), M.start(o, {
-          transform: j(-a * (U ? -1 : 1), "px")
-        }, u, g).then(c, A), l
-      },
-      cancel() {
-        return M.cancel(o)
-      },
-      reset() {
-        h(o, "transform", "")
-      },
-      async forward(u, d = this.percent()) {
-        return await this.cancel(), this.show(u, d, !0)
-      },
-      translate(u) {
-        if (u === this.percent()) return;
-        const d = this.getDistance() * i * (U ? -1 : 1);
-        h(o, "transform", j(K(-a + (d - d * u), -ke(o), m(o).width) * (U ? -1 : 1), "px"));
-        const f = this.getActives(),
-          g = this.getItemIn(),
-          w = this.getItemIn(!0);
-        u = t ? K(u, -1, 1) : 0;
-        for (const k of N(o)) {
-          const P = b(f, k),
-            it = k === g,
-            Tt = k === w,
-            Nt = it || !Tt && (P || i * (U ? -1 : 1) === -1 ^ Mi(k, o) > Mi(t || e));
-          Jt(k, `itemtranslate${Nt?"in":"out"}`, {
-            dir: i,
-            percent: Tt ? 1 - u : it ? u : P ? 1 : 0
-          })
-        }
-      },
-      percent() {
-        return Math.abs((new DOMMatrix(h(o, "transform")).m41 * (U ? -1 : 1) + r) / (a - r))
-      },
-      getDistance() {
-        return Math.abs(a - r)
-      },
-      getItemIn(u = !1) {
-        let d = this.getActives(),
-          f = Co(o, Qe(e || t, o, s));
-        if (u) {
-          const g = d;
-          d = f, f = g
-        }
-        return f[xt(f, g => !b(d, g))]
-      },
-      getActives() {
-        return Co(o, Qe(t || e, o, s))
-      }
-    }
   }
 
-  function Qe(t, e, i) {
-    const s = Mi(t, e);
-    return i ? s - gl(t, e) : Math.min(s, To(e))
+  function getLeft(el, list, center) {
+
+    var left = getElLeft(el, list);
+
+    return center
+      ? left - centerEl(el, list)
+      : Math.min(left, getMax(list));
+
   }
 
-  function To(t) {
-    return Math.max(0, ke(t) - m(t).width)
+  function getMax(list) {
+    return Math.max(0, getWidth(list) - bounds(list).width);
   }
 
-  function ke(t, e) {
-    return Wt(N(t).slice(0, e), i => m(i).width)
+  function getWidth(list) {
+    return slides(list).reduce(function (right, el) { return bounds(el).width + right; }, 0);
   }
 
-  function gl(t, e) {
-    return m(e).width / 2 - m(t).width / 2
+  function getMaxWidth(list) {
+    return slides(list).reduce(function (right, el) { return Math.max(right, bounds(el).width); }, 0);
   }
 
-  function Mi(t, e) {
-    return t && (is(t).left + (U ? m(t).width - m(e).width : 0)) * (U ? -1 : 1) || 0
+  function centerEl(el, list) {
+    return bounds(list).width / 2 - bounds(el).width / 2;
   }
 
-  function Co(t, e) {
-    e -= 1;
-    const i = m(t).width,
-      s = e + i + 2;
-    return N(t).filter(n => {
-      const o = Mi(n, t),
-        r = o + Math.min(m(n).width, i);
-      return o >= e && r <= s
-    })
+  function getElLeft(el, list) {
+    return (position(el).left + (isRtl ? bounds(el).width - bounds(list).width : 0)) * (isRtl ? -1 : 1);
   }
-  var ml = {
-    mixins: [st, no, Io, So, Eo],
+
+  function bounds(el) {
+    return el.getBoundingClientRect();
+  }
+
+  function triggerUpdate$1(el, type, data$$1) {
+    trigger(el, createEvent(type, false, false, data$$1));
+  }
+
+  function slides(list) {
+    return toNodes(list.children);
+  }
+
+  var Slider$1 = {
+
+    mixins: [Class, Slider, SliderReactive],
+
     props: {
       center: Boolean,
       sets: Boolean,
-      active: String
     },
+
     data: {
-      center: !1,
-      sets: !1,
-      attrItem: "uk-slider-item",
-      selList: ".uk-slider-items",
-      selNav: ".uk-slider-nav",
-      clsContainer: "uk-slider-container",
-      active: "all",
-      Transitioner: pl
+      center: false,
+      sets: false,
+      attrItem: 'uk-slider-item',
+      selList: '.uk-slider-items',
+      selNav: '.uk-slider-nav',
+      clsContainer: 'uk-slider-container',
+      Transitioner: Transitioner$1
     },
+
     computed: {
-      finite({
-               finite: t
-             }) {
-        return t || vl(this.list, this.center)
+
+      avgWidth: function() {
+        return getWidth(this.list) / this.length;
       },
-      maxIndex() {
-        if (!this.finite || this.center && !this.sets) return this.length - 1;
-        if (this.center) return Lt(this.sets);
-        let t = 0;
-        const e = To(this.list),
-          i = xt(this.slides, s => {
-            if (t >= e - .005) return !0;
-            t += m(s).width
-          });
-        return ~i ? i : this.length - 1
+
+      finite: function(ref) {
+        var finite = ref.finite;
+
+        return finite || getWidth(this.list) < bounds(this.list).width + getMaxWidth(this.list) + this.center;
       },
-      sets({
-             sets: t
-           }) {
-        if (!t || this.parallax) return;
-        let e = 0;
-        const i = [],
-          s = m(this.list).width;
-        for (let n = 0; n < this.length; n++) {
-          const o = m(this.slides[n]).width;
-          e + o > s && (e = 0), this.center ? e < s / 2 && e + o + m(this.slides[rt(n + 1, this.slides)]).width / 2 > s / 2 && (i.push(n), e = s / 2 - o / 2) : e === 0 && i.push(Math.min(n, this.maxIndex)), e += o
+
+      maxIndex: function() {
+
+        if (!this.finite || this.center && !this.sets) {
+          return this.length - 1;
         }
-        if (i.length) return i
+
+        if (this.center) {
+          return this.sets[this.sets.length - 1];
+        }
+
+        css(this.slides, 'order', '');
+
+        var max = getMax(this.list);
+        var i = this.length;
+
+        while (i--) {
+          if (getElLeft(this.list.children[i], this.list) < max) {
+            return Math.min(i + 1, this.length - 1);
+          }
+        }
+
+        return 0;
       },
-      transitionOptions() {
+
+      sets: function(ref) {
+        var this$1 = this;
+        var sets = ref.sets;
+
+
+        var width$$1 = bounds(this.list).width / (this.center ? 2 : 1);
+
+        var left = 0;
+        var leftCenter = width$$1;
+        var slideLeft = 0;
+
+        sets = sets && this.slides.reduce(function (sets, slide, i) {
+
+          var ref = bounds(slide);
+          var slideWidth = ref.width;
+          var slideRight = slideLeft + slideWidth;
+
+          if (slideRight > left) {
+
+            if (!this$1.center && i > this$1.maxIndex) {
+              i = this$1.maxIndex;
+            }
+
+            if (!includes(sets, i)) {
+
+              var cmp = this$1.slides[i + 1];
+              if (this$1.center && cmp && slideWidth < leftCenter - bounds(cmp).width / 2) {
+                leftCenter -= slideWidth;
+              } else {
+                leftCenter = width$$1;
+                sets.push(i);
+                left = slideLeft + width$$1 + (this$1.center ? slideWidth / 2 : 0);
+              }
+
+            }
+          }
+
+          slideLeft += slideWidth;
+
+          return sets;
+
+        }, []);
+
+        return sets && sets.length && sets;
+
+      },
+
+      transitionOptions: function() {
         return {
           center: this.center,
           list: this.list
-        }
-      },
-      slides() {
-        return N(this.list).filter(q)
-      }
-    },
-    connected() {
-      L(this.$el, this.clsContainer, !x(`.${this.clsContainer}`, this.$el))
-    },
-    observe: dt({
-      target: ({
-                 slides: t,
-                 $el: e
-               }) => [e, ...t]
-    }),
-    update: {
-      write() {
-        for (const t of this.navItems) {
-          const e = $t(Z(t, this.attrItem));
-          e !== !1 && (t.hidden = !this.maxIndex || e > this.maxIndex || this.sets && !b(this.sets, e))
-        }
-        this.reorder(), this.parallax || this._translate(1), this.updateActiveClasses()
-      },
-      events: ["resize"]
-    },
-    events: {
-      beforeitemshow(t) {
-        !this.dragging && this.sets && this.stack.length < 2 && !b(this.sets, this.index) && (this.index = this.getValidIndex());
-        const e = Math.abs(this.index - this.prevIndex + (this.dir > 0 && this.index < this.prevIndex || this.dir < 0 && this.index > this.prevIndex ? (this.maxIndex + 1) * this.dir : 0));
-        if (!this.dragging && e > 1) {
-          for (let n = 0; n < e; n++) this.stack.splice(1, 0, this.dir > 0 ? "next" : "previous");
-          t.preventDefault();
-          return
-        }
-        const i = this.dir < 0 || !this.slides[this.prevIndex] ? this.index : this.prevIndex,
-          s = ke(this.list) / this.length;
-        this.duration = oo(s / this.velocity) * (m(this.slides[i]).width / s), this.reorder()
-      },
-      itemshow() {
-        ~this.prevIndex && I(this._getTransitioner().getItemIn(), this.clsActive), this.updateActiveClasses(this.prevIndex)
-      },
-      itemshown() {
-        this.updateActiveClasses()
-      }
-    },
-    methods: {
-      reorder() {
-        if (this.finite) {
-          h(this.slides, "order", "");
-          return
-        }
-        const t = this.dir > 0 && this.slides[this.prevIndex] ? this.prevIndex : this.index;
-        if (this.slides.forEach((n, o) => h(n, "order", this.dir > 0 && o < t ? 1 : this.dir < 0 && o >= this.index ? -1 : "")), !this.center || !this.length) return;
-        const e = this.slides[t];
-        let i = m(this.list).width / 2 - m(e).width / 2,
-          s = 0;
-        for (; i > 0;) {
-          const n = this.getIndex(--s + t, t),
-            o = this.slides[n];
-          h(o, "order", n > t ? -2 : -1), i -= m(o).width
-        }
-      },
-      updateActiveClasses(t = this.index) {
-        let e = this._getTransitioner(t).getActives();
-        this.active !== "all" && (e = [this.slides[this.getValidIndex(t)]]);
-        const i = [this.clsActive, !this.sets || b(this.sets, S(this.index)) ? this.clsActivated : ""];
-        for (const s of this.slides) {
-          const n = b(e, s);
-          L(s, i, n), p(s, "aria-hidden", !n);
-          for (const o of D(ue, s)) gt(o, "_tabindex") || (o._tabindex = p(o, "tabindex")), p(o, "tabindex", n ? o._tabindex : -1)
-        }
-      },
-      getValidIndex(t = this.index, e = this.prevIndex) {
-        if (t = this.getIndex(t, e), !this.sets) return t;
-        let i;
-        do {
-          if (b(this.sets, t)) return t;
-          i = t, t = this.getIndex(t + this.dir, e)
-        } while (t !== i);
-        return t
-      },
-      getAdjacentSlides() {
-        const {
-          width: t
-        } = m(this.list), e = -t, i = t * 2, s = m(this.slides[this.index]).width, n = this.center ? t / 2 - s / 2 : 0, o = new Set;
-        for (const r of [-1, 1]) {
-          let a = n + (r > 0 ? s : 0),
-            l = 0;
-          do {
-            const c = this.slides[this.getIndex(this.index + r + l++ * r)];
-            a += m(c).width * r, o.add(c)
-          } while (this.length > l && a > e && a < i)
-        }
-        return Array.from(o)
-      },
-      getIndexAt(t) {
-        let e = -1;
-        const i = this.center ? ke(this.list) - (m(this.slides[0]).width / 2 + m(Lt(this.slides)).width / 2) : ke(this.list, this.maxIndex);
-        let s = t * i,
-          n = 0;
-        do {
-          const o = m(this.slides[++e]).width,
-            r = this.center ? o / 2 + m(this.slides[e + 1]).width / 2 : o;
-          n = s / r % 1, s -= r
-        } while (s >= 0 && e < this.maxIndex);
-        return [e, n]
-      }
-    }
-  };
-
-  function vl(t, e) {
-    if (!t || t.length < 2) return !0;
-    const {
-      width: i
-    } = m(t);
-    if (!e) return Math.ceil(ke(t)) < Math.trunc(i + bl(t));
-    const s = N(t),
-      n = Math.trunc(i / 2);
-    for (const o in s) {
-      const r = s[o],
-        a = m(r).width,
-        l = new Set([r]);
-      let c = 0;
-      for (const u of [-1, 1]) {
-        let d = a / 2,
-          f = 0;
-        for (; d < n;) {
-          const g = s[rt(+o + u + f++ * u, s)];
-          if (l.has(g)) return !0;
-          d += m(g).width, l.add(g)
-        }
-        c = Math.max(c, a / 2 + m(s[rt(+o + u, s)]).width / 2 - (d - n))
-      }
-      if (Math.trunc(c) > Wt(s.filter(u => !l.has(u)), u => m(u).width)) return !0
-    }
-    return !1
-  }
-
-  function bl(t) {
-    return Math.max(0, ...N(t).map(e => m(e).width))
-  }
-  var Po = {
-    mixins: [go],
-    beforeConnect() {
-      this.item = this.$el.closest(`.${this.$options.id.replace("parallax","items")} > *`)
-    },
-    disconnected() {
-      this.item = null
-    },
-    events: [{
-      name: "itemin itemout",
-      self: !0,
-      el: ({
-             item: t
-           }) => t,
-      handler({
-                type: t,
-                detail: {
-                  percent: e,
-                  duration: i,
-                  timing: s,
-                  dir: n
-                }
-              }) {
-        Mt.read(() => {
-          if (!this.matchMedia) return;
-          const o = this.getCss(Ao(t, n, e)),
-            r = this.getCss(_o(t) ? .5 : n > 0 ? 1 : 0);
-          Mt.write(() => {
-            h(this.$el, o), M.start(this.$el, r, i, s).catch(A)
-          })
-        })
-      }
-    }, {
-      name: "transitioncanceled transitionend",
-      self: !0,
-      el: ({
-             item: t
-           }) => t,
-      handler() {
-        M.cancel(this.$el)
-      }
-    }, {
-      name: "itemtranslatein itemtranslateout",
-      self: !0,
-      el: ({
-             item: t
-           }) => t,
-      handler({
-                type: t,
-                detail: {
-                  percent: e,
-                  dir: i
-                }
-              }) {
-        Mt.read(() => {
-          if (!this.matchMedia) {
-            this.reset();
-            return
-          }
-          const s = this.getCss(Ao(t, i, e));
-          Mt.write(() => h(this.$el, s))
-        })
-      }
-    }]
-  };
-
-  function _o(t) {
-    return se(t, "in")
-  }
-
-  function Ao(t, e, i) {
-    return i /= 2, _o(t) ^ e < 0 ? i : 1 - i
-  }
-  var wl = {
-      mixins: [st, ro, Io, So, Eo],
-      props: {
-        ratio: String,
-        minHeight: String,
-        maxHeight: String
-      },
-      data: {
-        ratio: "16:9",
-        minHeight: void 0,
-        maxHeight: void 0,
-        selList: ".uk-slideshow-items",
-        attrItem: "uk-slideshow-item",
-        selNav: ".uk-slideshow-nav",
-        Animations: Ka
-      },
-      watch: {
-        list(t) {
-          h(t, {
-            aspectRatio: this.ratio ? this.ratio.replace(":", "/") : void 0,
-            minHeight: this.minHeight,
-            maxHeight: this.maxHeight,
-            width: "100%"
-          })
-        }
-      },
-      methods: {
-        getAdjacentSlides() {
-          return [1, -1].map(t => this.slides[this.getIndex(this.index + t)])
-        }
-      }
-    },
-    xl = {
-      mixins: [st, Nn],
-      props: {
-        group: String,
-        threshold: Number,
-        clsItem: String,
-        clsPlaceholder: String,
-        clsDrag: String,
-        clsDragState: String,
-        clsBase: String,
-        clsNoDrag: String,
-        clsEmpty: String,
-        clsCustom: String,
-        handle: String
-      },
-      data: {
-        group: !1,
-        threshold: 5,
-        clsItem: "uk-sortable-item",
-        clsPlaceholder: "uk-sortable-placeholder",
-        clsDrag: "uk-sortable-drag",
-        clsDragState: "uk-drag",
-        clsBase: "uk-sortable",
-        clsNoDrag: "uk-sortable-nodrag",
-        clsEmpty: "uk-sortable-empty",
-        clsCustom: "",
-        handle: !1,
-        pos: {}
-      },
-      events: {
-        name: ut,
-        passive: !1,
-        handler(t) {
-          this.init(t)
-        }
-      },
-      computed: {
-        target: (t, e) => (e.tBodies || [e])[0],
-        items() {
-          return N(this.target)
-        },
-        isEmpty() {
-          return !this.items.length
-        },
-        handles({
-                  handle: t
-                }, e) {
-          return t ? D(t, e) : this.items
-        }
-      },
-      watch: {
-        isEmpty(t) {
-          L(this.target, this.clsEmpty, t)
-        },
-        handles(t, e) {
-          const i = {
-            touchAction: "none",
-            userSelect: "none"
-          };
-          St(e, i), h(t, i)
-        }
-      },
-      update: {
-        write(t) {
-          if (!this.drag || !O(this.placeholder)) return;
-          const {
-            pos: {
-              x: e,
-              y: i
-            },
-            origin: {
-              offsetTop: s,
-              offsetLeft: n
-            },
-            placeholder: o
-          } = this;
-          h(this.drag, {
-            top: i - s,
-            left: e - n
-          });
-          const r = this.getSortable(document.elementFromPoint(e, i));
-          if (!r) return;
-          const {
-            items: a
-          } = r;
-          if (a.some(M.inProgress)) return;
-          const l = Sl(a, {
-            x: e,
-            y: i
-          });
-          if (a.length && (!l || l === o)) return;
-          const c = this.getSortable(o),
-            u = Il(r.target, l, o, e, i, r === c && t.moved !== l);
-          u !== !1 && (u && o === u || (r !== c ? (c.remove(o), t.moved = l) : delete t.moved, r.insert(o, u), this.touched.add(r)))
-        },
-        events: ["move"]
-      },
-      methods: {
-        init(t) {
-          const {
-            target: e,
-            button: i,
-            defaultPrevented: s
-          } = t, [n] = this.items.filter(o => o.contains(e));
-          !n || s || i > 0 || hi(e) || e.closest(`.${this.clsNoDrag}`) || this.handle && !e.closest(this.handle) || (t.preventDefault(), this.pos = kt(t), this.touched = new Set([this]), this.placeholder = n, this.origin = {
-            target: e,
-            index: yt(n),
-            ...this.pos
-          }, y(document, ai, this.move), y(document, _t, this.end), this.threshold || this.start(t))
-        },
-        start(t) {
-          this.drag = kl(this.$container, this.placeholder);
-          const {
-            left: e,
-            top: i
-          } = m(this.placeholder);
-          ft(this.origin, {
-            offsetLeft: this.pos.x - e,
-            offsetTop: this.pos.y - i
-          }), I(this.drag, this.clsDrag, this.clsCustom), I(this.placeholder, this.clsPlaceholder), I(this.items, this.clsItem), I(document.documentElement, this.clsDragState), v(this.$el, "start", [this, this.placeholder]), $l(this.pos), this.move(t)
-        },
-        move: Tl(function (t) {
-          ft(this.pos, kt(t)), !this.drag && (Math.abs(this.pos.x - this.origin.x) > this.threshold || Math.abs(this.pos.y - this.origin.y) > this.threshold) && this.start(t), this.$emit("move")
-        }),
-        end() {
-          if (Ut(document, ai, this.move), Ut(document, _t, this.end), !this.drag) return;
-          yl();
-          const t = this.getSortable(this.placeholder);
-          this === t ? this.origin.index !== yt(this.placeholder) && v(this.$el, "moved", [this, this.placeholder]) : (v(t.$el, "added", [t, this.placeholder]), v(this.$el, "removed", [this, this.placeholder])), v(this.$el, "stop", [this, this.placeholder]), Q(this.drag), this.drag = null;
-          for (const {
-            clsPlaceholder: e,
-            clsItem: i
-          } of this.touched)
-            for (const s of this.touched) _(s.items, e, i);
-          this.touched = null, _(document.documentElement, this.clsDragState)
-        },
-        insert(t, e) {
-          I(this.items, this.clsItem), e && e.previousElementSibling !== t ? this.animate(() => fi(e, t)) : !e && this.target.lastElementChild !== t && this.animate(() => W(this.target, t))
-        },
-        remove(t) {
-          this.target.contains(t) && this.animate(() => Q(t))
-        },
-        getSortable(t) {
-          do {
-            const e = this.$getComponent(t, "sortable");
-            if (e && (e === this || this.group !== !1 && e.group === this.group)) return e
-          } while (t = O(t))
-        }
-      }
-    };
-  let Oo;
-
-  function $l(t) {
-    let e = Date.now();
-    Oo = setInterval(() => {
-      let {
-        x: i,
-        y: s
-      } = t;
-      s += document.scrollingElement.scrollTop;
-      const n = (Date.now() - e) * .3;
-      e = Date.now(), Yt(document.elementFromPoint(i, t.y)).reverse().some(o => {
-        let {
-          scrollTop: r,
-          scrollHeight: a
-        } = o;
-        const {
-          top: l,
-          bottom: c,
-          height: u
-        } = at(o);
-        if (l < s && l + 35 > s) r -= n;
-        else if (c > s && c - 35 < s) r += n;
-        else return;
-        if (r > 0 && r < a - u) return o.scrollTop = r, !0
-      })
-    }, 15)
-  }
-
-  function yl() {
-    clearInterval(Oo)
-  }
-
-  function kl(t, e) {
-    let i;
-    if (F(e, "li", "tr")) {
-      i = x("<div>"), W(i, e.cloneNode(!0).children);
-      for (const s of e.getAttributeNames()) p(i, s, e.getAttribute(s))
-    } else i = e.cloneNode(!0);
-    return W(t, i), h(i, "margin", "0", "important"), h(i, {
-      boxSizing: "border-box",
-      width: e.offsetWidth,
-      height: e.offsetHeight,
-      padding: h(e, "padding")
-    }), tt(i.firstElementChild, tt(e.firstElementChild)), i
-  }
-
-  function Sl(t, e) {
-    return t[xt(t, i => oi(e, m(i)))]
-  }
-
-  function Il(t, e, i, s, n, o) {
-    if (!N(t).length) return;
-    const r = m(e);
-    if (!o) return El(t, i) || n < r.top + r.height / 2 ? e : e.nextElementSibling;
-    const a = m(i),
-      l = Mo([r.top, r.bottom], [a.top, a.bottom]),
-      [c, u, d, f] = l ? [s, "width", "left", "right"] : [n, "height", "top", "bottom"],
-      g = a[u] < r[u] ? r[u] - a[u] : 0;
-    return a[d] < r[d] ? g && c < r[d] + g ? !1 : e.nextElementSibling : g && c > r[f] - g ? !1 : e
-  }
-
-  function El(t, e) {
-    const i = N(t).length === 1;
-    i && W(t, e);
-    const s = N(t),
-      n = s.some((o, r) => {
-        const a = m(o);
-        return s.slice(r + 1).some(l => {
-          const c = m(l);
-          return !Mo([a.left, a.right], [c.left, c.right])
-        })
-      });
-    return i && Q(e), n
-  }
-
-  function Mo(t, e) {
-    return t[1] > e[0] && e[1] > t[0]
-  }
-
-  function Tl(t) {
-    let e;
-    return function (...i) {
-      e || (e = !0, t.call(this, ...i), requestAnimationFrame(() => e = !1))
-    }
-  }
-  var Cl = {
-    mixins: [Ye, Xt, jn],
-    data: {
-      pos: "top",
-      animation: ["uk-animation-scale-up"],
-      duration: 100,
-      cls: "uk-active"
-    },
-    connected() {
-      Pl(this.$el)
-    },
-    disconnected() {
-      this.hide()
-    },
-    methods: {
-      show() {
-        if (this.isToggled(this.tooltip || null)) return;
-        const {
-          delay: t = 0,
-          title: e
-        } = Al(this.$options);
-        if (!e) return;
-        const i = p(this.$el, "title"),
-          s = y(this.$el, ["blur", ce], o => !pt(o) && this.hide());
-        this.reset = () => {
-          p(this.$el, {
-            title: i,
-            "aria-describedby": null
-          }), s()
         };
-        const n = Zt(this);
-        p(this.$el, {
-          title: null,
-          "aria-describedby": n
-        }), clearTimeout(this.showTimer), this.showTimer = setTimeout(() => this._show(e, n), t)
-      },
-      async hide() {
-        var t;
-        C(this.$el, "input:focus") || (clearTimeout(this.showTimer), this.isToggled(this.tooltip || null) && await this.toggleElement(this.tooltip, !1, !1), (t = this.reset) == null || t.call(this), Q(this.tooltip), this.tooltip = null)
-      },
-      async _show(t, e) {
-        this.tooltip = W(this.container, `<div id="${e}" class="uk-${this.$options.name}" role="tooltip"> <div class="uk-${this.$options.name}-inner">${t}</div> </div>`), y(this.tooltip, "toggled", (i, s) => {
-          if (!s) return;
-          const n = () => this.positionAt(this.tooltip, this.$el);
-          n();
-          const [o, r] = _l(this.tooltip, this.$el, this.pos);
-          this.origin = this.axis === "y" ? `${vi(o)}-${r}` : `${r}-${vi(o)}`;
-          const a = [z(document, `keydown ${ut}`, this.hide, !1, l => l.type === ut && !this.$el.contains(l.target) || l.type === "keydown" && l.keyCode === B.ESC), y([document, ...Gt(this.$el)], "scroll", n, {
-            passive: !0
-          })];
-          z(this.tooltip, "hide", () => a.forEach(l => l()), {
-            self: !0
-          })
-        }), await this.toggleElement(this.tooltip, !0) || this.hide()
       }
+
     },
+
+    connected: function() {
+      toggleClass(this.$el, this.clsContainer, !$(("." + (this.clsContainer)), this.$el));
+    },
+
+    update: {
+
+      write: function() {
+        var this$1 = this;
+
+
+        $$(("[" + (this.attrItem) + "],[data-" + (this.attrItem) + "]"), this.$el).forEach(function (el) {
+          var index$$1 = data(el, this$1.attrItem);
+          this$1.maxIndex && toggleClass(el, 'uk-hidden', isNumeric(index$$1) && (this$1.sets && !includes(this$1.sets, toFloat(index$$1)) || index$$1 > this$1.maxIndex));
+        });
+
+      },
+
+      events: ['load', 'resize']
+
+    },
+
     events: {
-      [`focus ${qt} ${ut}`](t) {
-        (!pt(t) || t.type === ut) && document.readyState !== "loading" && this.show()
+
+      beforeitemshow: function(e) {
+
+        if (!this.dragging && this.sets && this.stack.length < 2 && !includes(this.sets, this.index)) {
+          this.index = this.getValidIndex();
+        }
+
+        var diff = Math.abs(
+          this.index
+          - this.prevIndex
+          + (this.dir > 0 && this.index < this.prevIndex || this.dir < 0 && this.index > this.prevIndex ? (this.maxIndex + 1) * this.dir : 0)
+        );
+
+        if (!this.dragging && diff > 1) {
+
+          for (var i = 0; i < diff; i++) {
+            this.stack.splice(1, 0, this.dir > 0 ? 'next' : 'previous');
+          }
+
+          e.preventDefault();
+          return;
+        }
+
+        this.duration = speedUp(this.avgWidth / this.velocity)
+          * (bounds(
+            this.dir < 0 || !this.slides[this.prevIndex]
+              ? this.slides[this.index]
+              : this.slides[this.prevIndex]
+          ).width / this.avgWidth);
+
+        this.reorder();
+
+      },
+
+      itemshow: function() {
+        !isUndefined(this.prevIndex) && addClass(this._getTransitioner().getItemIn(), this.clsActive);
+      },
+
+      itemshown: function() {
+        var this$1 = this;
+
+        var actives = this._getTransitioner(this.index).getActives();
+        this.slides.forEach(function (slide) { return toggleClass(slide, this$1.clsActive, includes(actives, slide)); });
+        (!this.sets || includes(this.sets, toFloat(this.index))) && this.slides.forEach(function (slide) { return toggleClass(slide, this$1.clsActivated, includes(actives, slide)); });
       }
+
+    },
+
+    methods: {
+
+      reorder: function() {
+        var this$1 = this;
+
+
+        css(this.slides, 'order', '');
+
+        if (this.finite) {
+          return;
+        }
+
+        var index$$1 = this.dir > 0 && this.slides[this.prevIndex] ? this.prevIndex : this.index;
+
+        this.slides.forEach(function (slide, i) { return css(slide, 'order', this$1.dir > 0 && i < index$$1
+            ? 1
+            : this$1.dir < 0 && i >= this$1.index
+              ? -1
+              : ''
+          ); }
+        );
+
+        if (!this.center) {
+          return;
+        }
+
+        var next = this.slides[index$$1];
+        var width$$1 = bounds(this.list).width / 2 - bounds(next).width / 2;
+        var j = 0;
+
+        while (width$$1 > 0) {
+          var slideIndex = this.getIndex(--j + index$$1, index$$1);
+          var slide = this.slides[slideIndex];
+
+          css(slide, 'order', slideIndex > index$$1 ? -2 : -1);
+          width$$1 -= bounds(slide).width;
+        }
+
+      },
+
+      getValidIndex: function(index$$1, prevIndex) {
+        if ( index$$1 === void 0 ) index$$1 = this.index;
+        if ( prevIndex === void 0 ) prevIndex = this.prevIndex;
+
+
+        index$$1 = this.getIndex(index$$1, prevIndex);
+
+        if (!this.sets) {
+          return index$$1;
+        }
+
+        var prev;
+
+        do {
+
+          if (includes(this.sets, index$$1)) {
+            return index$$1;
+          }
+
+          prev = index$$1;
+          index$$1 = this.getIndex(index$$1 + this.dir, prevIndex);
+
+        } while (index$$1 !== prev);
+
+        return index$$1;
+      }
+
     }
+
   };
 
-  function Pl(t) {
-    ci(t) || p(t, "tabindex", "0")
-  }
+  var SliderParallax = {
 
-  function _l(t, e, [i, s]) {
-    const n = T(t),
-      o = T(e),
-      r = [
-        ["left", "right"],
-        ["top", "bottom"]
-      ];
-    for (const l of r) {
-      if (n[l[0]] >= o[l[1]]) {
-        i = l[1];
-        break
-      }
-      if (n[l[1]] <= o[l[0]]) {
-        i = l[0];
-        break
-      }
-    }
-    return s = (b(r[0], i) ? r[1] : r[0]).find(l => n[l] === o[l]) || "center", [i, s]
-  }
+    mixins: [Parallax],
 
-  function Al(t) {
-    const {
-      el: e,
-      id: i,
-      data: s
-    } = t;
-    return ["delay", "title"].reduce((n, o) => ({
-      [o]: Z(e, o),
-      ...n
-    }), {
-      ...ve(Z(e, i), ["title"]),
-      ...s
-    })
-  }
-  var Ol = {
-    mixins: [Ii],
-    i18n: {
-      invalidMime: "Invalid File Type: %s",
-      invalidName: "Invalid File Name: %s",
-      invalidSize: "Invalid File Size: %s Kilobytes Max"
+    data: {
+      selItem: '!li'
     },
+
+    computed: {
+
+      item: function(ref, $el) {
+        var selItem = ref.selItem;
+
+        return query(selItem, $el);
+      }
+
+    },
+
+    events: [
+
+      {
+
+        name: 'itemshown',
+
+        self: true,
+
+        el: function() {
+          return this.item;
+        },
+
+        handler: function() {
+          css(this.$el, this.getCss(.5));
+        }
+
+      },
+
+      {
+        name: 'itemin itemout',
+
+        self: true,
+
+        el: function() {
+          return this.item;
+        },
+
+        handler: function(ref) {
+          var type = ref.type;
+          var ref_detail = ref.detail;
+          var percent = ref_detail.percent;
+          var duration = ref_detail.duration;
+          var timing = ref_detail.timing;
+          var dir = ref_detail.dir;
+
+
+          Transition.cancel(this.$el);
+          css(this.$el, this.getCss(getCurrent(type, dir, percent)));
+
+          Transition.start(this.$el, this.getCss(isIn(type)
+            ? .5
+            : dir > 0
+              ? 1
+              : 0
+          ), duration, timing).catch(noop);
+
+        }
+      },
+
+      {
+        name: 'transitioncanceled transitionend',
+
+        self: true,
+
+        el: function() {
+          return this.item;
+        },
+
+        handler: function() {
+          Transition.cancel(this.$el);
+        }
+
+      },
+
+      {
+        name: 'itemtranslatein itemtranslateout',
+
+        self: true,
+
+        el: function() {
+          return this.item;
+        },
+
+        handler: function(ref) {
+          var type = ref.type;
+          var ref_detail = ref.detail;
+          var percent = ref_detail.percent;
+          var dir = ref_detail.dir;
+
+          Transition.cancel(this.$el);
+          css(this.$el, this.getCss(getCurrent(type, dir, percent)));
+        }
+      }
+
+    ]
+
+  };
+
+  function isIn(type) {
+    return endsWith(type, 'in');
+  }
+
+  function getCurrent(type, dir, percent) {
+
+    percent /= 2;
+
+    return !isIn(type)
+      ? dir < 0
+        ? percent
+        : 1 - percent
+      : dir < 0
+        ? 1 - percent
+        : percent;
+  }
+
+  var Animations$2 = assign({}, Animations, {
+
+    fade: {
+
+      show: function() {
+        return [
+          {opacity: 0, zIndex: 0},
+          {zIndex: -1}
+        ];
+      },
+
+      percent: function(current) {
+        return 1 - css(current, 'opacity');
+      },
+
+      translate: function(percent) {
+        return [
+          {opacity: 1 - percent, zIndex: 0},
+          {zIndex: -1}
+        ];
+      }
+
+    },
+
+    scale: {
+
+      show: function() {
+        return [
+          {opacity: 0, transform: scale3d(1 + .5), zIndex: 0},
+          {zIndex: -1}
+        ];
+      },
+
+      percent: function(current) {
+        return 1 - css(current, 'opacity');
+      },
+
+      translate: function(percent) {
+        return [
+          {opacity: 1 - percent, transform: scale3d(1 + .5 * percent), zIndex: 0},
+          {zIndex: -1}
+        ];
+      }
+
+    },
+
+    pull: {
+
+      show: function(dir) {
+        return dir < 0
+          ? [
+            {transform: translate(30), zIndex: -1},
+            {transform: translate(), zIndex: 0} ]
+          : [
+            {transform: translate(-100), zIndex: 0},
+            {transform: translate(), zIndex: -1}
+          ];
+      },
+
+      percent: function(current, next, dir) {
+        return dir < 0
+          ? 1 - translated(next)
+          : translated(current);
+      },
+
+      translate: function(percent, dir) {
+        return dir < 0
+          ? [
+            {transform: translate(30 * percent), zIndex: -1},
+            {transform: translate(-100 * (1 - percent)), zIndex: 0} ]
+          : [
+            {transform: translate(-percent * 100), zIndex: 0},
+            {transform: translate(30 * (1 - percent)), zIndex: -1}
+          ];
+      }
+
+    },
+
+    push: {
+
+      show: function(dir) {
+        return dir < 0
+          ? [
+            {transform: translate(100), zIndex: 0},
+            {transform: translate(), zIndex: -1} ]
+          : [
+            {transform: translate(-30), zIndex: -1},
+            {transform: translate(), zIndex: 0}
+          ];
+      },
+
+      percent: function(current, next, dir) {
+        return dir > 0
+          ? 1 - translated(next)
+          : translated(current);
+      },
+
+      translate: function(percent, dir) {
+        return dir < 0
+          ? [
+            {transform: translate(percent * 100), zIndex: 0},
+            {transform: translate(-30 * (1 - percent)), zIndex: -1} ]
+          : [
+            {transform: translate(-30 * percent), zIndex: -1},
+            {transform: translate(100 * (1 - percent)), zIndex: 0}
+          ];
+      }
+
+    }
+
+  });
+
+  var Slideshow$1 = {
+
+    mixins: [Class, Slideshow, SliderReactive],
+
+    props: {
+      ratio: String,
+      minHeight: Boolean,
+      maxHeight: Boolean,
+    },
+
+    data: {
+      ratio: '16:9',
+      minHeight: false,
+      maxHeight: false,
+      selList: '.uk-slideshow-items',
+      attrItem: 'uk-slideshow-item',
+      selNav: '.uk-slideshow-nav',
+      Animations: Animations$2
+    },
+
+    update: {
+
+      read: function() {
+
+        var ref = this.ratio.split(':').map(Number);
+        var width$$1 = ref[0];
+        var height$$1 = ref[1];
+
+        height$$1 = height$$1 * this.list.offsetWidth / width$$1;
+
+        if (this.minHeight) {
+          height$$1 = Math.max(this.minHeight, height$$1);
+        }
+
+        if (this.maxHeight) {
+          height$$1 = Math.min(this.maxHeight, height$$1);
+        }
+
+        return {height: height$$1 - boxModelAdjust(this.list, 'content-box')};
+      },
+
+      write: function(ref) {
+        var height$$1 = ref.height;
+
+        css(this.list, 'minHeight', height$$1);
+      },
+
+      events: ['load', 'resize']
+
+    }
+
+  };
+
+  var Sortable = {
+
+    mixins: [Class, Animate],
+
+    props: {
+      group: String,
+      threshold: Number,
+      clsItem: String,
+      clsPlaceholder: String,
+      clsDrag: String,
+      clsDragState: String,
+      clsBase: String,
+      clsNoDrag: String,
+      clsEmpty: String,
+      clsCustom: String,
+      handle: String
+    },
+
+    data: {
+      group: false,
+      threshold: 5,
+      clsItem: 'uk-sortable-item',
+      clsPlaceholder: 'uk-sortable-placeholder',
+      clsDrag: 'uk-sortable-drag',
+      clsDragState: 'uk-drag',
+      clsBase: 'uk-sortable',
+      clsNoDrag: 'uk-sortable-nodrag',
+      clsEmpty: 'uk-sortable-empty',
+      clsCustom: '',
+      handle: false
+    },
+
+    created: function() {
+      var this$1 = this;
+
+      ['init', 'start', 'move', 'end'].forEach(function (key) {
+        var fn = this$1[key];
+        this$1[key] = function (e) {
+          this$1.scrollY = window.pageYOffset;
+          var ref = getPos$1(e, 'page');
+          var x = ref.x;
+          var y = ref.y;
+          this$1.pos = {x: x, y: y};
+
+          fn(e);
+        };
+      });
+    },
+
+    events: {
+
+      name: pointerDown,
+      passive: false,
+      handler: 'init'
+
+    },
+
+    update: {
+
+      write: function() {
+
+        if (this.clsEmpty) {
+          toggleClass(this.$el, this.clsEmpty, !this.$el.children.length);
+        }
+
+        css(this.handle ? $$(this.handle, this.$el) : this.$el.children, 'touchAction', 'none');
+
+        if (!this.drag) {
+          return;
+        }
+
+        offset(this.drag, {top: this.pos.y + this.origin.top, left: this.pos.x + this.origin.left});
+
+        var ref = offset(this.drag);
+        var top = ref.top;
+        var offsetHeight = ref.height;
+        var bottom = top + offsetHeight;
+        var scroll;
+
+        if (top > 0 && top < this.scrollY) {
+          scroll = this.scrollY - 5;
+        } else if (bottom < height(document) && bottom > height(window) + this.scrollY) {
+          scroll = this.scrollY + 5;
+        }
+
+        scroll && setTimeout(function () { return scrollTop(window, scroll); }, 5);
+      }
+
+    },
+
+    methods: {
+
+      init: function(e) {
+
+        var target = e.target;
+        var button = e.button;
+        var defaultPrevented = e.defaultPrevented;
+        var ref = toNodes(this.$el.children).filter(function (el) { return within(target, el); });
+        var placeholder = ref[0];
+
+        if (!placeholder
+          || isInput(target)
+          || this.handle && !within(target, this.handle)
+          || button > 0
+          || within(target, ("." + (this.clsNoDrag)))
+          || defaultPrevented
+        ) {
+          return;
+        }
+
+        e.preventDefault();
+
+        this.touched = [this];
+        this.placeholder = placeholder;
+        this.origin = assign({target: target, index: index(placeholder)}, this.pos);
+
+        on(document, pointerMove, this.move);
+        on(document, pointerUp, this.end);
+        on(window, 'scroll', this.scroll);
+
+        if (!this.threshold) {
+          this.start(e);
+        }
+
+      },
+
+      start: function(e) {
+
+        this.drag = append(this.$container, this.placeholder.outerHTML.replace(/^<li/i, '<div').replace(/li>$/i, 'div>'));
+
+        css(this.drag, assign({
+          boxSizing: 'border-box',
+          width: this.placeholder.offsetWidth,
+          height: this.placeholder.offsetHeight
+        }, css(this.placeholder, ['paddingLeft', 'paddingRight', 'paddingTop', 'paddingBottom'])));
+        attr(this.drag, 'uk-no-boot', '');
+        addClass(this.drag, this.clsDrag, this.clsCustom);
+
+        height(this.drag.firstElementChild, height(this.placeholder.firstElementChild));
+
+        var ref = offset(this.placeholder);
+        var left = ref.left;
+        var top = ref.top;
+        assign(this.origin, {left: left - this.pos.x, top: top - this.pos.y});
+
+        addClass(this.placeholder, this.clsPlaceholder);
+        addClass(this.$el.children, this.clsItem);
+        addClass(document.documentElement, this.clsDragState);
+
+        trigger(this.$el, 'start', [this, this.placeholder]);
+
+        this.move(e);
+      },
+
+      move: function(e) {
+
+        if (!this.drag) {
+
+          if (Math.abs(this.pos.x - this.origin.x) > this.threshold || Math.abs(this.pos.y - this.origin.y) > this.threshold) {
+            this.start(e);
+          }
+
+          return;
+        }
+
+        this.$emit();
+
+        var target = e.type === 'mousemove' ? e.target : document.elementFromPoint(this.pos.x - window.pageXOffset, this.pos.y - window.pageYOffset);
+
+        var sortable = this.getSortable(target);
+        var previous = this.getSortable(this.placeholder);
+        var move = sortable !== previous;
+
+        if (!sortable || within(target, this.placeholder) || move && (!sortable.group || sortable.group !== previous.group)) {
+          return;
+        }
+
+        target = sortable.$el === target.parentNode && target || toNodes(sortable.$el.children).filter(function (element) { return within(target, element); })[0];
+
+        if (move) {
+          previous.remove(this.placeholder);
+        } else if (!target) {
+          return;
+        }
+
+        sortable.insert(this.placeholder, target);
+
+        if (!includes(this.touched, sortable)) {
+          this.touched.push(sortable);
+        }
+
+      },
+
+      end: function(e) {
+
+        off(document, pointerMove, this.move);
+        off(document, pointerUp, this.end);
+        off(window, 'scroll', this.scroll);
+
+        if (!this.drag) {
+          if (e.type === 'touchend') {
+            e.target.click();
+          }
+
+          return;
+        }
+
+        preventClick();
+
+        var sortable = this.getSortable(this.placeholder);
+
+        if (this === sortable) {
+          if (this.origin.index !== index(this.placeholder)) {
+            trigger(this.$el, 'moved', [this, this.placeholder]);
+          }
+        } else {
+          trigger(sortable.$el, 'added', [sortable, this.placeholder]);
+          trigger(this.$el, 'removed', [this, this.placeholder]);
+        }
+
+        trigger(this.$el, 'stop', [this, this.placeholder]);
+
+        remove(this.drag);
+        this.drag = null;
+
+        var classes = this.touched.map(function (sortable) { return ((sortable.clsPlaceholder) + " " + (sortable.clsItem)); }).join(' ');
+        this.touched.forEach(function (sortable) { return removeClass(sortable.$el.children, classes); });
+
+        removeClass(document.documentElement, this.clsDragState);
+
+      },
+
+      scroll: function() {
+        var scroll = window.pageYOffset;
+        if (scroll !== this.scrollY) {
+          this.pos.y += scroll - this.scrollY;
+          this.scrollY = scroll;
+          this.$emit();
+        }
+      },
+
+      insert: function(element, target) {
+        var this$1 = this;
+
+
+        addClass(this.$el.children, this.clsItem);
+
+        var insert = function () {
+
+          if (target) {
+
+            if (!within(element, this$1.$el) || isPredecessor(element, target)) {
+              before(target, element);
+            } else {
+              after(target, element);
+            }
+
+          } else {
+            append(this$1.$el, element);
+          }
+
+        };
+
+        if (this.animation) {
+          this.animate(insert);
+        } else {
+          insert();
+        }
+
+      },
+
+      remove: function(element) {
+
+        if (!within(element, this.$el)) {
+          return;
+        }
+
+        if (this.animation) {
+          this.animate(function () { return remove(element); });
+        } else {
+          remove(element);
+        }
+
+      },
+
+      getSortable: function(element) {
+        return element && (this.$getComponent(element, 'sortable') || this.getSortable(element.parentNode));
+      }
+
+    }
+
+  };
+
+  function isPredecessor(element, target) {
+    return element.parentNode === target.parentNode && index(element) > index(target);
+  }
+
+  var obj$1;
+
+  var actives = [];
+
+  var Tooltip = {
+
+    mixins: [Container, Togglable, Position],
+
+    args: 'title',
+
+    props: {
+      delay: Number,
+      title: String
+    },
+
+    data: {
+      pos: 'top',
+      title: '',
+      delay: 0,
+      animation: ['uk-animation-scale-up'],
+      duration: 100,
+      cls: 'uk-active',
+      clsPos: 'uk-tooltip'
+    },
+
+    beforeConnect: function() {
+      this._hasTitle = hasAttr(this.$el, 'title');
+      attr(this.$el, {title: '', 'aria-expanded': false});
+    },
+
+    disconnected: function() {
+      this.hide();
+      attr(this.$el, {title: this._hasTitle ? this.title : null, 'aria-expanded': null});
+    },
+
+    methods: {
+
+      show: function() {
+        var this$1 = this;
+
+
+        if (includes(actives, this)) {
+          return;
+        }
+
+        actives.forEach(function (active) { return active.hide(); });
+        actives.push(this);
+
+        this._unbind = on(document, pointerUp, function (e) { return !within(e.target, this$1.$el) && this$1.hide(); });
+
+        clearTimeout(this.showTimer);
+        this.showTimer = setTimeout(function () {
+          this$1._show();
+          this$1.hideTimer = setInterval(function () {
+
+            if (!isVisible(this$1.$el)) {
+              this$1.hide();
+            }
+
+          }, 150);
+        }, this.delay);
+      },
+
+      hide: function() {
+
+        var index$$1 = actives.indexOf(this);
+
+        if (!~index$$1 || matches(this.$el, 'input') && this.$el === document.activeElement) {
+          return;
+        }
+
+        actives.splice(index$$1, 1);
+
+        clearTimeout(this.showTimer);
+        clearInterval(this.hideTimer);
+        attr(this.$el, 'aria-expanded', false);
+        this.toggleElement(this.tooltip, false);
+        this.tooltip && remove(this.tooltip);
+        this.tooltip = false;
+        this._unbind();
+
+      },
+
+      _show: function() {
+
+        this.tooltip = append(this.container,
+          ("<div class=\"" + (this.clsPos) + "\" aria-expanded=\"true\" aria-hidden> <div class=\"" + (this.clsPos) + "-inner\">" + (this.title) + "</div> </div>")
+        );
+
+        this.positionAt(this.tooltip, this.$el);
+
+        this.origin = this.getAxis() === 'y'
+          ? ((flipPosition(this.dir)) + "-" + (this.align))
+          : ((this.align) + "-" + (flipPosition(this.dir)));
+
+        this.toggleElement(this.tooltip, true);
+
+      }
+
+    },
+
+    events: ( obj$1 = {}, obj$1[("focus " + pointerEnter + " " + pointerDown)] = function (e) {
+      if (e.type !== pointerDown || !isTouch(e)) {
+        this.show();
+      }
+    }, obj$1.blur = 'hide', obj$1[pointerLeave] = function (e) {
+      if (!isTouch(e)) {
+        this.hide();
+      }
+    }, obj$1 )
+
+  };
+
+  var Upload = {
+
     props: {
       allow: String,
       clsDragover: String,
@@ -5403,3027 +11716,217 @@
       maxSize: Number,
       method: String,
       mime: String,
+      msgInvalidMime: String,
+      msgInvalidName: String,
+      msgInvalidSize: String,
       multiple: Boolean,
       name: String,
       params: Object,
       type: String,
-      url: String
+      url: String,
     },
+
     data: {
-      allow: !1,
-      clsDragover: "uk-dragover",
+      allow: false,
+      clsDragover: 'uk-dragover',
       concurrent: 1,
       maxSize: 0,
-      method: "POST",
-      mime: !1,
-      multiple: !1,
-      name: "files[]",
+      method: 'POST',
+      mime: false,
+      msgInvalidMime: 'Invalid File Type: %s',
+      msgInvalidName: 'Invalid File Name: %s',
+      msgInvalidSize: 'Invalid File Size: %s Kilobytes Max',
+      multiple: false,
+      name: 'files[]',
       params: {},
-      type: "",
-      url: "",
-      abort: A,
-      beforeAll: A,
-      beforeSend: A,
-      complete: A,
-      completeAll: A,
-      error: A,
-      fail: A,
-      load: A,
-      loadEnd: A,
-      loadStart: A,
-      progress: A
+      type: '',
+      url: '',
+      abort: noop,
+      beforeAll: noop,
+      beforeSend: noop,
+      complete: noop,
+      completeAll: noop,
+      error: noop,
+      fail: noop,
+      load: noop,
+      loadEnd: noop,
+      loadStart: noop,
+      progress: noop
     },
+
     events: {
-      change(t) {
-        C(t.target, 'input[type="file"]') && (t.preventDefault(), t.target.files && this.upload(t.target.files), t.target.value = "")
-      },
-      drop(t) {
-        Di(t);
-        const e = t.dataTransfer;
-        e != null && e.files && (_(this.$el, this.clsDragover), this.upload(e.files))
-      },
-      dragenter(t) {
-        Di(t)
-      },
-      dragover(t) {
-        Di(t), I(this.$el, this.clsDragover)
-      },
-      dragleave(t) {
-        Di(t), _(this.$el, this.clsDragover)
-      }
-    },
-    methods: {
-      async upload(t) {
-        if (t = ne(t), !t.length) return;
-        v(this.$el, "upload", [t]);
-        for (const s of t) {
-          if (this.maxSize && this.maxSize * 1e3 < s.size) {
-            this.fail(this.t("invalidSize", this.maxSize));
-            return
-          }
-          if (this.allow && !Do(this.allow, s.name)) {
-            this.fail(this.t("invalidName", this.allow));
-            return
-          }
-          if (this.mime && !Do(this.mime, s.type)) {
-            this.fail(this.t("invalidMime", this.mime));
-            return
-          }
+
+      change: function(e) {
+
+        if (!matches(e.target, 'input[type="file"]')) {
+          return;
         }
-        this.multiple || (t = t.slice(0, 1)), this.beforeAll(this, t);
-        const e = Ml(t, this.concurrent),
-          i = async s => {
-            const n = new FormData;
-            s.forEach(o => n.append(this.name, o));
-            for (const o in this.params) n.append(o, this.params[o]);
-            try {
-              const o = await Dl(this.url, {
-                data: n,
-                method: this.method,
-                responseType: this.type,
-                beforeSend: r => {
-                  const {
-                    xhr: a
-                  } = r;
-                  y(a.upload, "progress", this.progress);
-                  for (const l of ["loadStart", "load", "loadEnd", "abort"]) y(a, l.toLowerCase(), this[l]);
-                  return this.beforeSend(r)
-                }
-              });
-              this.complete(o), e.length ? await i(e.shift()) : this.completeAll(o)
-            } catch (o) {
-              this.error(o)
+
+        e.preventDefault();
+
+        if (e.target.files) {
+          this.upload(e.target.files);
+        }
+
+        e.target.value = '';
+      },
+
+      drop: function(e) {
+        stop(e);
+
+        var transfer = e.dataTransfer;
+
+        if (!transfer || !transfer.files) {
+          return;
+        }
+
+        removeClass(this.$el, this.clsDragover);
+
+        this.upload(transfer.files);
+      },
+
+      dragenter: function(e) {
+        stop(e);
+      },
+
+      dragover: function(e) {
+        stop(e);
+        addClass(this.$el, this.clsDragover);
+      },
+
+      dragleave: function(e) {
+        stop(e);
+        removeClass(this.$el, this.clsDragover);
+      }
+
+    },
+
+    methods: {
+
+      upload: function(files) {
+        var this$1 = this;
+
+
+        if (!files.length) {
+          return;
+        }
+
+        trigger(this.$el, 'upload', [files]);
+
+        for (var i = 0; i < files.length; i++) {
+
+          if (this.maxSize && this.maxSize * 1000 < files[i].size) {
+            this.fail(this.msgInvalidSize.replace('%s', this.maxSize));
+            return;
+          }
+
+          if (this.allow && !match$1(this.allow, files[i].name)) {
+            this.fail(this.msgInvalidName.replace('%s', this.allow));
+            return;
+          }
+
+          if (this.mime && !match$1(this.mime, files[i].type)) {
+            this.fail(this.msgInvalidMime.replace('%s', this.mime));
+            return;
+          }
+
+        }
+
+        if (!this.multiple) {
+          files = [files[0]];
+        }
+
+        this.beforeAll(this, files);
+
+        var chunks = chunk(files, this.concurrent);
+        var upload = function (files) {
+
+          var data$$1 = new FormData();
+
+          files.forEach(function (file) { return data$$1.append(this$1.name, file); });
+
+          for (var key in this$1.params) {
+            data$$1.append(key, this$1.params[key]);
+          }
+
+          ajax(this$1.url, {
+            data: data$$1,
+            method: this$1.method,
+            responseType: this$1.type,
+            beforeSend: function (env) {
+
+              var xhr = env.xhr;
+              xhr.upload && on(xhr.upload, 'progress', this$1.progress);
+              ['loadStart', 'load', 'loadEnd', 'abort'].forEach(function (type) { return on(xhr, type.toLowerCase(), this$1[type]); }
+              );
+
+              this$1.beforeSend(env);
+
             }
-          };
-        await i(e.shift())
-      }
-    }
-  };
+          }).then(
+            function (xhr) {
 
-  function Do(t, e) {
-    return e.match(new RegExp(`^${t.replace(/\//g,"\\/").replace(/\*\*/g,"(\\/[^\\/]+)*").replace(/\*/g,"[^\\/]+").replace(/((?!\\))\?/g,"$1.")}$`, "i"))
-  }
+              this$1.complete(xhr);
 
-  function Ml(t, e) {
-    const i = [];
-    for (let s = 0; s < t.length; s += e) i.push(t.slice(s, s + e));
-    return i
-  }
-
-  function Di(t) {
-    t.preventDefault(), t.stopPropagation()
-  }
-  async function Dl(t, e) {
-    const i = {
-      data: null,
-      method: "GET",
-      headers: {},
-      xhr: new XMLHttpRequest,
-      beforeSend: A,
-      responseType: "",
-      ...e
-    };
-    return await i.beforeSend(i), Bl(t, i)
-  }
-
-  function Bl(t, e) {
-    return new Promise((i, s) => {
-      const {
-        xhr: n
-      } = e;
-      for (const o in e)
-        if (o in n) try {
-          n[o] = e[o]
-        } catch {}
-      n.open(e.method.toUpperCase(), t);
-      for (const o in e.headers) n.setRequestHeader(o, e.headers[o]);
-      y(n, "load", () => {
-        n.status === 0 || n.status >= 200 && n.status < 300 || n.status === 304 ? i(n) : s(ft(Error(n.statusText), {
-          xhr: n,
-          status: n.status
-        }))
-      }), y(n, "error", () => s(ft(Error("Network Error"), {
-        xhr: n
-      }))), y(n, "timeout", () => s(ft(Error("Network Timeout"), {
-        xhr: n
-      }))), n.send(e.data)
-    })
-  }
-  var Nl = Object.freeze({
-    __proto__: null,
-    Countdown: Vr,
-    Filter: na,
-    Lightbox: tl,
-    LightboxPanel: lo,
-    Notification: sl,
-    Parallax: dl,
-    Slider: ml,
-    SliderParallax: Po,
-    Slideshow: wl,
-    SlideshowParallax: Po,
-    Sortable: xl,
-    Tooltip: Cl,
-    Upload: Ol
-  });
-
-  function zl(t) {
-    Rt && window.MutationObserver && (document.body ? requestAnimationFrame(() => Bo(t)) : new MutationObserver((e, i) => {
-      document.body && (Bo(t), i.disconnect())
-    }).observe(document.documentElement, {
-      childList: !0
-    }))
-  }
-
-  function Bo(t) {
-    v(document, "uikit:init", t), document.body && Ot(document.body, No), new MutationObserver(Fl).observe(document, {
-      subtree: !0,
-      childList: !0,
-      attributes: !0
-    }), t._initialized = !0
-  }
-
-  function Fl(t) {
-    var e;
-    for (const {
-      addedNodes: i,
-      removedNodes: s,
-      target: n,
-      attributeName: o
-    } of t) {
-      for (const a of i) Ot(a, No);
-      for (const a of s) Ot(a, Hl);
-      const r = o && zo(o);
-      r && (Pt(n, o) ? Xe(r, n) : (e = Ti(n, r)) == null || e.$destroy())
-    }
-  }
-
-  function No(t) {
-    const e = Je(t);
-    for (const i in e) Os(e[i]);
-    for (const i of t.getAttributeNames()) {
-      const s = zo(i);
-      s && Xe(s, t)
-    }
-  }
-
-  function Hl(t) {
-    const e = Je(t);
-    for (const i in e) Ms(e[i])
-  }
-
-  function zo(t) {
-    mt(t, "data-") && (t = t.slice(5));
-    const e = xe[t];
-    return e && (e.options || e).name
-  }
-  qa(ht), Ua(ht);
-  var Fo = {
-    mixins: [st, Xt],
-    props: {
-      animation: Boolean,
-      targets: String,
-      active: null,
-      collapsible: Boolean,
-      multiple: Boolean,
-      toggle: String,
-      content: String,
-      offset: Number
-    },
-    data: {
-      targets: "> *",
-      active: !1,
-      animation: !0,
-      collapsible: !0,
-      multiple: !1,
-      clsOpen: "uk-open",
-      toggle: "> .uk-accordion-title",
-      content: "> .uk-accordion-content",
-      offset: 0
-    },
-    computed: {
-      items: ({
-                targets: t
-              }, e) => D(t, e),
-      toggles({
-                toggle: t
-              }) {
-        return this.items.map(e => x(t, e))
-      },
-      contents({
-                 content: t
-               }) {
-        return this.items.map(e => {
-          var i;
-          return ((i = e._wrapper) == null ? void 0 : i.firstElementChild) || x(t, e)
-        })
-      }
-    },
-    watch: {
-      items(t, e) {
-        if (e || $(t, this.clsOpen)) return;
-        const i = this.active !== !1 && t[Number(this.active)] || !this.collapsible && t[0];
-        i && this.toggle(i, !1)
-      },
-      toggles() {
-        this.$emit()
-      },
-      contents(t) {
-        for (const e of t) {
-          const i = $(this.items.find(s => s.contains(e)), this.clsOpen);
-          Bi(e, !i)
-        }
-        this.$emit()
-      }
-    },
-    observe: Si(),
-    events: [{
-      name: "click keydown",
-      delegate: ({
-                   targets: t,
-                   $props: e
-                 }) => `${t} ${e.toggle}`,
-      async handler(t) {
-        var e;
-        t.type === "keydown" && t.keyCode !== B.SPACE || (Et(t), (e = this._off) == null || e.call(this), this._off = Wl(t.target), await this.toggle(yt(this.toggles, t.current)), this._off())
-      }
-    }, {
-      name: "shown hidden",
-      self: !0,
-      delegate: ({
-                   targets: t
-                 }) => t,
-      handler() {
-        this.$emit()
-      }
-    }],
-    update() {
-      const t = De(this.items, `.${this.clsOpen}`);
-      for (const e in this.items) {
-        const i = this.toggles[e],
-          s = this.contents[e];
-        if (!i || !s) continue;
-        i.id = Zt(this, i), s.id = Zt(this, s);
-        const n = b(t, this.items[e]);
-        p(i, {
-          role: F(i, "a") ? "button" : null,
-          "aria-controls": s.id,
-          "aria-expanded": n,
-          "aria-disabled": !this.collapsible && t.length < 2 && n
-        }), p(s, {
-          role: "region",
-          "aria-labelledby": i.id
-        }), F(s, "ul") && p(N(s), "role", "presentation")
-      }
-    },
-    methods: {
-      toggle(t, e) {
-        t = this.items[rt(t, this.items)];
-        let i = [t];
-        const s = De(this.items, `.${this.clsOpen}`);
-        if (!this.multiple && !b(s, i[0]) && (i = i.concat(s)), !(!this.collapsible && s.length < 2 && b(s, t))) return Promise.all(i.map(n => this.toggleElement(n, !b(s, n), (o, r) => {
-          if (L(o, this.clsOpen, r), e === !1 || !this.animation) {
-            Bi(x(this.content, o), !r);
-            return
-          }
-          return Ll(o, r, this)
-        })))
-      }
-    }
-  };
-
-  function Bi(t, e) {
-    t && (t.hidden = e)
-  }
-  async function Ll(t, e, {
-    content: i,
-    duration: s,
-    velocity: n,
-    transition: o
-  }) {
-    var r;
-    i = ((r = t._wrapper) == null ? void 0 : r.firstElementChild) || x(i, t), t._wrapper || (t._wrapper = Fe(i, "<div>"));
-    const a = t._wrapper;
-    h(a, "overflow", "hidden");
-    const l = S(h(a, "height"));
-    await M.cancel(a), Bi(i, !1);
-    const c = Wt(["marginTop", "marginBottom"], d => h(i, d)) + m(i).height,
-      u = l / c;
-    s = (n * c + s) * (e ? 1 - u : u), h(a, "height", l), await M.start(a, {
-      height: e ? c : 0
-    }, s, o), He(i), delete t._wrapper, e || Bi(i, !0)
-  }
-
-  function Wl(t) {
-    const e = Dt(t, !0);
-    let i;
-    return function s() {
-      i = requestAnimationFrame(() => {
-        const {
-          top: n
-        } = m(t);
-        n < 0 && (e.scrollTop += n), s()
-      })
-    }(), () => requestAnimationFrame(() => cancelAnimationFrame(i))
-  }
-  var jl = {
-    mixins: [st, Xt],
-    args: "animation",
-    props: {
-      animation: Boolean,
-      close: String
-    },
-    data: {
-      animation: !0,
-      selClose: ".uk-alert-close",
-      duration: 150
-    },
-    events: {
-      name: "click",
-      delegate: ({
-                   selClose: t
-                 }) => t,
-      handler(t) {
-        Et(t), this.close()
-      }
-    },
-    methods: {
-      async close() {
-        await this.toggleElement(this.$el, !1, Rl), this.$destroy(!0)
-      }
-    }
-  };
-
-  function Rl(t, e, {
-    duration: i,
-    transition: s,
-    velocity: n
-  }) {
-    const o = S(h(t, "height"));
-    return h(t, "height", o), M.start(t, {
-      height: 0,
-      marginTop: 0,
-      marginBottom: 0,
-      paddingTop: 0,
-      paddingBottom: 0,
-      borderTop: 0,
-      borderBottom: 0,
-      opacity: 0
-    }, n * o + i, s)
-  }
-  var Ho = {
-    args: "autoplay",
-    props: {
-      automute: Boolean,
-      autoplay: Boolean
-    },
-    data: {
-      automute: !1,
-      autoplay: !0
-    },
-    beforeConnect() {
-      this.autoplay === "inview" && !Pt(this.$el, "preload") && (this.$el.preload = "none"), F(this.$el, "iframe") && !Pt(this.$el, "allow") && (this.$el.allow = "autoplay"), this.autoplay === "hover" && (F(this.$el, "video") ? this.$el.tabindex = 0 : this.autoplay = !0), this.automute && fn(this.$el)
-    },
-    events: [{
-      name: `${qt} focusin`,
-      filter: ({
-                 autoplay: t
-               }) => b(t, "hover"),
-      handler(t) {
-        !pt(t) || !ql(this.$el) ? as(this.$el) : xi(this.$el)
-      }
-    }, {
-      name: `${ce} focusout`,
-      filter: ({
-                 autoplay: t
-               }) => b(t, "hover"),
-      handler(t) {
-        pt(t) || xi(this.$el)
-      }
-    }],
-    observe: [be({
-      filter: ({
-                 autoplay: t
-               }) => t !== "hover",
-      handler([{
-        isIntersecting: t
-      }]) {
-        document.fullscreenElement || (t ? this.autoplay && as(this.$el) : xi(this.$el))
-      },
-      args: {
-        intersecting: !1
-      },
-      options: ({
-                  $el: t,
-                  autoplay: e
-                }) => ({
-        root: e === "inview" ? null : O(t).closest(":not(a)")
-      })
-    })]
-  };
-
-  function ql(t) {
-    return !t.paused && !t.ended
-  }
-  var Ul = {
-    mixins: [Ho],
-    props: {
-      width: Number,
-      height: Number
-    },
-    data: {
-      automute: !0
-    },
-    created() {
-      this.useObjectFit = F(this.$el, "img", "video")
-    },
-    observe: dt({
-      target: ({
-                 $el: t
-               }) => Lo(t) || O(t),
-      filter: ({
-                 useObjectFit: t
-               }) => !t
-    }),
-    update: {
-      read() {
-        if (this.useObjectFit) return !1;
-        const {
-          ratio: t,
-          cover: e
-        } = qi, {
-          $el: i,
-          width: s,
-          height: n
-        } = this;
-        let o = {
-          width: s,
-          height: n
-        };
-        if (!s || !n) {
-          const c = {
-            width: i.naturalWidth || i.videoWidth || i.clientWidth,
-            height: i.naturalHeight || i.videoHeight || i.clientHeight
-          };
-          s ? o = t(c, "width", s) : n ? o = t(c, "height", n) : o = c
-        }
-        const {
-          offsetHeight: r,
-          offsetWidth: a
-        } = Lo(i) || O(i), l = e(o, {
-          width: a,
-          height: r
-        });
-        return !l.width || !l.height ? !1 : l
-      },
-      write({
-              height: t,
-              width: e
-            }) {
-        h(this.$el, {
-          height: t,
-          width: e
-        })
-      },
-      events: ["resize"]
-    }
-  };
-
-  function Lo(t) {
-    for (; t = O(t);)
-      if (h(t, "position") !== "static") return t
-  }
-  let Y;
-  var Wo = {
-    mixins: [Ye, jn, Xt],
-    args: "pos",
-    props: {
-      mode: "list",
-      toggle: Boolean,
-      boundary: Boolean,
-      boundaryX: Boolean,
-      boundaryY: Boolean,
-      target: Boolean,
-      targetX: Boolean,
-      targetY: Boolean,
-      stretch: Boolean,
-      delayShow: Number,
-      delayHide: Number,
-      autoUpdate: Boolean,
-      clsDrop: String,
-      animateOut: Boolean,
-      bgScroll: Boolean,
-      closeOnScroll: Boolean
-    },
-    data: {
-      mode: ["click", "hover"],
-      toggle: "- *",
-      boundary: !1,
-      boundaryX: !1,
-      boundaryY: !1,
-      target: !1,
-      targetX: !1,
-      targetY: !1,
-      stretch: !1,
-      delayShow: 0,
-      delayHide: 800,
-      autoUpdate: !0,
-      clsDrop: !1,
-      animateOut: !1,
-      bgScroll: !0,
-      animation: ["uk-animation-fade"],
-      cls: "uk-open",
-      container: !1,
-      closeOnScroll: !1,
-      selClose: ".uk-drop-close"
-    },
-    computed: {
-      boundary({
-                 boundary: t,
-                 boundaryX: e,
-                 boundaryY: i
-               }, s) {
-        return [et(e || t, s) || window, et(i || t, s) || window]
-      },
-      target({
-               target: t,
-               targetX: e,
-               targetY: i
-             }, s) {
-        return e || (e = t || this.targetEl), i || (i = t || this.targetEl), [e === !0 ? window : et(e, s), i === !0 ? window : et(i, s)]
-      }
-    },
-    created() {
-      this.tracker = new cn
-    },
-    beforeConnect() {
-      this.clsDrop = this.$props.clsDrop || this.$options.id
-    },
-    connected() {
-      I(this.$el, "uk-drop", this.clsDrop), this.toggle && !this.targetEl && (this.targetEl = Yl(this)), this._style = si(this.$el.style, ["width", "height"])
-    },
-    disconnected() {
-      this.isActive() && (this.hide(!1), Y = null), h(this.$el, this._style)
-    },
-    events: [{
-      name: "click",
-      delegate: ({
-                   selClose: t
-                 }) => t,
-      handler(t) {
-        Et(t), this.hide(!1)
-      }
-    }, {
-      name: "click",
-      delegate: () => 'a[href*="#"]',
-      handler({
-                defaultPrevented: t,
-                current: e
-              }) {
-        const {
-          hash: i
-        } = e;
-        !t && i && fe(e) && !this.$el.contains(x(i)) && this.hide(!1)
-      }
-    }, {
-      name: "beforescroll",
-      handler() {
-        this.hide(!1)
-      }
-    }, {
-      name: "toggle",
-      self: !0,
-      handler(t, e) {
-        t.preventDefault(), this.isToggled() ? this.hide(!1) : this.show(e == null ? void 0 : e.$el, !1)
-      }
-    }, {
-      name: "toggleshow",
-      self: !0,
-      handler(t, e) {
-        t.preventDefault(), this.show(e == null ? void 0 : e.$el)
-      }
-    }, {
-      name: "togglehide",
-      self: !0,
-      handler(t) {
-        t.preventDefault(), C(this.$el, ":focus,:hover") || this.hide()
-      }
-    }, {
-      name: `${qt} focusin`,
-      filter: ({
-                 mode: t
-               }) => b(t, "hover"),
-      handler(t) {
-        pt(t) || this.clearTimers()
-      }
-    }, {
-      name: `${ce} focusout`,
-      filter: ({
-                 mode: t
-               }) => b(t, "hover"),
-      handler(t) {
-        !pt(t) && t.relatedTarget && this.hide()
-      }
-    }, {
-      name: "toggled",
-      self: !0,
-      handler(t, e) {
-        e && (this.clearTimers(), this.position())
-      }
-    }, {
-      name: "show",
-      self: !0,
-      handler() {
-        Y = this, this.tracker.init(), p(this.targetEl, "aria-expanded", !0);
-        const t = [Gl(this), Xl(this), Kl(this), this.autoUpdate && jo(this), this.closeOnScroll && Jl(this)];
-        z(this.$el, "hide", () => t.forEach(e => e && e()), {
-          self: !0
-        }), this.bgScroll || z(this.$el, "hidden", Wn(this.$el), {
-          self: !0
-        })
-      }
-    }, {
-      name: "beforehide",
-      self: !0,
-      handler() {
-        this.clearTimers()
-      }
-    }, {
-      name: "hide",
-      handler({
-                target: t
-              }) {
-        if (this.$el !== t) {
-          Y = Y === null && this.$el.contains(t) && this.isToggled() ? this : Y;
-          return
-        }
-        Y = this.isActive() ? null : Y, this.tracker.cancel(), p(this.targetEl, "aria-expanded", null)
-      }
-    }],
-    update: {
-      write() {
-        this.isToggled() && !$(this.$el, this.clsEnter) && this.position()
-      }
-    },
-    methods: {
-      show(t = this.targetEl, e = !0) {
-        if (this.isToggled() && t && this.targetEl && t !== this.targetEl && this.hide(!1, !1), this.targetEl = t, this.clearTimers(), !this.isActive()) {
-          if (Y) {
-            if (e && Y.isDelaying()) {
-              this.showTimer = setTimeout(() => C(t, ":hover") && this.show(), 10);
-              return
-            }
-            let i;
-            for (; Y && i !== Y && !Y.$el.contains(this.$el);) i = Y, Y.hide(!1, !1)
-          }
-          this.container && O(this.$el) !== this.container && W(this.container, this.$el), this.showTimer = setTimeout(() => this.toggleElement(this.$el, !0), e && this.delayShow || 0)
-        }
-      },
-      hide(t = !0, e = !0) {
-        const i = () => this.toggleElement(this.$el, !1, this.animateOut && e);
-        this.clearTimers(), this.isDelayedHide = t, t && this.isDelaying() ? this.hideTimer = setTimeout(this.hide, 50) : t && this.delayHide ? this.hideTimer = setTimeout(i, this.delayHide) : i()
-      },
-      clearTimers() {
-        clearTimeout(this.showTimer), clearTimeout(this.hideTimer), this.showTimer = null, this.hideTimer = null
-      },
-      isActive() {
-        return Y === this
-      },
-      isDelaying() {
-        return [this.$el, ...D(".uk-drop", this.$el)].some(t => this.tracker.movesTo(t))
-      },
-      position() {
-        const t = Cs(this.$el);
-        _(this.$el, "uk-drop-stack"), h(this.$el, this._style), this.$el.hidden = !0;
-        const e = this.target.map(o => Vl(this.$el, o)),
-          i = this.getViewportOffset(this.$el),
-          s = [
-            [0, ["x", "width", "left", "right"]],
-            [1, ["y", "height", "top", "bottom"]]
-          ];
-        for (const [o, [r, a]] of s) this.axis !== r && b([r, !0], this.stretch) && h(this.$el, {
-          [a]: Math.min(T(this.boundary[o])[a], e[o][a] - 2 * i),
-          [`overflow-${r}`]: "auto"
-        });
-        const n = e[0].width - 2 * i;
-        this.$el.hidden = !1, h(this.$el, "maxWidth", ""), this.$el.offsetWidth > n && I(this.$el, "uk-drop-stack"), h(this.$el, "maxWidth", n), this.positionAt(this.$el, this.target, this.boundary);
-        for (const [o, [r, a, l, c]] of s)
-          if (this.axis === r && b([r, !0], this.stretch)) {
-            const u = Math.abs(this.getPositionOffset()),
-              d = T(this.target[o]),
-              f = T(this.$el);
-            h(this.$el, {
-              [a]: (d[l] > f[l] ? d[this.inset ? c : l] - Math.max(T(this.boundary[o])[l], e[o][l] + i) : Math.min(T(this.boundary[o])[c], e[o][c] - i) - d[this.inset ? l : c]) - u,
-              [`overflow-${r}`]: "auto"
-            }), this.positionAt(this.$el, this.target, this.boundary)
-          } t()
-      }
-    }
-  };
-
-  function Vl(t, e) {
-    return at(Gt(e).find(i => i.contains(t)))
-  }
-
-  function Yl(t) {
-    const {
-      $el: e
-    } = t.$create("toggle", et(t.toggle, t.$el), {
-      target: t.$el,
-      mode: t.mode
-    });
-    return p(e, "aria-haspopup", !0), e
-  }
-
-  function Gl(t) {
-    const e = () => t.$emit(),
-      i = [os(e), je(Gt(t.$el).concat(t.target), e)];
-    return () => i.map(s => s.disconnect())
-  }
-
-  function jo(t, e = () => t.$emit()) {
-    return y([document, ...Gt(t.$el)], "scroll", e, {
-      passive: !0
-    })
-  }
-
-  function Xl(t) {
-    return y(document, "keydown", e => {
-      e.keyCode === B.ESC && t.hide(!1)
-    })
-  }
-
-  function Jl(t) {
-    return jo(t, () => t.hide(!1))
-  }
-
-  function Kl(t) {
-    return y(document, ut, ({
-                              target: e
-                            }) => {
-      t.$el.contains(e) || z(document, `${_t} ${li} scroll`, ({
-                                                                defaultPrevented: i,
-                                                                type: s,
-                                                                target: n
-                                                              }) => {
-        var o;
-        !i && s === _t && e === n && !((o = t.targetEl) != null && o.contains(e)) && t.hide(!1)
-      }, !0)
-    })
-  }
-  var Ro = {
-    mixins: [st, Ye],
-    props: {
-      align: String,
-      clsDrop: String,
-      boundary: Boolean,
-      dropbar: Boolean,
-      dropbarAnchor: Boolean,
-      duration: Number,
-      mode: Boolean,
-      offset: Boolean,
-      stretch: Boolean,
-      delayShow: Boolean,
-      delayHide: Boolean,
-      target: Boolean,
-      targetX: Boolean,
-      targetY: Boolean,
-      animation: Boolean,
-      animateOut: Boolean,
-      closeOnScroll: Boolean
-    },
-    data: {
-      align: U ? "right" : "left",
-      clsDrop: "uk-dropdown",
-      clsDropbar: "uk-dropnav-dropbar",
-      boundary: !0,
-      dropbar: !1,
-      dropbarAnchor: !1,
-      duration: 200,
-      container: !1,
-      selNavItem: "> li > a, > ul > li > a"
-    },
-    computed: {
-      dropbarAnchor: ({
-                        dropbarAnchor: t
-                      }, e) => et(t, e) || e,
-      dropbar({
-                dropbar: t
-              }) {
-        return t ? (t = this._dropbar || et(t, this.$el) || x(`+ .${this.clsDropbar}`, this.$el), t || (this._dropbar = x("<div></div>"))) : null
-      },
-      dropContainer(t, e) {
-        return this.container || e
-      },
-      dropdowns({
-                  clsDrop: t
-                }, e) {
-        var i;
-        const s = D(`.${t}`, e);
-        if (this.dropContainer !== e)
-          for (const n of D(`.${t}`, this.dropContainer)) {
-            const o = (i = this.getDropdown(n)) == null ? void 0 : i.targetEl;
-            !b(s, n) && o && this.$el.contains(o) && s.push(n)
-          }
-        return s
-      },
-      items({
-              selNavItem: t
-            }, e) {
-        return D(t, e)
-      }
-    },
-    watch: {
-      dropbar(t) {
-        I(t, "uk-dropbar", "uk-dropbar-top", this.clsDropbar, `uk-${this.$options.name}-dropbar`)
-      },
-      dropdowns() {
-        this.initializeDropdowns()
-      }
-    },
-    connected() {
-      this.initializeDropdowns()
-    },
-    disconnected() {
-      Q(this._dropbar), delete this._dropbar
-    },
-    events: [{
-      name: "mouseover focusin",
-      delegate: ({
-                   selNavItem: t
-                 }) => t,
-      handler({
-                current: t
-              }) {
-        const e = this.getActive();
-        e && b(e.mode, "hover") && e.targetEl && !t.contains(e.targetEl) && !e.isDelaying() && e.hide(!1)
-      }
-    }, {
-      name: "keydown",
-      self: !0,
-      delegate: ({
-                   selNavItem: t
-                 }) => t,
-      handler(t) {
-        var e;
-        const {
-          current: i,
-          keyCode: s
-        } = t, n = this.getActive();
-        if (s === B.DOWN)
-          if ((n == null ? void 0 : n.targetEl) === i) t.preventDefault(), (e = x(ue, n.$el)) == null || e.focus();
-          else {
-            const o = this.dropdowns.find(r => {
-              var a;
-              return ((a = this.getDropdown(r)) == null ? void 0 : a.targetEl) === i
-            });
-            o && (t.preventDefault(), i.click(), z(o, "show", r => {
-              var a;
-              return (a = x(ue, r.target)) == null ? void 0 : a.focus()
-            }))
-          } qo(t, this.items, n)
-      }
-    }, {
-      name: "keydown",
-      el: ({
-             dropContainer: t
-           }) => t,
-      delegate: ({
-                   clsDrop: t
-                 }) => `.${t}`,
-      handler(t) {
-        var e;
-        const {
-          current: i,
-          keyCode: s,
-          target: n
-        } = t;
-        if (hi(n) || !b(this.dropdowns, i)) return;
-        const o = this.getActive();
-        let r = -1;
-        if (s === B.HOME ? r = 0 : s === B.END ? r = "last" : s === B.UP ? r = "previous" : s === B.DOWN ? r = "next" : s === B.ESC && ((e = o.targetEl) == null || e.focus()), ~r) {
-          t.preventDefault();
-          const a = D(ue, i);
-          a[rt(r, a, xt(a, l => C(l, ":focus")))].focus();
-          return
-        }
-        qo(t, this.items, o)
-      }
-    }, {
-      name: "mouseleave",
-      el: ({
-             dropbar: t
-           }) => t,
-      filter: ({
-                 dropbar: t
-               }) => t,
-      handler() {
-        const t = this.getActive();
-        t && b(t.mode, "hover") && !this.dropdowns.some(e => C(e, ":hover")) && t.hide()
-      }
-    }, {
-      name: "beforeshow",
-      el: ({
-             dropContainer: t
-           }) => t,
-      filter: ({
-                 dropbar: t
-               }) => t,
-      handler({
-                target: t
-              }) {
-        this.isDropbarDrop(t) && (this.dropbar.previousElementSibling !== this.dropbarAnchor && pi(this.dropbarAnchor, this.dropbar), I(t, `${this.clsDrop}-dropbar`))
-      }
-    }, {
-      name: "show",
-      el: ({
-             dropContainer: t
-           }) => t,
-      filter: ({
-                 dropbar: t
-               }) => t,
-      handler({
-                target: t
-              }) {
-        if (!this.isDropbarDrop(t)) return;
-        const e = this.getDropdown(t),
-          i = () => {
-            const s = Math.max(...de(t, `.${this.clsDrop}`).concat(t).map(n => T(n).bottom));
-            T(this.dropbar, {
-              left: T(this.dropbar).left,
-              top: this.getDropbarOffset(e.getPositionOffset())
-            }), this.transitionTo(s - T(this.dropbar).top + S(h(t, "marginBottom")), t)
-          };
-        this._observer = je([e.$el, ...e.target], i), i()
-      }
-    }, {
-      name: "beforehide",
-      el: ({
-             dropContainer: t
-           }) => t,
-      filter: ({
-                 dropbar: t
-               }) => t,
-      handler(t) {
-        const e = this.getActive();
-        C(this.dropbar, ":hover") && e.$el === t.target && this.isDropbarDrop(e.$el) && b(e.mode, "hover") && e.isDelayedHide && !this.items.some(i => e.targetEl !== i && C(i, ":focus")) && t.preventDefault()
-      }
-    }, {
-      name: "hide",
-      el: ({
-             dropContainer: t
-           }) => t,
-      filter: ({
-                 dropbar: t
-               }) => t,
-      handler({
-                target: t
-              }) {
-        var e;
-        if (!this.isDropbarDrop(t)) return;
-        (e = this._observer) == null || e.disconnect();
-        const i = this.getActive();
-        (!i || i.$el === t) && this.transitionTo(0)
-      }
-    }],
-    methods: {
-      getActive() {
-        var t;
-        return b(this.dropdowns, (t = Y) == null ? void 0 : t.$el) && Y
-      },
-      async transitionTo(t, e) {
-        const {
-          dropbar: i
-        } = this, s = tt(i);
-        if (e = s < t && e, await M.cancel([e, i]), e) {
-          const n = T(e).top - T(i).top - s;
-          n > 0 && h(e, "transitionDelay", `${n/t*this.duration}ms`)
-        }
-        h(e, "clipPath", `polygon(0 0,100% 0,100% ${s}px,0 ${s}px)`), tt(i, s), await Promise.all([M.start(i, {
-          height: t
-        }, this.duration), M.start(e, {
-          clipPath: `polygon(0 0,100% 0,100% ${t}px,0 ${t}px)`
-        }, this.duration).finally(() => h(e, {
-          clipPath: "",
-          transitionDelay: ""
-        }))]).catch(A)
-      },
-      getDropdown(t) {
-        return this.$getComponent(t, "drop") || this.$getComponent(t, "dropdown")
-      },
-      isDropbarDrop(t) {
-        return b(this.dropdowns, t) && $(t, this.clsDrop)
-      },
-      getDropbarOffset(t) {
-        const {
-          $el: e,
-          target: i,
-          targetY: s
-        } = this, {
-          top: n,
-          height: o
-        } = T(et(s || i || e, e));
-        return n + o + t
-      },
-      initializeDropdowns() {
-        this.$create("drop", this.dropdowns.filter(t => !this.getDropdown(t)), {
-          ...this.$props,
-          flip: !1,
-          shift: !0,
-          pos: `bottom-${this.align}`,
-          boundary: this.boundary === !0 ? this.$el : this.boundary
-        })
-      }
-    }
-  };
-
-  function qo(t, e, i) {
-    var s, n, o;
-    const {
-      current: r,
-      keyCode: a
-    } = t;
-    let l = -1;
-    a === B.HOME ? l = 0 : a === B.END ? l = "last" : a === B.LEFT ? l = "previous" : a === B.RIGHT ? l = "next" : a === B.TAB && ((s = i.targetEl) == null || s.focus(), (n = i.hide) == null || n.call(i, !1)), ~l && (t.preventDefault(), (o = i.hide) == null || o.call(i, !1), e[rt(l, e, e.indexOf(i.targetEl || r))].focus())
-  }
-  var Zl = {
-      mixins: [st],
-      args: "target",
-      props: {
-        target: Boolean
-      },
-      data: {
-        target: !1
-      },
-      computed: {
-        input: (t, e) => x(Me, e),
-        state() {
-          return this.input.nextElementSibling
-        },
-        target({
-                 target: t
-               }, e) {
-          return t && (t === !0 && O(this.input) === e && this.input.nextElementSibling || x(t, e))
-        }
-      },
-      update() {
-        var t;
-        const {
-          target: e,
-          input: i
-        } = this;
-        if (!e) return;
-        let s;
-        const n = hi(e) ? "value" : "textContent",
-          o = e[n],
-          r = (t = i.files) != null && t[0] ? i.files[0].name : C(i, "select") && (s = D("option", i).filter(a => a.selected)[0]) ? s.textContent : i.value;
-        o !== r && (e[n] = r)
-      },
-      events: [{
-        name: "change",
-        handler() {
-          this.$emit()
-        }
-      }, {
-        name: "reset",
-        el: ({
-               $el: t
-             }) => t.closest("form"),
-        handler() {
-          this.$emit()
-        }
-      }]
-    },
-    Ql = {
-      extends: Pn,
-      mixins: [st],
-      name: "grid",
-      props: {
-        masonry: Boolean,
-        parallax: String,
-        parallaxStart: String,
-        parallaxEnd: String,
-        parallaxJustify: Boolean
-      },
-      data: {
-        margin: "uk-grid-margin",
-        clsStack: "uk-grid-stack",
-        masonry: !1,
-        parallax: 0,
-        parallaxStart: 0,
-        parallaxEnd: 0,
-        parallaxJustify: !1
-      },
-      connected() {
-        this.masonry && I(this.$el, "uk-flex-top", "uk-flex-wrap-top")
-      },
-      observe: Ue({
-        filter: ({
-                   parallax: t,
-                   parallaxJustify: e
-                 }) => t || e
-      }),
-      update: [{
-        write({
-                rows: t
-              }) {
-          L(this.$el, this.clsStack, !t.some(e => e.length > 1))
-        },
-        events: ["resize"]
-      }, {
-        read(t) {
-          const {
-            rows: e
-          } = t;
-          let {
-            masonry: i,
-            parallax: s,
-            parallaxJustify: n,
-            margin: o
-          } = this;
-          if (s = Math.max(0, G(s)), !(i || s || n) || Uo(e) || e[0].some((w, k) => e.some(P => P[k] && P[k].offsetWidth !== w.offsetWidth))) return t.translates = t.scrollColumns = !1;
-          let r = eh(e, o),
-            a, l;
-          i ? [a, l] = th(e, r, i === "next") : a = ih(e);
-          const c = a.map(w => Wt(w, "offsetHeight") + r * (w.length - 1)),
-            u = Math.max(0, ...c);
-          let d, f, g;
-          return (s || n) && (d = c.map((w, k) => n ? u - w + s : s / (k % 2 || 8)), n || (s = Math.max(...c.map((w, k) => w + d[k] - u))), f = G(this.parallaxStart, "height", this.$el, !0), g = G(this.parallaxEnd, "height", this.$el, !0)), {
-            columns: a,
-            translates: l,
-            scrollColumns: d,
-            parallaxStart: f,
-            parallaxEnd: g,
-            padding: s,
-            height: l ? u : ""
-          }
-        },
-        write({
-                height: t,
-                padding: e
-              }) {
-          h(this.$el, "paddingBottom", e || ""), t !== !1 && h(this.$el, "height", t)
-        },
-        events: ["resize"]
-      }, {
-        read({
-               rows: t,
-               scrollColumns: e,
-               parallaxStart: i,
-               parallaxEnd: s
-             }) {
-          return {
-            scrolled: e && !Uo(t) ? $i(this.$el, i, s) : !1
-          }
-        },
-        write({
-                columns: t,
-                scrolled: e,
-                scrollColumns: i,
-                translates: s
-              }) {
-          !e && !s || t.forEach((n, o) => n.forEach((r, a) => {
-            let [l, c] = s && s[o][a] || [0, 0];
-            e && (c += e * i[o]), h(r, "transform", `translate(${l}px, ${c}px)`)
-          }))
-        },
-        events: ["scroll", "resize"]
-      }]
-    };
-
-  function Uo(t) {
-    return t.flat().some(e => h(e, "position") === "absolute")
-  }
-
-  function th(t, e, i) {
-    const s = [],
-      n = [],
-      o = Array(t[0].length).fill(0);
-    let r = 0;
-    for (let a of t) {
-      U && a.reverse();
-      let l = 0;
-      for (const c in a) {
-        const {
-          offsetWidth: u,
-          offsetHeight: d
-        } = a[c], f = i ? c : o.indexOf(Math.min(...o));
-        Ns(s, f, a[c]), Ns(n, f, [(f - c) * u * (U ? -1 : 1), o[f] - r]), o[f] += d + e, l = Math.max(l, d)
-      }
-      r += l + e
-    }
-    return [s, n]
-  }
-
-  function eh(t, e) {
-    const i = t.flat().find(s => $(s, e));
-    return S(i ? h(i, "marginTop") : h(t[0][0], "paddingLeft"))
-  }
-
-  function ih(t) {
-    const e = [];
-    for (const i of t)
-      for (const s in i) Ns(e, s, i[s]);
-    return e
-  }
-
-  function Ns(t, e, i) {
-    t[e] || (t[e] = []), t[e].push(i)
-  }
-  var sh = {
-    args: "target",
-    props: {
-      target: String,
-      row: Boolean
-    },
-    data: {
-      target: "> *",
-      row: !0
-    },
-    computed: {
-      elements: ({
-                   target: t
-                 }, e) => D(t, e)
-    },
-    observe: dt({
-      target: ({
-                 $el: t,
-                 elements: e
-               }) => e.reduce((i, s) => i.concat(s, ...s.children), [t])
-    }),
-    events: {
-      name: "loadingdone",
-      el: () => document.fonts,
-      handler() {
-        this.$emit("resize")
-      }
-    },
-    update: {
-      read() {
-        return {
-          rows: (this.row ? ws(this.elements) : [this.elements]).map(nh)
-        }
-      },
-      write({
-              rows: t
-            }) {
-        for (const {
-          heights: e,
-          elements: i
-        } of t) i.forEach((s, n) => h(s, "minHeight", e[n]))
-      },
-      events: ["resize"]
-    }
-  };
-
-  function nh(t) {
-    if (t.length < 2) return {
-      heights: [""],
-      elements: t
-    };
-    let e = t.map(oh);
-    const i = Math.max(...e);
-    return {
-      heights: t.map((s, n) => e[n].toFixed(2) === i.toFixed(2) ? "" : i),
-      elements: t
-    }
-  }
-
-  function oh(t) {
-    const e = si(t.style, ["display", "minHeight"]);
-    q(t) || h(t, "display", "block", "important"), h(t, "minHeight", "");
-    const i = m(t).height - ge(t, "height", "content-box");
-    return h(t, e), i
-  }
-  var rh = {
-      args: "target",
-      props: {
-        target: String
-      },
-      data: {
-        target: ""
-      },
-      computed: {
-        target: {
-          get: ({
-                  target: t
-                }, e) => et(t, e),
-          observe: ({
-                      target: t
-                    }) => t
-        }
-      },
-      observe: dt({
-        target: ({
-                   target: t
-                 }) => t
-      }),
-      update: {
-        read() {
-          return this.target ? {
-            height: this.target.offsetHeight
-          } : !1
-        },
-        write({
-                height: t
-              }) {
-          h(this.$el, "minHeight", t)
-        },
-        events: ["resize"]
-      }
-    },
-    ah = {
-      props: {
-        expand: Boolean,
-        offsetTop: Boolean,
-        offsetBottom: Boolean,
-        min: Number,
-        property: String
-      },
-      data: {
-        expand: !1,
-        offsetTop: !1,
-        offsetBottom: !1,
-        min: 0,
-        property: "min-height"
-      },
-      observe: [bs({
-        filter: ({
-                   expand: t
-                 }) => t
-      }), dt({
-        target: ({
-                   $el: t
-                 }) => Yt(t)
-      })],
-      update: {
-        read() {
-          if (!q(this.$el)) return !1;
-          let t = "";
-          const e = ge(this.$el, "height", "content-box"),
-            {
-              body: i,
-              scrollingElement: s
-            } = document,
-            n = Dt(this.$el),
-            {
-              height: o
-            } = at(n === i ? s : n),
-            r = s === n || i === n;
-          if (t = `calc(${r?"100vh":`${o}px`}`, this.expand) {
-            const a = m(n).height - m(this.$el).height;
-            t += ` - ${a}px`
-          } else {
-            if (this.offsetTop)
-              if (r) {
-                const a = this.offsetTop === !0 ? this.$el : et(this.offsetTop, this.$el),
-                  {
-                    top: l
-                  } = T(a);
-                t += l > 0 && l < o / 2 ? ` - ${l}px` : ""
-              } else t += ` - ${ge(n,"height",h(n,"boxSizing"))}px`;
-            this.offsetBottom === !0 ? t += ` - ${m(this.$el.nextElementSibling).height}px` : vt(this.offsetBottom) ? t += ` - ${this.offsetBottom}vh` : this.offsetBottom && se(this.offsetBottom, "px") ? t += ` - ${S(this.offsetBottom)}px` : H(this.offsetBottom) && (t += ` - ${m(et(this.offsetBottom,this.$el)).height}px`)
-          }
-          return t += `${e?` - ${e}px`:""})`, {
-            minHeight: t
-          }
-        },
-        write({
-                minHeight: t
-              }) {
-          h(this.$el, this.property, `max(${this.min||0}px, ${t})`)
-        },
-        events: ["resize"]
-      }
-    },
-    lh = '<svg width="14" height="14" viewBox="0 0 14 14"><line fill="none" stroke="#000" stroke-width="1.1" x1="1" y1="1" x2="13" y2="13"/><line fill="none" stroke="#000" stroke-width="1.1" x1="13" y1="1" x2="1" y2="13"/></svg>',
-    hh = '<svg width="20" height="20" viewBox="0 0 20 20"><line fill="none" stroke="#000" stroke-width="1.4" x1="1" y1="1" x2="19" y2="19"/><line fill="none" stroke="#000" stroke-width="1.4" x1="19" y1="1" x2="1" y2="19"/></svg>',
-    ch = '<svg width="12" height="12" viewBox="0 0 12 12"><polyline fill="none" stroke="#000" stroke-width="1.1" points="1 3.5 6 8.5 11 3.5"/></svg>',
-    uh = '<svg width="20" height="20" viewBox="0 0 20 20"><rect width="1" height="11" x="9" y="4"/><rect width="11" height="1" x="4" y="9"/></svg>',
-    dh = '<svg width="14" height="14" viewBox="0 0 14 14"><polyline fill="none" stroke="#000" stroke-width="1.1" points="1 4 7 10 13 4"/></svg>',
-    fh = '<svg width="12" height="12" viewBox="0 0 12 12"><polyline fill="none" stroke="#000" stroke-width="1.1" points="1 3.5 6 8.5 11 3.5"/></svg>',
-    ph = '<svg width="12" height="12" viewBox="0 0 12 12"><polyline fill="none" stroke="#000" stroke-width="1.1" points="1 3.5 6 8.5 11 3.5"/></svg>',
-    gh = '<svg width="20" height="20" viewBox="0 0 20 20"><style>.uk-navbar-toggle-icon svg>[class*="line-"]{transition:0.2s ease-in-out;transition-property:transform, opacity;transform-origin:center;opacity:1}.uk-navbar-toggle-icon svg>.line-3{opacity:0}.uk-navbar-toggle-animate[aria-expanded="true"] svg>.line-3{opacity:1}.uk-navbar-toggle-animate[aria-expanded="true"] svg>.line-2{transform:rotate(45deg)}.uk-navbar-toggle-animate[aria-expanded="true"] svg>.line-3{transform:rotate(-45deg)}.uk-navbar-toggle-animate[aria-expanded="true"] svg>.line-1,.uk-navbar-toggle-animate[aria-expanded="true"] svg>.line-4{opacity:0}.uk-navbar-toggle-animate[aria-expanded="true"] svg>.line-1{transform:translateY(6px) scaleX(0)}.uk-navbar-toggle-animate[aria-expanded="true"] svg>.line-4{transform:translateY(-6px) scaleX(0)}</style><rect width="20" height="2" y="3" class="line-1"/><rect width="20" height="2" y="9" class="line-2"/><rect width="20" height="2" y="9" class="line-3"/><rect width="20" height="2" y="15" class="line-4"/></svg>',
-    mh = '<svg width="40" height="40" viewBox="0 0 40 40"><rect width="1" height="40" x="19" y="0"/><rect width="40" height="1" x="0" y="19"/></svg>',
-    vh = '<svg width="7" height="12" viewBox="0 0 7 12"><polyline fill="none" stroke="#000" stroke-width="1.2" points="1 1 6 6 1 11"/></svg>',
-    bh = '<svg width="7" height="12" viewBox="0 0 7 12"><polyline fill="none" stroke="#000" stroke-width="1.2" points="6 1 1 6 6 11"/></svg>',
-    Vo = '<svg width="20" height="20" viewBox="0 0 20 20"><circle fill="none" stroke="#000" stroke-width="1.1" cx="9" cy="9" r="7"/><path fill="none" stroke="#000" stroke-width="1.1" d="M14,14 L18,18 L14,14 Z"/></svg>',
-    wh = '<svg width="40" height="40" viewBox="0 0 40 40"><circle fill="none" stroke="#000" stroke-width="1.8" cx="17.5" cy="17.5" r="16.5"/><line fill="none" stroke="#000" stroke-width="1.8" x1="38" y1="39" x2="29" y2="30"/></svg>',
-    xh = '<svg width="24" height="24" viewBox="0 0 24 24"><circle fill="none" stroke="#000" stroke-width="1.1" cx="10.5" cy="10.5" r="9.5"/><line fill="none" stroke="#000" stroke-width="1.1" x1="23" y1="23" x2="17" y2="17"/></svg>',
-    $h = '<svg width="25" height="40" viewBox="0 0 25 40"><polyline fill="none" stroke="#000" stroke-width="2" points="4.002,38.547 22.527,20.024 4,1.5"/></svg>',
-    yh = '<svg width="14" height="24" viewBox="0 0 14 24"><polyline fill="none" stroke="#000" stroke-width="1.4" points="1.225,23 12.775,12 1.225,1"/></svg>',
-    kh = '<svg width="25" height="40" viewBox="0 0 25 40"><polyline fill="none" stroke="#000" stroke-width="2" points="20.527,1.5 2,20.024 20.525,38.547"/></svg>',
-    Sh = '<svg width="14" height="24" viewBox="0 0 14 24"><polyline fill="none" stroke="#000" stroke-width="1.4" points="12.775,1 1.225,12 12.775,23"/></svg>',
-    Ih = '<svg width="30" height="30" viewBox="0 0 30 30"><circle fill="none" stroke="#000" cx="15" cy="15" r="14"/></svg>',
-    Eh = '<svg width="18" height="10" viewBox="0 0 18 10"><polyline fill="none" stroke="#000" stroke-width="1.2" points="1 9 9 1 17 9"/></svg>',
-    Yo = {
-      args: "src",
-      props: {
-        width: Number,
-        height: Number,
-        ratio: Number
-      },
-      data: {
-        ratio: 1
-      },
-      connected() {
-        this.svg = this.getSvg().then(t => {
-          if (!this._connected) return;
-          const e = Th(t, this.$el);
-          return this.svgEl && e !== this.svgEl && Q(this.svgEl), Ch.call(this, e, t), this.svgEl = e
-        }, A)
-      },
-      disconnected() {
-        this.svg.then(t => {
-          this._connected || (Ui(this.$el) && (this.$el.hidden = !1), Q(t), this.svgEl = null)
-        }), this.svg = null
-      },
-      methods: {
-        async getSvg() {}
-      }
-    };
-
-  function Th(t, e) {
-    if (Ui(e) || F(e, "canvas")) {
-      e.hidden = !0;
-      const s = e.nextElementSibling;
-      return Go(t, s) ? s : pi(e, t)
-    }
-    const i = e.lastElementChild;
-    return Go(t, i) ? i : W(e, t)
-  }
-
-  function Go(t, e) {
-    return F(t, "svg") && F(e, "svg") && t.innerHTML === e.innerHTML
-  }
-
-  function Ch(t, e) {
-    const i = ["width", "height"];
-    let s = i.map(o => this[o]);
-    s.some(o => o) || (s = i.map(o => p(e, o)));
-    const n = p(e, "viewBox");
-    n && !s.some(o => o) && (s = n.split(" ").slice(2)), s.forEach((o, r) => p(t, i[r], S(o) * this.ratio || null))
-  }
-
-  function Xo(t, e) {
-    return e && b(t, "<symbol") && (t = Ph(t)[e] || t), E(It(t)).filter(oe)[0]
-  }
-  const Jo = /<symbol([^]*?id=(['"])(.+?)\2[^]*?<\/)symbol>/g,
-    Ph = ct(function (t) {
-      const e = {};
-      Jo.lastIndex = 0;
-      let i;
-      for (; i = Jo.exec(t);) e[i[3]] = `<svg ${i[1]}svg>`;
-      return e
-    }),
-    Ni = {
-      spinner: Ih,
-      totop: Eh,
-      marker: uh,
-      "close-icon": lh,
-      "close-large": hh,
-      "drop-parent-icon": ch,
-      "nav-parent-icon": fh,
-      "nav-parent-icon-large": dh,
-      "navbar-parent-icon": ph,
-      "navbar-toggle-icon": gh,
-      "overlay-icon": mh,
-      "pagination-next": vh,
-      "pagination-previous": bh,
-      "search-icon": Vo,
-      "search-medium": xh,
-      "search-large": wh,
-      "search-toggle-icon": Vo,
-      "slidenav-next": yh,
-      "slidenav-next-large": $h,
-      "slidenav-previous": Sh,
-      "slidenav-previous-large": kh
-    },
-    zs = {
-      install: Hh,
-      mixins: [Yo],
-      args: "icon",
-      props: {
-        icon: String
-      },
-      isIcon: !0,
-      beforeConnect() {
-        I(this.$el, "uk-icon")
-      },
-      methods: {
-        async getSvg() {
-          const t = Wh(this.icon);
-          if (!t) throw "Icon not found.";
-          return t
-        }
-      }
-    },
-    te = {
-      args: !1,
-      extends: zs,
-      data: t => ({
-        icon: zt(t.constructor.options.name)
-      }),
-      beforeConnect() {
-        I(this.$el, this.$options.id)
-      }
-    },
-    _h = {
-      extends: te,
-      beforeConnect() {
-        const t = this.$props.icon;
-        this.icon = this.$el.closest(".uk-nav-primary") ? `${t}-large` : t
-      }
-    },
-    Ah = {
-      extends: te,
-      mixins: [Ii],
-      i18n: {
-        toggle: "Open Search",
-        submit: "Submit Search"
-      },
-      beforeConnect() {
-        const t = $(this.$el, "uk-search-toggle") || $(this.$el, "uk-navbar-toggle");
-        if (this.icon = t ? "search-toggle-icon" : $(this.$el, "uk-search-icon") && this.$el.closest(".uk-search-large") ? "search-large" : this.$el.closest(".uk-search-medium") ? "search-medium" : this.$props.icon, !Pt(this.$el, "aria-label"))
-          if (t) {
-            const e = this.t("toggle");
-            p(this.$el, "aria-label", e)
-          } else {
-            const e = this.$el.closest("a,button");
-            if (e) {
-              const i = this.t("submit");
-              p(e, "aria-label", i)
-            }
-          }
-      }
-    },
-    Oh = {
-      extends: te,
-      beforeConnect() {
-        p(this.$el, "role", "status")
-      },
-      methods: {
-        async getSvg() {
-          const t = await zs.methods.getSvg.call(this);
-          return this.ratio !== 1 && h(x("circle", t), "strokeWidth", 1 / this.ratio), t
-        }
-      }
-    },
-    ee = {
-      extends: te,
-      mixins: [Ii],
-      beforeConnect() {
-        const t = this.$el.closest("a,button");
-        p(t, "role", this.role !== null && F(t, "a") ? "button" : this.role);
-        const e = this.t("label");
-        e && !Pt(t, "aria-label") && p(t, "aria-label", e)
-      }
-    },
-    Ko = {
-      extends: ee,
-      beforeConnect() {
-        I(this.$el, "uk-slidenav");
-        const t = this.$props.icon;
-        this.icon = $(this.$el, "uk-slidenav-large") ? `${t}-large` : t
-      }
-    },
-    Mh = {
-      extends: ee,
-      i18n: {
-        label: "Open menu"
-      }
-    },
-    Dh = {
-      extends: ee,
-      i18n: {
-        label: "Close"
-      },
-      beforeConnect() {
-        this.icon = `close-${$(this.$el,"uk-close-large")?"large":"icon"}`
-      }
-    },
-    Bh = {
-      extends: ee,
-      i18n: {
-        label: "Open"
-      }
-    },
-    Nh = {
-      extends: ee,
-      i18n: {
-        label: "Back to top"
-      }
-    },
-    zh = {
-      extends: ee,
-      i18n: {
-        label: "Next page"
-      },
-      data: {
-        role: null
-      }
-    },
-    Fh = {
-      extends: ee,
-      i18n: {
-        label: "Previous page"
-      },
-      data: {
-        role: null
-      }
-    },
-    zi = {};
-
-  function Hh(t) {
-    t.icon.add = (e, i) => {
-      const s = H(e) ? {
-        [e]: i
-      } : e;
-      ae(s, (n, o) => {
-        Ni[o] = n, delete zi[o]
-      }), t._initialized && Ot(document.body, n => ae(t.getComponents(n), o => {
-        o.$options.isIcon && o.icon in s && o.$reset()
-      }))
-    }
-  }
-  const Lh = {
-    twitter: "x"
-  };
-
-  function Wh(t) {
-    return t = Lh[t] || t, Ni[t] ? (zi[t] || (zi[t] = Xo(Ni[jh(t)] || Ni[t])), zi[t].cloneNode(!0)) : null
-  }
-
-  function jh(t) {
-    return U ? ji(ji(t, "left", "right"), "previous", "next") : t
-  }
-  var Rh = {
-    props: {
-      target: String,
-      selActive: String
-    },
-    data: {
-      target: !1,
-      selActive: !1
-    },
-    computed: {
-      target: ({
-                 target: t
-               }, e) => t ? D(t, e) : e
-    },
-    observe: [be({
-      handler(t) {
-        this.isIntersecting = t.some(({
-                                        isIntersecting: e
-                                      }) => e), this.$emit()
-      },
-      target: ({
-                 target: t
-               }) => t,
-      args: {
-        intersecting: !1
-      }
-    }), ki({
-      target: ({
-                 target: t
-               }) => t,
-      options: {
-        attributes: !0,
-        attributeFilter: ["class"],
-        attributeOldValue: !0
-      }
-    }), {
-      target: ({
-                 target: t
-               }) => t,
-      observe: (t, e) => {
-        const i = je([...E(t), document.documentElement], e),
-          s = [y(document, "scroll itemshown itemhidden", e, {
-            passive: !0,
-            capture: !0
-          }), y(document, "show hide transitionstart", n => (e(), i.observe(n.target))), y(document, "shown hidden transitionend transitioncancel", n => (e(), i.unobserve(n.target)))];
-        return {
-          observe: i.observe.bind(i),
-          unobserve: i.unobserve.bind(i),
-          disconnect() {
-            i.disconnect(), s.map(n => n())
-          }
-        }
-      },
-      handler() {
-        this.$emit()
-      }
-    }],
-    update: {
-      read() {
-        if (!this.isIntersecting) return !1;
-        for (const t of E(this.target)) {
-          let e = !this.selActive || C(t, this.selActive) ? qh(t) : "";
-          e !== !1 && ri(t, "uk-light uk-dark", e)
-        }
-      }
-    }
-  };
-
-  function qh(t) {
-    const e = m(t),
-      i = m(window);
-    if (!ni(e, i)) return !1;
-    const {
-      left: s,
-      top: n,
-      height: o,
-      width: r
-    } = e;
-    let a;
-    for (const l of [.25, .5, .75]) {
-      const c = t.ownerDocument.elementsFromPoint(Math.max(0, Math.min(s + r * l, i.width - 1)), Math.max(0, Math.min(n + o / 2, i.height - 1)));
-      for (const u of c) {
-        if (t.contains(u) || !Uh(u) || u.closest('[class*="-leave"]') && c.some(f => u !== f && C(f, '[class*="-enter"]'))) continue;
-        const d = h(u, "--uk-inverse");
-        if (d) {
-          if (d === a) return `uk-${d}`;
-          a = d;
-          break
-        }
-      }
-    }
-    return a ? `uk-${a}` : ""
-  }
-
-  function Uh(t) {
-    if (h(t, "visibility") !== "visible") return !1;
-    for (; t;) {
-      if (h(t, "opacity") === "0") return !1;
-      t = O(t)
-    }
-    return !0
-  }
-  var Vh = {
-      mixins: [st, Ci],
-      props: {
-        fill: String
-      },
-      data: {
-        fill: "",
-        clsWrapper: "uk-leader-fill",
-        clsHide: "uk-leader-hide",
-        attrFill: "data-fill"
-      },
-      computed: {
-        fill: ({
-                 fill: t
-               }, e) => t || h(e, "--uk-leader-fill-content")
-      },
-      connected() {
-        [this.wrapper] = es(this.$el, `<span class="${this.clsWrapper}">`)
-      },
-      disconnected() {
-        He(this.wrapper.childNodes)
-      },
-      observe: dt(),
-      update: {
-        read() {
-          return {
-            width: Math.trunc(this.$el.offsetWidth / 2),
-            fill: this.fill,
-            hide: !this.matchMedia
-          }
-        },
-        write({
-                width: t,
-                fill: e,
-                hide: i
-              }) {
-          L(this.wrapper, this.clsHide, i), p(this.wrapper, this.attrFill, new Array(t).join(e))
-        },
-        events: ["resize"]
-      }
-    },
-    Yh = {
-      install: Gh,
-      mixins: [Ps],
-      data: {
-        clsPage: "uk-modal-page",
-        selPanel: ".uk-modal-dialog",
-        selClose: '[class*="uk-modal-close"]'
-      },
-      events: [{
-        name: "fullscreenchange webkitendfullscreen",
-        capture: !0,
-        handler(t) {
-          F(t.target, "video") && this.isToggled() && !document.fullscreenElement && this.hide()
-        }
-      }, {
-        name: "show",
-        self: !0,
-        handler() {
-          $(this.panel, "uk-margin-auto-vertical") ? I(this.$el, "uk-flex") : h(this.$el, "display", "block"), tt(this.$el)
-        }
-      }, {
-        name: "hidden",
-        self: !0,
-        handler() {
-          h(this.$el, "display", ""), _(this.$el, "uk-flex")
-        }
-      }]
-    };
-
-  function Gh({
-                modal: t
-              }) {
-    t.dialog = function (i, s) {
-      const n = t(x(`<div><div class="uk-modal-dialog">${i}</div></div>`), {
-        stack: !0,
-        role: "alertdialog",
-        ...s
-      });
-      return n.show(), y(n.$el, "hidden", async () => {
-        await Promise.resolve(), n.$destroy(!0)
-      }, {
-        self: !0
-      }), n
-    }, t.alert = function (i, s) {
-      return e(({
-                  i18n: n
-                }) => `<div class="uk-modal-body">${H(i)?i:bt(i)}</div> <div class="uk-modal-footer uk-text-right"> <button class="uk-button uk-button-primary uk-modal-close" type="button" autofocus>${n.ok}</button> </div>`, s)
-    }, t.confirm = function (i, s) {
-      return e(({
-                  i18n: n
-                }) => `<form> <div class="uk-modal-body">${H(i)?i:bt(i)}</div> <div class="uk-modal-footer uk-text-right"> <button class="uk-button uk-button-default uk-modal-close" type="button">${n.cancel}</button> <button class="uk-button uk-button-primary" autofocus>${n.ok}</button> </div> </form>`, s, () => Promise.reject())
-    }, t.prompt = function (i, s, n) {
-      const o = e(({
-                     i18n: l
-                   }) => `<form class="uk-form-stacked"> <div class="uk-modal-body"> <label>${H(i)?i:bt(i)}</label> <input class="uk-input" autofocus> </div> <div class="uk-modal-footer uk-text-right"> <button class="uk-button uk-button-default uk-modal-close" type="button">${l.cancel}</button> <button class="uk-button uk-button-primary">${l.ok}</button> </div> </form>`, n, () => null, () => a.value),
-        {
-          $el: r
-        } = o.dialog,
-        a = x("input", r);
-      return a.value = s || "", y(r, "show", () => a.select()), o
-    }, t.i18n = {
-      ok: "Ok",
-      cancel: "Cancel"
-    };
-
-    function e(i, s, n = A, o = A) {
-      s = {
-        bgClose: !1,
-        escClose: !0,
-        ...s,
-        i18n: {
-          ...t.i18n,
-          ...s == null ? void 0 : s.i18n
-        }
-      };
-      const r = t.dialog(i(s), s);
-      return ft(new Promise(a => {
-        const l = y(r.$el, "hide", () => a(n()));
-        y(r.$el, "submit", "form", c => {
-          c.preventDefault(), a(o(r)), l(), r.hide()
-        })
-      }), {
-        dialog: r
-      })
-    }
-  }
-  var Xh = {
-    extends: Fo,
-    data: {
-      targets: "> .uk-parent",
-      toggle: "> a",
-      content: "> ul"
-    }
-  };
-  const Fs = "uk-navbar-transparent";
-  var Jh = {
-    extends: Ro,
-    props: {
-      dropbarTransparentMode: Boolean
-    },
-    data: {
-      clsDrop: "uk-navbar-dropdown",
-      selNavItem: ".uk-navbar-nav > li > a,a.uk-navbar-item,button.uk-navbar-item,.uk-navbar-item a,.uk-navbar-item button,.uk-navbar-toggle",
-      dropbarTransparentMode: !1
-    },
-    computed: {
-      navbarContainer: (t, e) => e.closest(".uk-navbar-container")
-    },
-    watch: {
-      items() {
-        const t = $(this.$el, "uk-navbar-justify"),
-          e = D(".uk-navbar-nav, .uk-navbar-left, .uk-navbar-right", this.$el);
-        for (const i of e) {
-          const s = t ? D(".uk-navbar-nav > li > a, .uk-navbar-item, .uk-navbar-toggle", i).length : "";
-          h(i, "flexGrow", s)
-        }
-      }
-    },
-    events: [{
-      name: "show",
-      el: ({
-             dropContainer: t
-           }) => t,
-      handler({
-                target: t
-              }) {
-        this.getTransparentMode(t) === "remove" && $(this.navbarContainer, Fs) && (_(this.navbarContainer, Fs), this._transparent = !0)
-      }
-    }, {
-      name: "hide",
-      el: ({
-             dropContainer: t
-           }) => t,
-      async handler() {
-        await Kh(), this._transparent && (!Y || !this.dropContainer.contains(Y.$el)) && (I(this.navbarContainer, Fs), this._transparent = null)
-      }
-    }],
-    methods: {
-      getTransparentMode(t) {
-        if (!this.navbarContainer) return;
-        if (this.dropbar && this.isDropbarDrop(t)) return this.dropbarTransparentMode;
-        const e = this.getDropdown(t);
-        if (e && $(t, "uk-dropbar")) return e.inset ? "behind" : "remove"
-      },
-      getDropbarOffset(t) {
-        const {
-          top: e,
-          height: i
-        } = T(this.navbarContainer);
-        return e + (this.dropbarTransparentMode === "behind" ? 0 : i + t)
-      }
-    }
-  };
-
-  function Kh() {
-    return new Promise(t => setTimeout(t))
-  }
-  var Zh = {
-    mixins: [Ps],
-    args: "mode",
-    props: {
-      mode: String,
-      flip: Boolean,
-      overlay: Boolean,
-      swiping: Boolean
-    },
-    data: {
-      mode: "slide",
-      flip: !1,
-      overlay: !1,
-      clsPage: "uk-offcanvas-page",
-      clsContainer: "uk-offcanvas-container",
-      selPanel: ".uk-offcanvas-bar",
-      clsFlip: "uk-offcanvas-flip",
-      clsContainerAnimation: "uk-offcanvas-container-animation",
-      clsSidebarAnimation: "uk-offcanvas-bar-animation",
-      clsMode: "uk-offcanvas",
-      clsOverlay: "uk-offcanvas-overlay",
-      selClose: ".uk-offcanvas-close",
-      container: !1,
-      swiping: !0
-    },
-    computed: {
-      clsFlip: ({
-                  flip: t,
-                  clsFlip: e
-                }) => t ? e : "",
-      clsOverlay: ({
-                     overlay: t,
-                     clsOverlay: e
-                   }) => t ? e : "",
-      clsMode: ({
-                  mode: t,
-                  clsMode: e
-                }) => `${e}-${t}`,
-      clsSidebarAnimation: ({
-                              mode: t,
-                              clsSidebarAnimation: e
-                            }) => t === "none" || t === "reveal" ? "" : e,
-      clsContainerAnimation: ({
-                                mode: t,
-                                clsContainerAnimation: e
-                              }) => t !== "push" && t !== "reveal" ? "" : e,
-      transitionElement({
-                          mode: t
-                        }) {
-        return t === "reveal" ? O(this.panel) : this.panel
-      }
-    },
-    observe: Cn({
-      filter: ({
-                 swiping: t
-               }) => t
-    }),
-    update: {
-      read() {
-        this.isToggled() && !q(this.$el) && this.hide()
-      },
-      events: ["resize"]
-    },
-    events: [{
-      name: "touchmove",
-      self: !0,
-      passive: !1,
-      filter: ({
-                 overlay: t
-               }) => t,
-      handler(t) {
-        t.cancelable && t.preventDefault()
-      }
-    }, {
-      name: "show",
-      self: !0,
-      handler() {
-        this.mode === "reveal" && !$(O(this.panel), this.clsMode) && I(Fe(this.panel, "<div>"), this.clsMode);
-        const {
-          body: t,
-          scrollingElement: e
-        } = document;
-        I(t, this.clsContainer, this.clsFlip), h(t, "touchAction", "pan-y pinch-zoom"), h(this.$el, "display", "block"), h(this.panel, "maxWidth", e.clientWidth), I(this.$el, this.clsOverlay), I(this.panel, this.clsSidebarAnimation, this.mode === "reveal" ? "" : this.clsMode), tt(t), I(t, this.clsContainerAnimation), this.clsContainerAnimation && Qh()
-      }
-    }, {
-      name: "hide",
-      self: !0,
-      handler() {
-        _(document.body, this.clsContainerAnimation), h(document.body, "touchAction", "")
-      }
-    }, {
-      name: "hidden",
-      self: !0,
-      handler() {
-        this.clsContainerAnimation && tc(), this.mode === "reveal" && $(O(this.panel), this.clsMode) && He(this.panel), _(this.panel, this.clsSidebarAnimation, this.clsMode), _(this.$el, this.clsOverlay), h(this.$el, "display", ""), h(this.panel, "maxWidth", ""), _(document.body, this.clsContainer, this.clsFlip)
-      }
-    }, {
-      name: "swipeLeft swipeRight",
-      handler(t) {
-        this.isToggled() && se(t.type, "Left") ^ this.flip && this.hide()
-      }
-    }]
-  };
-
-  function Qh() {
-    Zo().content += ",user-scalable=0"
-  }
-
-  function tc() {
-    const t = Zo();
-    t.content = t.content.replace(/,user-scalable=0$/, "")
-  }
-
-  function Zo() {
-    return x('meta[name="viewport"]', document.head) || W(document.head, '<meta name="viewport">')
-  }
-  var ec = {
-      mixins: [st],
-      props: {
-        selContainer: String,
-        selContent: String,
-        minHeight: Number
-      },
-      data: {
-        selContainer: ".uk-modal",
-        selContent: ".uk-modal-dialog",
-        minHeight: 150
-      },
-      computed: {
-        container: ({
-                      selContainer: t
-                    }, e) => e.closest(t),
-        content: ({
-                    selContent: t
-                  }, e) => e.closest(t)
-      },
-      observe: dt({
-        target: ({
-                   container: t,
-                   content: e
-                 }) => [t, e]
-      }),
-      update: {
-        read() {
-          return !this.content || !this.container || !q(this.$el) ? !1 : {
-            max: Math.max(this.minHeight, tt(this.container) - (m(this.content).height - tt(this.$el)))
-          }
-        },
-        write({
-                max: t
-              }) {
-          h(this.$el, {
-            minHeight: this.minHeight,
-            maxHeight: t
-          })
-        },
-        events: ["resize"]
-      }
-    },
-    ic = {
-      props: ["width", "height"],
-      connected() {
-        I(this.$el, "uk-responsive-width"), h(this.$el, "aspectRatio", `${this.width}/${this.height}`)
-      }
-    },
-    sc = {
-      props: {
-        offset: Number
-      },
-      data: {
-        offset: 0
-      },
-      connected() {
-        nc(this)
-      },
-      disconnected() {
-        oc(this)
-      },
-      methods: {
-        async scrollTo(t) {
-          t = t && x(t) || document.body, v(this.$el, "beforescroll", [this, t]) && (await vn(t, {
-            offset: this.offset
-          }), v(this.$el, "scrolled", [this, t]))
-        }
-      }
-    };
-  const ti = new Set;
-
-  function nc(t) {
-    ti.size || y(document, "click", Qo), ti.add(t)
-  }
-
-  function oc(t) {
-    ti.delete(t), ti.size || Ut(document, "click", Qo)
-  }
-
-  function Qo(t) {
-    if (!t.defaultPrevented)
-      for (const e of ti) e.$el.contains(t.target) && fe(e.$el) && (t.preventDefault(), window.location.href !== e.$el.href && window.history.pushState({}, "", e.$el.href), e.scrollTo(Vi(e.$el)))
-  }
-  const Hs = "uk-scrollspy-inview";
-  var rc = {
-      args: "cls",
-      props: {
-        cls: String,
-        target: String,
-        hidden: Boolean,
-        margin: String,
-        repeat: Boolean,
-        delay: Number
-      },
-      data: () => ({
-        cls: "",
-        target: !1,
-        hidden: !0,
-        margin: "-1px",
-        repeat: !1,
-        delay: 0
-      }),
-      computed: {
-        elements: ({
-                     target: t
-                   }, e) => t ? D(t, e) : [e]
-      },
-      watch: {
-        elements(t) {
-          this.hidden && h(De(t, `:not(.${Hs})`), "opacity", 0)
-        }
-      },
-      connected() {
-        this.elementData = new Map
-      },
-      disconnected() {
-        for (const [t, e] of this.elementData.entries()) _(t, Hs, (e == null ? void 0 : e.cls) || "");
-        delete this.elementData
-      },
-      observe: be({
-        target: ({
-                   elements: t
-                 }) => t,
-        handler(t) {
-          const e = this.elementData;
-          for (const {
-            target: i,
-            isIntersecting: s
-          } of t) {
-            e.has(i) || e.set(i, {
-              cls: Z(i, "uk-scrollspy-class") || this.cls
-            });
-            const n = e.get(i);
-            !this.repeat && n.show || (n.show = s)
-          }
-          this.$emit()
-        },
-        options: ({
-                    margin: t
-                  }) => ({
-          rootMargin: t
-        }),
-        args: {
-          intersecting: !1
-        }
-      }),
-      update: [{
-        write(t) {
-          for (const [e, i] of this.elementData.entries()) i.show && !i.inview && !i.queued ? (i.queued = !0, t.promise = (t.promise || Promise.resolve()).then(() => new Promise(s => setTimeout(s, this.delay))).then(() => {
-            this.toggle(e, !0), setTimeout(() => {
-              i.queued = !1, this.$emit()
-            }, 300)
-          })) : !i.show && i.inview && !i.queued && this.repeat && this.toggle(e, !1)
-        }
-      }],
-      methods: {
-        toggle(t, e) {
-          var i, s;
-          const n = (i = this.elementData) == null ? void 0 : i.get(t);
-          if (!n) return;
-          (s = n.off) == null || s.call(n), h(t, "opacity", !e && this.hidden ? 0 : ""), L(t, Hs, e), L(t, n.cls);
-          let o;
-          if (o = n.cls.match(/\buk-animation-[\w-]+/g)) {
-            const r = () => _(t, o);
-            e ? n.off = z(t, "animationcancel animationend", r, {
-              self: !0
-            }) : r()
-          }
-          v(t, e ? "inview" : "outview"), n.inview = e
-        }
-      }
-    },
-    ac = {
-      props: {
-        cls: String,
-        closest: Boolean,
-        scroll: Boolean,
-        target: String,
-        offset: Number
-      },
-      data: {
-        cls: "uk-active",
-        closest: !1,
-        scroll: !1,
-        target: 'a[href]:not([role="button"])',
-        offset: 0
-      },
-      computed: {
-        links: ({
-                  target: t
-                }, e) => D(t, e).filter(i => fe(i)),
-        elements({
-                   closest: t
-                 }) {
-          return this.links.map(e => e.closest(t || "*"))
-        }
-      },
-      watch: {
-        links(t) {
-          this.scroll && this.$create("scroll", t, {
-            offset: this.offset
-          })
-        }
-      },
-      observe: [be(), Ue()],
-      update: [{
-        read() {
-          const t = this.links.map(l => Vi(l)).filter(Boolean),
-            {
-              length: e
-            } = t;
-          if (!e || !q(this.$el)) return !1;
-          const i = Dt(t, !0),
-            {
-              scrollTop: s,
-              scrollHeight: n
-            } = i,
-            o = at(i),
-            r = n - o.height;
-          let a = !1;
-          if (s >= r) a = e - 1;
-          else {
-            const l = this.offset + m(ds()).height + o.height * .1;
-            for (let c = 0; c < t.length && !(T(t[c]).top - o.top - l > 0); c++) a = +c
-          }
-          return {
-            active: a
-          }
-        },
-        write({
-                active: t
-              }) {
-          const e = t !== !1 && !$(this.elements[t], this.cls);
-          this.links.forEach(i => i.blur());
-          for (let i = 0; i < this.elements.length; i++) L(this.elements[i], this.cls, +i === t);
-          e && v(this.$el, "active", [t, this.elements[t]])
-        },
-        events: ["scroll", "resize"]
-      }]
-    },
-    lc = {
-      mixins: [st, Ci],
-      props: {
-        position: String,
-        top: null,
-        bottom: null,
-        start: null,
-        end: null,
-        offset: String,
-        offsetEnd: String,
-        overflowFlip: Boolean,
-        animation: String,
-        clsActive: String,
-        clsInactive: String,
-        clsFixed: String,
-        clsBelow: String,
-        selTarget: String,
-        showOnUp: Boolean,
-        targetOffset: Number
-      },
-      data: {
-        position: "top",
-        top: !1,
-        bottom: !1,
-        start: !1,
-        end: !1,
-        offset: 0,
-        offsetEnd: 0,
-        overflowFlip: !1,
-        animation: "",
-        clsActive: "uk-active",
-        clsInactive: "",
-        clsFixed: "uk-sticky-fixed",
-        clsBelow: "uk-sticky-below",
-        selTarget: "",
-        showOnUp: !1,
-        targetOffset: !1
-      },
-      computed: {
-        target: ({
-                   selTarget: t
-                 }, e) => t && x(t, e) || e
-      },
-      connected() {
-        this.start = tr(this.start || this.top), this.end = tr(this.end || this.bottom), this.placeholder = x("+ .uk-sticky-placeholder", this.$el) || x('<div class="uk-sticky-placeholder"></div>'), this.isFixed = !1, this.setActive(!1)
-      },
-      beforeDisconnect() {
-        this.isFixed && (this.hide(), _(this.target, this.clsInactive)), Ws(this.$el), Q(this.placeholder), this.placeholder = null
-      },
-      observe: [bs(), Ue({
-        target: () => document.scrollingElement
-      }), dt({
-        target: ({
-                   $el: t
-                 }) => [t, Fi(t), document.scrollingElement],
-        handler(t) {
-          this.$emit(this._data.resized && t.some(({
-                                                     target: e
-                                                   }) => e === Fi(this.$el)) ? "update" : "resize"), this._data.resized = !0
-        }
-      })],
-      events: [{
-        name: "load hashchange popstate",
-        el: () => window,
-        filter: ({
-                   targetOffset: t
-                 }) => t !== !1,
-        handler() {
-          const {
-            scrollingElement: t
-          } = document;
-          !location.hash || t.scrollTop === 0 || setTimeout(() => {
-            const e = T(x(location.hash)),
-              i = T(this.$el);
-            this.isFixed && ni(e, i) && (t.scrollTop = Math.ceil(e.top - i.height - G(this.targetOffset, "height", this.placeholder) - G(this.offset, "height", this.placeholder)))
-          })
-        }
-      }],
-      update: [{
-        read({
-               height: t,
-               width: e,
-               margin: i,
-               sticky: s
-             }, n) {
-          if (this.inactive = !this.matchMedia || !q(this.$el) || !this.$el.offsetHeight, this.inactive) return;
-          const o = tt(window),
-            r = Math.max(0, document.scrollingElement.scrollHeight - o);
-          if (!r) {
-            this.inactive = !0;
-            return
-          }
-          const a = this.isFixed && n.has("update");
-          a && (Rs(this.target), this.hide()), this.active || ({
-            height: t,
-            width: e
-          } = m(this.$el), i = h(this.$el, "margin")), a && this.show();
-          const l = G("100vh", "height");
-          let c = this.position;
-          this.overflowFlip && t > l && (c = c === "top" ? "bottom" : "top");
-          const u = this.isFixed ? this.placeholder : this.$el;
-          let [d, f] = [this.offset, this.offsetEnd].map(Nt => G(Nt, "height", s ? this.$el : u));
-          c === "bottom" && (t < o || this.overflowFlip) && (d += o - t);
-          const g = t + d + f,
-            w = this.overflowFlip ? 0 : Math.max(0, g - l),
-            k = T(u).top - new DOMMatrix(h(u, "transform")).m42,
-            P = m(this.$el).height,
-            it = (this.start === !1 ? k : Ls(this.start, this.$el, k)) - d,
-            Tt = this.end === !1 ? r : Math.min(r, Ls(this.end, this.$el, k + t, !0) - P - d + w);
-          return s = !this.showOnUp && it + d === k && Tt === Math.min(r, Ls(!0, this.$el, 0, !0) - P - d + w) && h(Fi(this.$el), "overflowY") !== "hidden", {
-            start: it,
-            end: Tt,
-            offset: d,
-            overflow: w,
-            height: t,
-            elHeight: P,
-            width: e,
-            margin: i,
-            top: Le(u)[0],
-            sticky: s,
-            viewport: l,
-            maxScrollHeight: r
-          }
-        },
-        write({
-                height: t,
-                width: e,
-                margin: i,
-                offset: s,
-                sticky: n
-              }) {
-          if ((this.inactive || n || !this.isFixed) && Ws(this.$el), this.inactive) return;
-          n && (t = e = i = 0, h(this.$el, {
-            position: "sticky",
-            top: s
-          }));
-          const {
-            placeholder: o
-          } = this;
-          h(o, {
-            height: t,
-            width: e,
-            margin: i
-          }), (O(o) !== O(this.$el) || n ^ yt(o) < yt(this.$el)) && ((n ? fi : pi)(this.$el, o), o.hidden = !0)
-        },
-        events: ["resize"]
-      }, {
-        read({
-               scroll: t = 0,
-               dir: e = "down",
-               overflow: i,
-               overflowScroll: s = 0,
-               start: n,
-               end: o,
-               elHeight: r,
-               height: a,
-               sticky: l,
-               maxScrollHeight: c
-             }) {
-          const u = Math.min(document.scrollingElement.scrollTop, c),
-            d = t <= u ? "down" : "up",
-            f = this.isFixed ? this.placeholder : this.$el;
-          return {
-            dir: d,
-            prevDir: e,
-            scroll: u,
-            prevScroll: t,
-            below: u > T(f).top + (l ? Math.min(a, r) : a),
-            offsetParentTop: T(f.offsetParent).top,
-            overflowScroll: K(s + K(u, n, o) - K(t, n, o), 0, i)
-          }
-        },
-        write(t, e) {
-          const i = e.has("scroll"),
-            {
-              initTimestamp: s = 0,
-              dir: n,
-              prevDir: o,
-              scroll: r,
-              prevScroll: a = 0,
-              top: l,
-              start: c,
-              below: u
-            } = t;
-          if (r < 0 || r === a && i || this.showOnUp && !i && !this.isFixed) return;
-          const d = Date.now();
-          if ((d - s > 300 || n !== o) && (t.initScroll = r, t.initTimestamp = d), !(this.showOnUp && !this.isFixed && Math.abs(t.initScroll - r) <= 30 && Math.abs(a - r) <= 10))
-            if (this.inactive || r < c || this.showOnUp && (r <= c || n === "down" && i || n === "up" && !this.isFixed && !u)) {
-              if (!this.isFixed) {
-                At.inProgress(this.$el) && l > r && (At.cancel(this.$el), this.hide());
-                return
+              if (chunks.length) {
+                upload(chunks.shift());
+              } else {
+                this$1.completeAll(xhr);
               }
-              if (this.animation && u) {
-                if ($(this.$el, "uk-animation-leave")) return;
-                At.out(this.$el, this.animation).then(() => this.hide(), A)
-              } else this.hide()
-            } else this.isFixed ? this.update() : this.animation && u ? (this.show(), At.in(this.$el, this.animation).catch(A)) : (Rs(this.target), this.show())
-        },
-        events: ["resize", "resizeViewport", "scroll"]
-      }],
-      methods: {
-        show() {
-          this.isFixed = !0, this.update(), this.placeholder.hidden = !1
-        },
-        hide() {
-          const {
-            offset: t,
-            sticky: e
-          } = this._data;
-          this.setActive(!1), _(this.$el, this.clsFixed, this.clsBelow), e ? h(this.$el, "top", t) : Ws(this.$el), this.placeholder.hidden = !0, this.isFixed = !1
-        },
-        update() {
-          let {
-            width: t,
-            scroll: e = 0,
-            overflow: i,
-            overflowScroll: s = 0,
-            start: n,
-            end: o,
-            offset: r,
-            offsetParentTop: a,
-            sticky: l,
-            below: c
-          } = this._data;
-          const u = n !== 0 || e > n;
-          if (!l) {
-            let d = "fixed";
-            e > o && (r += o - a + s - i, d = "absolute"), h(this.$el, {
-              position: d,
-              width: t,
-              marginTop: 0
-            }, "important")
-          }
-          h(this.$el, "top", r - s), this.setActive(u), L(this.$el, this.clsBelow, c), I(this.$el, this.clsFixed)
-        },
-        setActive(t) {
-          const e = this.active;
-          this.active = t, t ? (ri(this.target, this.clsInactive, this.clsActive), e !== t && v(this.$el, "active")) : (ri(this.target, this.clsActive, this.clsInactive), e !== t && (Rs(this.target), v(this.$el, "inactive")))
-        }
-      }
-    };
 
-  function Ls(t, e, i, s) {
-    if (!t) return 0;
-    if (vt(t) || H(t) && t.match(/^-?\d/)) return i + G(t, "height", e, !0); {
-      const n = t === !0 ? Fi(e) : et(t, e);
-      return T(n).bottom - (s && (n != null && n.contains(e)) ? S(h(n, "paddingBottom")) + S(h(n, "borderBottomWidth")) : 0)
+            },
+            function (e) { return this$1.error(e); }
+          );
+
+        };
+
+        upload(chunks.shift());
+
+      }
+
     }
-  }
 
-  function tr(t) {
-    return t === "true" ? !0 : t === "false" ? !1 : t
-  }
-
-  function Ws(t) {
-    h(t, {
-      position: "",
-      top: "",
-      marginTop: "",
-      width: ""
-    })
-  }
-  const js = "uk-transition-disable";
-
-  function Rs(t) {
-    $(t, js) || (I(t, js), requestAnimationFrame(() => _(t, js)))
-  }
-
-  function Fi(t) {
-    for (; t = O(t);)
-      if (q(t)) return t
-  }
-  var hc = {
-    mixins: [Yo],
-    args: "src",
-    props: {
-      src: String,
-      icon: String,
-      attributes: "list",
-      strokeAnimation: Boolean
-    },
-    data: {
-      strokeAnimation: !1
-    },
-    observe: [ki({
-      async handler() {
-        const t = await this.svg;
-        t && er.call(this, t)
-      },
-      options: {
-        attributes: !0,
-        attributeFilter: ["id", "class", "style"]
-      }
-    })],
-    async connected() {
-      b(this.src, "#") && ([this.src, this.icon] = this.src.split("#", 2));
-      const t = await this.svg;
-      t && (er.call(this, t), this.strokeAnimation && uc(t))
-    },
-    methods: {
-      async getSvg() {
-        return F(this.$el, "img") && !this.$el.complete && this.$el.loading === "lazy" && await new Promise(t => z(this.$el, "load", t)), Xo(await cc(this.src), this.icon) || Promise.reject("SVG not found.")
-      }
-    }
   };
 
-  function er(t) {
-    const {
-      $el: e
-    } = this;
-    I(t, p(e, "class"), "uk-svg");
-    for (let i = 0; i < e.style.length; i++) {
-      const s = e.style[i];
-      h(t, s, h(e, s))
-    }
-    for (const i in this.attributes) {
-      const [s, n] = this.attributes[i].split(":", 2);
-      p(t, s, n)
-    }
-    this.$el.id || Oe(t, "id")
+  function match$1(pattern, path) {
+    return path.match(new RegExp(("^" + (pattern.replace(/\//g, '\\/').replace(/\*\*/g, '(\\/[^\\/]+)*').replace(/\*/g, '[^\\/]+').replace(/((?!\\))\?/g, '$1.')) + "$"), 'i'));
   }
-  const cc = ct(async t => {
-    if (t) {
-      if (mt(t, "data:")) return decodeURIComponent(t.split(",", 2)[1]); {
-        const e = await fetch(t);
-        if (e.headers.get("Content-Type") === "image/svg+xml") return e.text()
-      }
-    }
-    return Promise.reject()
-  });
 
-  function uc(t) {
-    const e = fo(t);
-    e && h(t, "--uk-animation-stroke", e)
+  function chunk(files, size) {
+    var chunks = [];
+    for (var i = 0; i < files.length; i += size) {
+      var chunk = [];
+      for (var j = 0; j < size; j++) {
+        chunk.push(files[i + j]);
+      }
+      chunks.push(chunk);
+    }
+    return chunks;
   }
-  const qs = ".uk-disabled *, .uk-disabled, [disabled]";
-  var ir = {
-      mixins: [Xt],
-      args: "connect",
-      props: {
-        connect: String,
-        toggle: String,
-        itemNav: String,
-        active: Number,
-        followFocus: Boolean,
-        swiping: Boolean
-      },
-      data: {
-        connect: "~.uk-switcher",
-        toggle: "> * > :first-child",
-        itemNav: !1,
-        active: 0,
-        cls: "uk-active",
-        attrItem: "uk-switcher-item",
-        selVertical: ".uk-nav",
-        followFocus: !1,
-        swiping: !0
-      },
-      computed: {
-        connects: {
-          get: ({
-                  connect: t
-                }, e) => Be(t, e),
-          observe: ({
-                      connect: t
-                    }) => t
-        },
-        connectChildren() {
-          return this.connects.map(t => N(t)).flat()
-        },
-        toggles: ({
-                    toggle: t
-                  }, e) => D(t, e),
-        children(t, e) {
-          return N(e).filter(i => this.toggles.some(s => i.contains(s)))
-        }
-      },
-      watch: {
-        connects(t) {
-          this.swiping && h(t, "touchAction", "pan-y pinch-zoom"), this.$emit()
-        },
-        connectChildren() {
-          let t = Math.max(0, this.index());
-          for (const e of this.connects) N(e).forEach((i, s) => L(i, this.cls, s === t));
-          this.$emit()
-        },
-        toggles(t) {
-          this.$emit();
-          const e = this.index();
-          this.show(~e ? e : t[this.active] || t[0])
-        }
-      },
-      connected() {
-        p(this.$el, "role", "tablist")
-      },
-      observe: [Si({
-        targets: ({
-                    connectChildren: t
-                  }) => t
-      }), Cn({
-        target: ({
-                   connects: t
-                 }) => t,
-        filter: ({
-                   swiping: t
-                 }) => t
-      })],
-      events: [{
-        name: "click keydown",
-        delegate: ({
-                     toggle: t
-                   }) => t,
-        handler(t) {
-          !C(t.current, qs) && (t.type === "click" || t.keyCode === B.SPACE) && (Et(t), this.show(t.current))
-        }
-      }, {
-        name: "keydown",
-        delegate: ({
-                     toggle: t
-                   }) => t,
-        handler(t) {
-          const {
-            current: e,
-            keyCode: i
-          } = t, s = C(this.$el, this.selVertical);
-          let n = i === B.HOME ? 0 : i === B.END ? "last" : i === B.LEFT && !s || i === B.UP && s ? "previous" : i === B.RIGHT && !s || i === B.DOWN && s ? "next" : -1;
-          if (~n) {
-            t.preventDefault();
-            const o = this.toggles.filter(a => !C(a, qs)),
-              r = o[rt(n, o, o.indexOf(e))];
-            r.focus(), this.followFocus && this.show(r)
-          }
-        }
-      }, {
-        name: "click",
-        el: ({
-               $el: t,
-               connects: e,
-               itemNav: i
-             }) => e.concat(i ? Be(i, t) : []),
-        delegate: ({
-                     attrItem: t
-                   }) => `[${t}],[data-${t}]`,
-        handler(t) {
-          t.target.closest("a,button") && (Et(t), this.show(Z(t.current, this.attrItem)))
-        }
-      }, {
-        name: "swipeRight swipeLeft",
-        filter: ({
-                   swiping: t
-                 }) => t,
-        el: ({
-               connects: t
-             }) => t,
-        handler({
-                  type: t
-                }) {
-          this.show(se(t, "Left") ? "next" : "previous")
-        }
-      }],
-      update() {
-        var t;
-        for (const e of this.connects) F(e, "ul") && p(e, "role", "presentation");
-        p(N(this.$el), "role", "presentation");
-        for (const e in this.toggles) {
-          const i = this.toggles[e],
-            s = (t = this.connects[0]) == null ? void 0 : t.children[e];
-          p(i, "role", "tab"), s && (i.id = Zt(this, i), s.id = Zt(this, s), p(i, "aria-controls", s.id), p(s, {
-            role: "tabpanel",
-            "aria-labelledby": i.id
-          }))
-        }
-        p(this.$el, "aria-orientation", C(this.$el, this.selVertical) ? "vertical" : null)
-      },
-      methods: {
-        index() {
-          return xt(this.children, t => $(t, this.cls))
-        },
-        show(t) {
-          const e = this.toggles.filter(r => !C(r, qs)),
-            i = this.index(),
-            s = rt(!Pe(t) || b(e, t) ? t : 0, e, rt(this.toggles[i], e)),
-            n = rt(e[s], this.toggles);
-          this.children.forEach((r, a) => {
-            L(r, this.cls, n === a), p(this.toggles[a], {
-              "aria-selected": n === a,
-              tabindex: n === a ? null : -1
-            })
-          });
-          const o = i >= 0 && i !== s;
-          this.connects.forEach(async ({
-                                         children: r
-                                       }) => {
-            const a = ne(r).filter((l, c) => c !== n && $(l, this.cls));
-            await this.toggleElement(a, !1, o) && await this.toggleElement(r[n], !0, o)
-          })
-        }
-      }
-    },
-    dc = {
-      mixins: [st],
-      extends: ir,
-      props: {
-        media: Boolean
-      },
-      data: {
-        media: 960,
-        attrItem: "uk-tab-item",
-        selVertical: ".uk-tab-left,.uk-tab-right"
-      },
-      connected() {
-        const t = $(this.$el, "uk-tab-left") ? "uk-tab-left" : $(this.$el, "uk-tab-right") ? "uk-tab-right" : !1;
-        t && this.$create("toggle", this.$el, {
-          cls: t,
-          mode: "media",
-          media: this.media
-        })
-      }
-    };
-  const fc = 13,
-    pc = 32;
-  var gc = {
-      mixins: [Ci, Xt],
-      args: "target",
-      props: {
-        href: String,
-        target: null,
-        mode: "list",
-        queued: Boolean
-      },
-      data: {
-        href: !1,
-        target: !1,
-        mode: "click",
-        queued: !0
-      },
-      computed: {
-        target: {
-          get: ({
-                  target: t
-                }, e) => (t = Be(t || e.hash, e), t.length ? t : [e]),
-          observe: ({
-                      target: t
-                    }) => t
-        }
-      },
-      connected() {
-        b(this.mode, "media") || (ci(this.$el) || p(this.$el, "tabindex", "0"), !this.cls && F(this.$el, "a") && p(this.$el, "role", "button"))
-      },
-      observe: Si({
-        targets: ({
-                    target: t
-                  }) => t
-      }),
-      events: [{
-        name: ut,
-        filter: ({
-                   mode: t
-                 }) => b(t, "hover"),
-        handler(t) {
-          this._preventClick = null, !(!pt(t) || re(this._showState) || this.$el.disabled) && (v(this.$el, "focus"), z(document, ut, () => v(this.$el, "blur"), !0, e => !this.$el.contains(e.target)), b(this.mode, "click") && (this._preventClick = !0))
-        }
-      }, {
-        name: `mouseenter mouseleave ${qt} ${ce} focus blur`,
-        filter: ({
-                   mode: t
-                 }) => b(t, "hover"),
-        handler(t) {
-          if (pt(t) || this.$el.disabled || document.readyState === "loading") return;
-          const e = b(["mouseenter", qt, "focus"], t.type),
-            i = this.isToggled(this.target);
-          if (!e && (!re(this._showState) || t.type !== "blur" && C(this.$el, ":focus") || t.type === "blur" && C(this.$el, ":hover"))) {
-            i === this._showState && (this._showState = null);
-            return
-          }
-          e && re(this._showState) && i !== this._showState || (this._showState = e ? i : null, this.toggle(`toggle${e?"show":"hide"}`))
-        }
-      }, {
-        name: "keydown",
-        filter: ({
-                   $el: t,
-                   mode: e
-                 }) => b(e, "click") && !F(t, "input"),
-        handler(t) {
-          (t.keyCode === pc || t.keyCode === fc) && (t.preventDefault(), this.$el.click())
-        }
-      }, {
-        name: "click",
-        filter: ({
-                   mode: t
-                 }) => ["click", "hover"].some(e => b(t, e)),
-        handler(t) {
-          let e;
-          (this._preventClick || t.target.closest('a[href="#"], a[href=""]') || (e = t.target.closest("a[href]")) && (!this.isToggled(this.target) || e.hash && C(this.target, e.hash))) && t.preventDefault(), !this._preventClick && b(this.mode, "click") && this.toggle()
-        }
-      }, {
-        name: "mediachange",
-        filter: ({
-                   mode: t
-                 }) => b(t, "media"),
-        el: ({
-               target: t
-             }) => t,
-        handler(t, e) {
-          e.matches ^ this.isToggled(this.target) && this.toggle()
-        }
-      }],
-      methods: {
-        async toggle(t) {
-          if (!v(this.target, t || "toggle", [this])) return;
-          if (Pt(this.$el, "aria-expanded") && p(this.$el, "aria-expanded", !this.isToggled(this.target)), !this.queued) return this.toggleElement(this.target);
-          const e = this.target.filter(s => $(s, this.clsLeave));
-          if (e.length) {
-            for (const s of this.target) {
-              const n = b(e, s);
-              this.toggleElement(s, n, n)
-            }
-            return
-          }
-          const i = this.target.filter(this.isToggled);
-          await this.toggleElement(i, !1) && await this.toggleElement(this.target.filter(s => !b(i, s)), !0)
-        }
-      }
-    },
-    mc = Object.freeze({
-      __proto__: null,
-      Accordion: Fo,
-      Alert: jl,
-      Close: Dh,
-      Cover: Ul,
-      Drop: Wo,
-      DropParentIcon: te,
-      Dropdown: Wo,
-      Dropnav: Ro,
-      FormCustom: Zl,
-      Grid: Ql,
-      HeightMatch: sh,
-      HeightPlaceholder: rh,
-      HeightViewport: ah,
-      Icon: zs,
-      Img: ca,
-      Inverse: Rh,
-      Leader: Vh,
-      Margin: Pn,
-      Marker: Bh,
-      Modal: Yh,
-      Nav: Xh,
-      NavParentIcon: _h,
-      Navbar: Jh,
-      NavbarParentIcon: te,
-      NavbarToggleIcon: Mh,
-      Offcanvas: Zh,
-      OverflowAuto: ec,
-      OverlayIcon: te,
-      PaginationNext: zh,
-      PaginationPrevious: Fh,
-      Responsive: ic,
-      Scroll: sc,
-      Scrollspy: rc,
-      ScrollspyNav: ac,
-      SearchIcon: Ah,
-      SlidenavNext: Ko,
-      SlidenavPrevious: Ko,
-      Spinner: Oh,
-      Sticky: lc,
-      Svg: hc,
-      Switcher: ir,
-      Tab: dc,
-      Toggle: gc,
-      Totop: Nh,
-      Video: Ho
-    });
-  return ae(mc, (t, e) => ht.component(e, t)), zl(ht), ae(Nl, (t, e) => ht.component(e, t)), ht
-});
+
+  function stop(e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  UIkit.component('countdown', Countdown);
+  UIkit.component('filter', Filter);
+  UIkit.component('lightbox', Lightbox);
+  UIkit.component('lightboxPanel', LightboxPanel);
+  UIkit.component('notification', Notification);
+  UIkit.component('parallax', Parallax$1);
+  UIkit.component('slider', Slider$1);
+  UIkit.component('sliderParallax', SliderParallax);
+  UIkit.component('slideshow', Slideshow$1);
+  UIkit.component('slideshowParallax', SliderParallax);
+  UIkit.component('sortable', Sortable);
+  UIkit.component('tooltip', Tooltip);
+  UIkit.component('upload', Upload);
+
+  {
+    boot(UIkit);
+  }
+
+  return UIkit;
+
+}));
