@@ -2,8 +2,6 @@ PATH
   remote: .
   specs:
     uikit-reset (2.0)
-      bundler (~> 2.4.17)
-      rake (~> 10.0)
 
 GEM
   remote: https://rubygems.org/
@@ -21,7 +19,7 @@ GEM
     rainbow (3.1.1)
     rake (10.5.0)
     regexp_parser (2.10.0)
-    rubocop (1.75.3)
+    rubocop (1.75.4)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -41,11 +39,12 @@ GEM
     unicode-emoji (4.0.4)
 
 PLATFORMS
-  arm64-darwin-22
+  arm64-darwin-24
 
 DEPENDENCIES
+  rake (~> 10.0)
   rubocop (~> 1.21)
   uikit-reset!
 
 BUNDLED WITH
-   2.4.17
+   2.4.22

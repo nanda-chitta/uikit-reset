@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-lib = File.expand_path('lib', __dir__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'uikit/reset/version'
+require_relative 'lib/uikit/reset/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'uikit-reset'
@@ -14,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = 'Uikit::Reset is a gem to make it super easy to use UIkit in your Rails project.'
   spec.homepage      = 'https://github.com/nanda-chitta/uikit-reset'
   spec.license       = 'MIT'
-  spec.required_ruby_version = '>= 2.3.0'
+  spec.required_ruby_version = '>= 2.4.0'
 
   spec.files         = Dir['{test,spec,features,lib,vendor}/**/*']
 
@@ -22,7 +20,4 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
   spec.metadata['rubygems_mfa_required'] = 'true'
-
-  spec.add_development_dependency 'bundler', '~>2.4.17'
-  spec.add_development_dependency 'rake', '~>10.0'
 end
