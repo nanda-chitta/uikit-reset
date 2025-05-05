@@ -20,4 +20,6 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
   spec.metadata['rubygems_mfa_required'] = 'true'
+  spec.metadata['source_code_uri'] = 'https://github.com/nanda-chitta/uikit-reset'
+  spec.metadata['homepage_uri']    = 'https://github.com/nanda-chitta/uikit-reset'
 end

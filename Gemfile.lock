@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    uikit-reset (2.0)
+    uikit-reset (3.23.6)
 
 GEM
   remote: https://rubygems.org/

@@ -38,12 +38,27 @@ Or install it yourself as:
 
      //= require uikit-reset
 
-#### NOTE
+### Include UIkit in Your Layout:
+   ###### In app/views/layouts/application.html.erb
+    <%= stylesheet_link_tag 'uikit/uikit.min', media: 'all' %>
+    <%= javascript_include_tag 'uikit/uikit.min', defer: true %>
+    <%= javascript_include_tag 'uikit/uikit-icons.min', defer: true %>
 
- **Uikit::Reset** version till 1.1.2 will be on <br>
- **GITHUB:** https://github.com/Ranjanchitta/uikit-reset <br>
- And from **Uikit::Reset** version > 1.1.2 <br>
- **GITHUB:** https://github.com/nanda-chitta/uikit-reset
+#### Include for Precompile Assets (Optional)
+   ###### If you're using production mode, make sure to allow precompilation:
+   ###### In `config/initializers/assets.rb:`
+
+    Rails.application.config.assets.precompile += %w(
+      uikit/uikit.min.js
+      uikit/uikit-icons.min.js
+      uikit/uikit.min.css
+    )
+
+#### NOTE
+   **Uikit::Reset** version till 1.1.2 will be on <br>
+   **GITHUB:** https://github.com/Ranjanchitta/uikit-reset <br>
+   And from **Uikit::Reset** version > 1.1.2 <br>
+   **GITHUB:** https://github.com/nanda-chitta/uikit-reset
 
 ## Development
 
