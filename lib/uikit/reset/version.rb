@@ -2,6 +2,6 @@
 
 module Uikit
   module Reset
-    VERSION = '3.10.0'
+    VERSION = '3.23.6'
   end
 end
