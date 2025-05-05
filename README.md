@@ -38,6 +38,13 @@ Or install it yourself as:
 
      //= require uikit-reset
 
+#### NOTE
+
+ **Uikit::Reset** version till 1.1.2 will be on <br>
+ **GITHUB:** https://github.com/Ranjanchitta/uikit-reset <br>
+ And from **Uikit::Reset** version > 1.1.2 <br>
+ **GITHUB:** https://github.com/nanda-chitta/uikit-reset     
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec/test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
